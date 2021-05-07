@@ -1,9 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React from "react";
-import { backgroundColor, focusedColor } from "../api/constants";
+import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
 import Budget from "../screens/Budget";
-import Home from "../screens/Home";
+import Home from "../screens/HomeScreen/Home";
 import Report from "../screens/Report";
 import Other from "../screens/Other";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -51,10 +51,10 @@ const BottomTabNavigator = () => {
           height: 60,
           justifyContent: "center",
           backgroundColor: backgroundColor,
-          elevation: 2,
+          elevation: 10,
         },
         activeTintColor: focusedColor,
-        inactiveTintColor: focusedColor,
+        inactiveTintColor: inactiveColor,
         showIcon: true,
         indicatorStyle: {
           top: 0,
