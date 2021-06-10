@@ -1,12 +1,16 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import React from "react";
-import { backgroundColor, focusedColor } from "../api/constants";
+import React, { useEffect, useState } from "react";
+import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
 import Budget from "../screens/Budget";
-import Home from "../screens/Home";
+import Home from "../screens/HomeScreen/Home";
 import Report from "../screens/Report";
 import Other from "../screens/Other";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";
+import LoginScreen from "../screens/LoginScreen/LoginScreen";
+import { firebase } from "../firebase/config";
+import { Text, View } from "react-native";
 
 const iconSize = 25;
 const Tab = createMaterialTopTabNavigator();
@@ -51,10 +55,10 @@ const BottomTabNavigator = () => {
           height: 60,
           justifyContent: "center",
           backgroundColor: backgroundColor,
-          elevation: 2,
+          elevation: 10,
         },
         activeTintColor: focusedColor,
-        inactiveTintColor: focusedColor,
+        inactiveTintColor: inactiveColor,
         showIcon: true,
         indicatorStyle: {
           top: 0,
@@ -102,12 +106,54 @@ const screenOptionStyle = {
   headerShown: false,
 };
 
-const HomeStackNavigator = () => {
-  return (
-    <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Main" component={BottomTabNavigator} />
-    </Stack.Navigator>
-  );
+const Navigator = () => {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const usersRef = firebase.firestore().collection("users");
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then((document) => {
+            const userData = document.data();
+            setLoading(false);
+            setUser(userData);
+          })
+          .catch((error) => {
+            setLoading(false);
+          });
+      } else {
+        setLoading(false);
+      }
+    });
+  }, []);
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.2)",
+        }}
+      ></View>
+    );
+  } else
+    return (
+      <Stack.Navigator screenOptions={screenOptionStyle}>
+        {user ? (
+          <Stack.Screen name="Main" component={BottomTabNavigator} />
+        ) : (
+          <>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} />
+          </>
+        )}
+      </Stack.Navigator>
+    );
 };
 
-export default HomeStackNavigator;
+export default Navigator;

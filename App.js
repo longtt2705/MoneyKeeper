@@ -1,15 +1,20 @@
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
-import FloatingActionButton from "./src/components/FloatingActionButton";
-import HomeStackNavigator from "./src/navigations/Navigator";
+import { Provider } from "react-redux";
+import Navigator from "./src/navigations/Navigator";
+
+import store from "./src/redux/store/store";
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <HomeStackNavigator />
-      {/* <FloatingActionButton /> */}
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Navigator />
+      </NavigationContainer>
+    </Provider>
   );
 };
+
+// console.log(store.getState());
 
 export default App;
