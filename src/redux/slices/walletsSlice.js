@@ -1,62 +1,69 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { sub } from "date-fns";
 
-const initialState = [
-  {
-    id: "1",
-    title: "cash",
-    icon: "",
-    balance: 1000000,
-    limit: null,
-    transactions: [
-      {
-        categoryId: "",
-        userCreatedCategoryId: "",
-        eventId: null,
-        moneyAmount: 25000,
-        note: "breakfast in vietnam !!! Pho",
-        date: sub(new Date(), { minutes: 10 }),
-        image: "",
-      },
-      {
-        categoryId: "",
-        userCreatedCategoryId: "",
-        eventId: null,
-        moneyAmount: 50000,
-        note: "coffee",
-        date: sub(new Date(), { minutes: 20 }),
-        image: "",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "momo",
-    icon: "",
-    balance: 135000,
-    limit: null,
-    transactions: [
-      {
-        categoryId: "",
-        userCreatedCategoryId: "",
-        eventId: null,
-        moneyAmount: 15000,
-        note: "beamin order",
-        date: sub(new Date(), { minutes: 17 }),
-        image: "",
-      },
-      {
-        categoryId: "",
-        userCreatedCategoryId: "",
-        eventId: null,
-        moneyAmount: 29000,
-        note: "foodie",
-        date: sub(new Date(), { minutes: 12 }),
-        image: "",
-      },
-    ],
-  },
-];
+const initialState = {
+  lastUsedWalletId: "1",
+  wallets: [
+    {
+      id: "1",
+      title: "cash",
+      icon: "",
+      balance: 1000000,
+      limit: null,
+      transactions: [
+        {
+          id: "1",
+          categoryId: "1",
+          userCreatedCategoryId: "",
+          eventId: null,
+          moneyAmount: 25000,
+          note: "breakfast in vietnam !!! Pho",
+          date: sub(new Date(), { minutes: 10 }),
+          image: "",
+        },
+        {
+          id: "2",
+          categoryId: "2",
+          userCreatedCategoryId: "",
+          eventId: null,
+          moneyAmount: 50000,
+          note: "coffee",
+          date: sub(new Date(), { minutes: 20 }),
+          image: "",
+        },
+      ],
+    },
+    {
+      id: "2",
+      title: "momo",
+      icon: "",
+      balance: 135000,
+      limit: null,
+      transactions: [
+        {
+          id: "3",
+          categoryId: "",
+          userCreatedCategoryId: "",
+          eventId: null,
+          moneyAmount: 15000,
+          note: "beamin order",
+          date: sub(new Date(), { minutes: 17 }),
+          image: "",
+        },
+        {
+          id: "4",
+          categoryId: "",
+          userCreatedCategoryId: "",
+          eventId: null,
+          moneyAmount: 29000,
+          note: "foodie",
+          date: sub(new Date(), { minutes: 12 }),
+          image: "",
+        },
+      ],
+    },
+  ],
+};
 
 const walletsSlice = createSlice({
   name: "wallets",
@@ -65,7 +72,9 @@ const walletsSlice = createSlice({
     addTransaction: {
       reducer(state, action) {
         const { walletId, ...transaction } = action.payload;
-        const existingWallet = state.find((wallet) => wallet.id === walletId);
+        const existingWallet = state.wallets.find(
+          (wallet) => wallet.id === walletId
+        );
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
@@ -97,7 +106,7 @@ const walletsSlice = createSlice({
     },
     addWallet: {
       reducer(state, action) {
-        state.push(action.payload);
+        state.wallets.push(action.payload);
       },
       prepare(title, icon, balance = 0, limit = null) {
         return {
@@ -107,13 +116,16 @@ const walletsSlice = createSlice({
             icon,
             balance,
             limit,
+            transaction: [],
           },
         };
       },
     },
     updateWallet(state, action) {
       const { walletId, ...updatingField } = action.payload;
-      const existingWallet = state.find((wallet) => wallet.id == walletId);
+      const existingWallet = state.wallets.find(
+        (wallet) => wallet.id == walletId
+      );
       if (existingWallet) {
         for (let prop in updatingField) {
           let val = updatingField[prop];
@@ -124,6 +136,6 @@ const walletsSlice = createSlice({
   },
 });
 
-export const { addTransaction, addWallet } = walletsSlice.actions;
+export const { addTransaction, addWallet, updateWallet } = walletsSlice.actions;
 
 export default walletsSlice.reducer;
