@@ -9,22 +9,24 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const data = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4];
 export default function AddTransaction() {
   const [date, setDate] = useState(new Date());
-  const [show, setShow] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const handleDate = () => {
-    console.log("123123");
-    setShow(true);
+  const hideDatePicker = () => {
+    setShowDatePicker(false);
   };
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    hideDatePicker();
+  };
+
+  const openDatePicker = () => {
+    setShowDatePicker(true);
   };
 
   return (
@@ -36,18 +38,13 @@ export default function AddTransaction() {
       <View style={styles.innerContainer}>
         <View style={styles.row}>
           <Text style={[styles.text, { width: 100 }]}>Date</Text>
-          <Text onPress={handleDate}> {date.toISOString()}</Text>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode="date"
-              is24Hour={true}
-              display="spinner"
-              onChange={onChange}
-              style={{ width: 100, backgroundColor: "white" }}
-            />
-          )}
+          <Text onPress={openDatePicker}> {date.toISOString()}</Text>
+          <DateTimePickerModal
+            isVisible={showDatePicker}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
         </View>
 
         <View style={styles.row}>
