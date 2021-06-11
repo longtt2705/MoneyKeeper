@@ -1,11 +1,25 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
+import { firebase } from "../firebase/config";
 
 export default function Other({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>Khác</Text>
-      <Button onPress={handleAddWallet} />
+      <Button
+        title="PUSH"
+        onPress={() => {
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              navigation.navigate("Login", { screen: "Login" });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }}
+      />
     </View>
   );
 }
