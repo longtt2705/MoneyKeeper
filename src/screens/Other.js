@@ -1,11 +1,25 @@
-import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import React from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { firebase } from "../firebase/config";
 
-export default function Other({navigation}) {
+export default function Other({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>Khác</Text>
-      <Button title="PUSH" onPress={() => navigation.navigate('Budget')} />
+      <Button
+        title="PUSH"
+        onPress={() => {
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              navigation.navigate("Login", { screen: "Login" });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }}
+      />
     </View>
   );
 }
@@ -13,7 +27,7 @@ export default function Other({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
