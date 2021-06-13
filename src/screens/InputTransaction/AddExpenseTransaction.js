@@ -7,26 +7,49 @@ import {
   Button,
   ScrollView,
 } from "react-native";
+import moment from "moment";
 import Constants from "expo-constants";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import {
+  backgroundColor,
+  primaryColor,
+  textColor,
+  focusedColor,
+  formBackgroundColor,
+  textColorOnLightBg,
+  inactiveColor,
+} from "../../api/constants";
+import { useSelector } from "react-redux";
+
+import MyInput from "./MyInput";
 
 const data = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4];
-export default function AddTransaction() {
+export default function AddExpenseTransaction() {
   const [date, setDate] = useState(new Date());
+  const [moneyAmount, setMoneyAmount] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [note, setNote] = useState();
 
   const hideDatePicker = () => {
     setShowDatePicker(false);
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
+    setDate(date);
     hideDatePicker();
   };
 
   const openDatePicker = () => {
     setShowDatePicker(true);
+  };
+
+  const handleChangeMoney = (value) => {
+    setMoneyAmount(value);
+  };
+
+  const handleChangeNote = (value) => {
+    setNote(value);
   };
 
   return (
@@ -38,27 +61,39 @@ export default function AddTransaction() {
       <View style={styles.innerContainer}>
         <View style={styles.row}>
           <Text style={[styles.text, { width: 100 }]}>Date</Text>
-          <Text onPress={openDatePicker}> {date.toISOString()}</Text>
+          <Text
+            style={[styles.input, styles.active, { textAlign: "center" }]}
+            onPress={openDatePicker}
+          >
+            {moment(date).format("DD/MM/YYYY")}
+          </Text>
           <DateTimePickerModal
             isVisible={showDatePicker}
             mode="date"
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
+            display="spinner"
+            style={{ color: "#000" }}
           />
         </View>
 
         <View style={styles.row}>
           <Text style={[styles.text, { width: 100 }]}>Expense</Text>
-          <TextInput
-            style={[styles.input, { fontWeight: "bold" }]}
-            value="3,000,000"
+          <MyInput
+            value={moneyAmount}
             textAlign={"center"}
             keyboardType="number-pad"
+            onChange={handleChangeMoney}
           />
         </View>
+
         <View style={styles.row}>
           <Text style={[styles.text, { width: 100 }]}>Note</Text>
-          <TextInput style={styles.input} />
+          <MyInput
+            value={note}
+            onChange={handleChangeNote}
+            placeholder="enter note here"
+          />
         </View>
 
         <View
@@ -66,7 +101,7 @@ export default function AddTransaction() {
         >
           <View style={styles.inputWithIcon}>
             <View style={styles.inputIcon}>
-              <MaterialCommunityIcons name="wallet" size={34} color="#fff" />
+              <MaterialCommunityIcons name="wallet" size={34} color="#000" />
             </View>
             <View style={{ flexDirection: "column" }}>
               <Text style={styles.text}>Wallet</Text>
@@ -76,7 +111,7 @@ export default function AddTransaction() {
 
           <View style={styles.inputWithIcon}>
             <View style={styles.inputIcon}>
-              <MaterialIcons name="update" size={34} color="#fff" />
+              <MaterialIcons name="update" size={34} color="#000" />
             </View>
             <View style={{ flexDirection: "column", flex: 1 }}>
               <Text style={styles.text}>Event</Text>
@@ -109,10 +144,9 @@ export default function AddTransaction() {
             ))}
           </ScrollView>
         </View>
-      </View>
-
-      <View style={styles.submitButton}>
-        <Button color="#FE346E" title="Submit" />
+        <View style={styles.submitButton}>
+          <Button color={backgroundColor} title="Submit" />
+        </View>
       </View>
     </View>
   );
@@ -120,7 +154,7 @@ export default function AddTransaction() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#6A3D75",
+    backgroundColor: backgroundColor,
     flex: 1,
     paddingTop: Constants.statusBarHeight,
   },
@@ -130,24 +164,27 @@ const styles = StyleSheet.create({
     height: 50,
   },
   text: {
-    color: "white",
+    color: textColorOnLightBg,
     fontSize: 20,
   },
   normalText: {
-    color: "#fff",
+    color: textColorOnLightBg,
     fontSize: 14,
   },
   input: {
-    color: "#fff",
-    backgroundColor: "#6A3D75",
+    color: textColorOnLightBg,
+    backgroundColor: inactiveColor,
     borderColor: "#707070",
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 20,
     flex: 1,
   },
+  active: {
+    backgroundColor: "#fff",
+  },
   innerContainer: {
-    backgroundColor: "#42224A",
+    backgroundColor: formBackgroundColor,
     paddingLeft: 20,
     paddingRight: 20,
   },
@@ -178,8 +215,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   submitButton: {
+    overflow: "hidden",
     alignSelf: "center",
-    width: 100,
-    marginTop: 20,
+    width: 200,
+    margin: 20,
+    borderRadius: 5,
   },
 });

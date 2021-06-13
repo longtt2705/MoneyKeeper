@@ -2,11 +2,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React, { useEffect, useState } from "react";
 import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
+
 import Budget from "../screens/Budget";
 import Home from "../screens/HomeScreen/Home";
 import Report from "../screens/Report";
 import Other from "../screens/Other";
-import AddTransaction from "../screens/InputTransaction/AddTransaction";
+import InputNavigation from "./InputNavigation";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
@@ -86,7 +88,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="+"
-        component={AddTransaction}
+        component={InputNavigation}
         options={{
           tabBarLabel: "+",
         }}

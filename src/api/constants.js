@@ -2,8 +2,10 @@ export const primaryColor = "#1A2C65";
 export const backgroundColor = "#214B8F";
 export const focusedColor = "#fff";
 export const textColor = "#fff";
-export const inactiveColor = "rgba(255, 255, 255, 0.25)";
+export const textColorOnFocused = "#000";
+export const inactiveColor = "#efefef";
 export const itemBackgroundColor = "#efefef";
+export const formBackgroundColor = "#fff";
 
 export const Colors = [
   "#FF6633",
