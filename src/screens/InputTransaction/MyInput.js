@@ -14,17 +14,20 @@ import {
 const MyInput = (props) => {
   const [isFocused, setIsFocused] = useState(false);
 
-  const handleChange = (e) => {
-    props.onChange(e.target.value);
-  }
+  const handleChange = (value) => {
+    props.onChangeText(value);
+  };
 
   return (
-    <TextInput 
-      {...props} 
-      style={[styles.input, {backgroundColor : isFocused ? "#fff" : inactiveColor}]} 
+    <TextInput
+      {...props}
+      style={[
+        styles.input,
+        { backgroundColor: isFocused ? "#fff" : inactiveColor },
+      ]}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
-      onChange={handleChange}
+      onChangeText={(text) => handleChange(text)}
     />
   );
 };

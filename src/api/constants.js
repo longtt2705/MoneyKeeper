@@ -6,6 +6,7 @@ export const textColorOnFocused = "#000";
 export const inactiveColor = "#efefef";
 export const itemBackgroundColor = "#efefef";
 export const formBackgroundColor = "#fff";
+export const highlightColor = "#E666FF";
 
 export const Colors = [
   "#FF6633",

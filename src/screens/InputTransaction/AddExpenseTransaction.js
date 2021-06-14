@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import moment from "moment";
 import Constants from "expo-constants";
@@ -19,8 +20,10 @@ import {
   formBackgroundColor,
   textColorOnLightBg,
   inactiveColor,
+  highlightColor,
 } from "../../api/constants";
 import { useSelector } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 
 import MyInput from "./MyInput";
 
@@ -29,7 +32,22 @@ export default function AddExpenseTransaction() {
   const [date, setDate] = useState(new Date());
   const [moneyAmount, setMoneyAmount] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [note, setNote] = useState();
+  const [categoryId, setCategoryId] = useState("");
+  const [note, setNote] = useState("");
+
+  const categories = useSelector((state) => state.categories);
+  const expenseCategories = categories.filter((c) => c.type === "expense");
+
+  console.log(moneyAmount);
+
+  // cái này là tạo categories trống để lấp đầy chỗ ở scrollView
+  const tempCategory = [];
+  let numOfTempCategory = (expenseCategories.length + 1) % 3;
+  if (numOfTempCategory == 2) {
+    tempCategory.push(
+      <View key={nanoid()} style={styles.tempCategoryItem}></View>
+    );
+  }
 
   const hideDatePicker = () => {
     setShowDatePicker(false);
@@ -45,11 +63,16 @@ export default function AddExpenseTransaction() {
   };
 
   const handleChangeMoney = (value) => {
+    console.log(value);
     setMoneyAmount(value);
   };
 
   const handleChangeNote = (value) => {
     setNote(value);
+  };
+
+  const handleChangeCategory = (categoryId) => {
+    setCategoryId(categoryId);
   };
 
   return (
@@ -83,7 +106,8 @@ export default function AddExpenseTransaction() {
             value={moneyAmount}
             textAlign={"center"}
             keyboardType="number-pad"
-            onChange={handleChangeMoney}
+            onChangeText={handleChangeMoney}
+            returnKeyType="done"
           />
         </View>
 
@@ -93,6 +117,7 @@ export default function AddExpenseTransaction() {
             value={note}
             onChange={handleChangeNote}
             placeholder="enter note here"
+            returnKeyType="done"
           />
         </View>
 
@@ -130,18 +155,43 @@ export default function AddExpenseTransaction() {
               justifyContent: "space-between",
             }}
           >
-            {data.map((categoryItem, index) => (
-              <View key={index} style={styles.categoryItem}>
-                <View>
-                  <MaterialCommunityIcons
-                    name="wallet"
-                    size={34}
-                    color="#fff"
-                  />
-                </View>
-                <Text style={styles.normalText}>Shopping</Text>
-              </View>
-            ))}
+            {expenseCategories.map((category, index) =>
+              category.id == categoryId ? (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.focusedCategoryItem}
+                  onPress={() => handleChangeCategory(category.id)}
+                >
+                  <View>
+                    <MaterialCommunityIcons
+                      name="wallet"
+                      size={34}
+                      color="#000"
+                    />
+                  </View>
+                  <Text style={styles.normalText}>{category.title}</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.categoryItem}
+                  onPress={() => handleChangeCategory(category.id)}
+                >
+                  <View>
+                    <MaterialCommunityIcons
+                      name="wallet"
+                      size={34}
+                      color="#000"
+                    />
+                  </View>
+                  <Text style={styles.normalText}>{category.title}</Text>
+                </TouchableOpacity>
+              )
+            )}
+            <TouchableOpacity style={styles.categoryItem}>
+              <Text style={styles.normalText}>Edit</Text>
+            </TouchableOpacity>
+            {tempCategory}
           </ScrollView>
         </View>
         <View style={styles.submitButton}>
@@ -205,11 +255,28 @@ const styles = StyleSheet.create({
     height: 160,
   },
   categoryItem: {
-    borderColor: "#707070",
+    borderColor: inactiveColor,
     borderWidth: 1,
     borderRadius: 5,
-    height: 70,
-    width: 85,
+    height: 65,
+    width: 115,
+    marginBottom: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  focusedCategoryItem: {
+    borderColor: highlightColor,
+    borderWidth: 1,
+    borderRadius: 5,
+    height: 65,
+    width: 115,
+    marginBottom: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tempCategoryItem: {
+    height: 65,
+    width: 115,
     marginBottom: 8,
     justifyContent: "center",
     alignItems: "center",
