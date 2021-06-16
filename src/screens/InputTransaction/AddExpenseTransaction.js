@@ -27,18 +27,20 @@ import { nanoid } from "@reduxjs/toolkit";
 
 import MyInput from "./MyInput";
 
-const data = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4];
-export default function AddExpenseTransaction() {
-  const [date, setDate] = useState(new Date());
-  const [moneyAmount, setMoneyAmount] = useState("");
+export default function AddExpenseTransaction({
+  date,
+  setDate,
+  moneyAmount,
+  setMoneyAmount,
+  categoryId,
+  setCategoryId,
+  note,
+  setNote,
+}) {
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [categoryId, setCategoryId] = useState("");
-  const [note, setNote] = useState("");
 
   const categories = useSelector((state) => state.categories);
   const expenseCategories = categories.filter((c) => c.type === "expense");
-
-  console.log(moneyAmount);
 
   // cái này là tạo categories trống để lấp đầy chỗ ở scrollView
   const tempCategory = [];
@@ -63,12 +65,11 @@ export default function AddExpenseTransaction() {
   };
 
   const handleChangeMoney = (value) => {
-    console.log(value);
-    setMoneyAmount(value);
+    if (value.length < 15) setMoneyAmount(value);
   };
 
   const handleChangeNote = (value) => {
-    setNote(value);
+    if (value.length < 255) setNote(value);
   };
 
   const handleChangeCategory = (categoryId) => {
@@ -84,12 +85,22 @@ export default function AddExpenseTransaction() {
       <View style={styles.innerContainer}>
         <View style={styles.row}>
           <Text style={[styles.text, { width: 100 }]}>Date</Text>
+
           <Text
-            style={[styles.input, styles.active, { textAlign: "center" }]}
+            style={[
+              styles.input,
+              styles.active,
+              {
+                textAlign: "center",
+                fontSize: 20,
+                textAlignVertical: "center",
+              },
+            ]}
             onPress={openDatePicker}
           >
             {moment(date).format("DD/MM/YYYY")}
           </Text>
+
           <DateTimePickerModal
             isVisible={showDatePicker}
             mode="date"
@@ -99,6 +110,13 @@ export default function AddExpenseTransaction() {
             style={{ color: "#000" }}
           />
         </View>
+
+        <View
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
 
         <View style={styles.row}>
           <Text style={[styles.text, { width: 100 }]}>Expense</Text>
@@ -111,15 +129,29 @@ export default function AddExpenseTransaction() {
           />
         </View>
 
+        <View
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
+
         <View style={styles.row}>
           <Text style={[styles.text, { width: 100 }]}>Note</Text>
           <MyInput
             value={note}
-            onChange={handleChangeNote}
+            onChangeText={handleChangeNote}
             placeholder="enter note here"
             returnKeyType="done"
           />
         </View>
+
+        <View
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
 
         <View
           style={[styles.row, { height: 60, justifyContent: "space-between" }]}
@@ -144,6 +176,13 @@ export default function AddExpenseTransaction() {
             </View>
           </View>
         </View>
+
+        <View
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
 
         <View>
           <Text style={styles.text}>Category</Text>
@@ -176,6 +215,7 @@ export default function AddExpenseTransaction() {
                   key={index}
                   style={styles.categoryItem}
                   onPress={() => handleChangeCategory(category.id)}
+                  activeOpacity={1}
                 >
                   <View>
                     <MaterialCommunityIcons
@@ -195,7 +235,7 @@ export default function AddExpenseTransaction() {
           </ScrollView>
         </View>
         <View style={styles.submitButton}>
-          <Button color={backgroundColor} title="Submit" />
+          <Button color={textColor} title="Submit" />
         </View>
       </View>
     </View>
@@ -212,6 +252,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 5,
+    marginBottom: 5,
   },
   text: {
     color: textColorOnLightBg,
@@ -229,14 +273,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 20,
     flex: 1,
+    height: 40,
   },
   active: {
     backgroundColor: "#fff",
   },
   innerContainer: {
     backgroundColor: formBackgroundColor,
-    paddingLeft: 20,
-    paddingRight: 20,
   },
   inputWithIcon: {
     alignItems: "center",
@@ -285,7 +328,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     alignSelf: "center",
     width: 200,
-    margin: 20,
+    marginBottom: 20,
+    marginTop: 40,
     borderRadius: 5,
+    backgroundColor: backgroundColor,
   },
 });

@@ -18,12 +18,17 @@ const MyInput = (props) => {
     props.onChangeText(value);
   };
 
+  console.log(props.value);
+
   return (
     <TextInput
       {...props}
       style={[
         styles.input,
-        { backgroundColor: isFocused ? "#fff" : inactiveColor },
+        {
+          backgroundColor:
+            isFocused || props.value.length > 0 ? "#fff" : inactiveColor,
+        },
       ]}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
@@ -40,6 +45,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 20,
     flex: 1,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 40,
   },
 });
 

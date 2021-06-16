@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import moment from "moment";
 import Constants from "expo-constants";
@@ -19,16 +20,36 @@ import {
   formBackgroundColor,
   textColorOnLightBg,
   inactiveColor,
+  highlightColor,
 } from "../../api/constants";
+import { useSelector } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 
 import MyInput from "./MyInput";
 
-const data = [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4];
-export default function AddIncomeTransaction() {
-  const [date, setDate] = useState(new Date());
-  const [moneyAmount, setMoneyAmount] = useState("");
+export default function AddExpenseTransaction({
+  date,
+  setDate,
+  moneyAmount,
+  setMoneyAmount,
+  categoryId,
+  setCategoryId,
+  note,
+  setNote,
+}) {
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [note, setNote] = useState();
+
+  const categories = useSelector((state) => state.categories);
+  const incomeCategories = categories.filter((c) => c.type === "income");
+
+  // cái này là tạo categories trống để lấp đầy chỗ ở scrollView
+  const tempCategory = [];
+  let numOfTempCategory = (incomeCategories.length + 1) % 3;
+  if (numOfTempCategory == 2) {
+    tempCategory.push(
+      <View key={nanoid()} style={styles.tempCategoryItem}></View>
+    );
+  }
 
   const hideDatePicker = () => {
     setShowDatePicker(false);
@@ -49,6 +70,10 @@ export default function AddIncomeTransaction() {
 
   const handleChangeNote = (value) => {
     setNote(value);
+  };
+
+  const handleChangeCategory = (categoryId) => {
+    setCategoryId(categoryId);
   };
 
   return (
@@ -72,26 +97,28 @@ export default function AddIncomeTransaction() {
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
             display="spinner"
+            style={{ color: "#000" }}
           />
         </View>
 
         <View style={styles.row}>
-          <Text style={[styles.text, { width: 100 }]}>Income</Text>
+          <Text style={[styles.text, { width: 100 }]}>Expense</Text>
           <MyInput
             value={moneyAmount}
             textAlign={"center"}
             keyboardType="number-pad"
-            onChange={handleChangeMoney}
+            onChangeText={handleChangeMoney}
+            returnKeyType="done"
           />
         </View>
 
         <View style={styles.row}>
           <Text style={[styles.text, { width: 100 }]}>Note</Text>
-
           <MyInput
             value={note}
-            onChange={handleChangeNote}
+            onChangeText={handleChangeNote}
             placeholder="enter note here"
+            returnKeyType="done"
           />
         </View>
 
@@ -100,7 +127,7 @@ export default function AddIncomeTransaction() {
         >
           <View style={styles.inputWithIcon}>
             <View style={styles.inputIcon}>
-              <MaterialCommunityIcons name="wallet" size={34} color="#fff" />
+              <MaterialCommunityIcons name="wallet" size={34} color="#000" />
             </View>
             <View style={{ flexDirection: "column" }}>
               <Text style={styles.text}>Wallet</Text>
@@ -110,7 +137,7 @@ export default function AddIncomeTransaction() {
 
           <View style={styles.inputWithIcon}>
             <View style={styles.inputIcon}>
-              <MaterialIcons name="update" size={34} color="#fff" />
+              <MaterialIcons name="update" size={34} color="#000" />
             </View>
             <View style={{ flexDirection: "column", flex: 1 }}>
               <Text style={styles.text}>Event</Text>
@@ -129,18 +156,43 @@ export default function AddIncomeTransaction() {
               justifyContent: "space-between",
             }}
           >
-            {data.map((categoryItem, index) => (
-              <View key={index} style={styles.categoryItem}>
-                <View>
-                  <MaterialCommunityIcons
-                    name="wallet"
-                    size={34}
-                    color="#fff"
-                  />
-                </View>
-                <Text style={styles.normalText}>Shopping</Text>
-              </View>
-            ))}
+            {incomeCategories.map((category, index) =>
+              category.id == categoryId ? (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.focusedCategoryItem}
+                  onPress={() => handleChangeCategory(category.id)}
+                >
+                  <View>
+                    <MaterialCommunityIcons
+                      name="wallet"
+                      size={34}
+                      color="#000"
+                    />
+                  </View>
+                  <Text style={styles.normalText}>{category.title}</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.categoryItem}
+                  onPress={() => handleChangeCategory(category.id)}
+                >
+                  <View>
+                    <MaterialCommunityIcons
+                      name="wallet"
+                      size={34}
+                      color="#000"
+                    />
+                  </View>
+                  <Text style={styles.normalText}>{category.title}</Text>
+                </TouchableOpacity>
+              )
+            )}
+            <TouchableOpacity style={styles.categoryItem}>
+              <Text style={styles.normalText}>Edit</Text>
+            </TouchableOpacity>
+            {tempCategory}
           </ScrollView>
         </View>
         <View style={styles.submitButton}>
@@ -204,11 +256,28 @@ const styles = StyleSheet.create({
     height: 160,
   },
   categoryItem: {
-    borderColor: "#707070",
+    borderColor: inactiveColor,
     borderWidth: 1,
     borderRadius: 5,
-    height: 70,
-    width: 85,
+    height: 65,
+    width: 115,
+    marginBottom: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  focusedCategoryItem: {
+    borderColor: highlightColor,
+    borderWidth: 1,
+    borderRadius: 5,
+    height: 65,
+    width: 115,
+    marginBottom: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tempCategoryItem: {
+    height: 65,
+    width: 115,
     marginBottom: 8,
     justifyContent: "center",
     alignItems: "center",

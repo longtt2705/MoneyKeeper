@@ -11,13 +11,16 @@ import {
 } from "../../api/constants";
 import { back } from "react-native/Libraries/Animated/src/Easing";
 
-const Header = ({ navigation, scene }) => {
+const Header = ({ navigation, scene, setCategoryId }) => {
   if (scene)
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={[styles.button, scene.route.name == "expense" && styles.focus]}
-          onPress={() => navigation.navigate("expense")}
+          onPress={() => {
+            setCategoryId("");
+            navigation.navigate("expense");
+          }}
         >
           <Text
             style={{
@@ -30,7 +33,10 @@ const Header = ({ navigation, scene }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, scene.route.name == "income" && styles.focus]}
-          onPress={() => navigation.navigate("income")}
+          onPress={() => {
+            setCategoryId("");
+            navigation.navigate("income");
+          }}
         >
           <Text
             style={{
