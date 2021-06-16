@@ -1,17 +1,16 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { sub } from "date-fns";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
   {
     id: "1",
-    title: "salary",
-    icon: "",
+    title: "Salary",
+    icon: "money.svg",
     type: "income",
   },
   {
     id: "2",
-    title: "bonus",
-    icon: "",
+    title: "Bonus",
+    icon: "money.svg",
     type: "income",
   },
   {

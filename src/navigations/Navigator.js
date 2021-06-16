@@ -114,7 +114,6 @@ const Navigator = () => {
     const usersRef = firebase.firestore().collection("users");
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         usersRef
           .doc(user.uid)
           .get()
