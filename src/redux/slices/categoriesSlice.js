@@ -44,6 +44,30 @@ const initialState = [
     icon: "",
     type: "expense",
   },
+  {
+    id: "8",
+    title: "Medical",
+    icon: "",
+    type: "expense",
+  },
+  {
+    id: "9",
+    title: "Education",
+    icon: "",
+    type: "expense",
+  },
+  {
+    id: "12",
+    title: "Contact fee",
+    icon: "",
+    type: "expense",
+  },
+  {
+    id: "13",
+    title: "Contact fee",
+    icon: "",
+    type: "expense",
+  },
 ];
 
 const categoriesSlice = createSlice({
