@@ -11,7 +11,7 @@ import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import { firebase } from "../firebase/config";
 import { Text, View } from "react-native";
-
+import LanguageScreen from "../screens/OtherScreen/language"
 const iconSize = 25;
 const Tab = createMaterialTopTabNavigator();
 const BottomTabNavigator = () => {
@@ -146,11 +146,15 @@ const Navigator = () => {
     return (
       <Stack.Navigator screenOptions={screenOptionStyle}>
         {user ? (
+          <>
           <Stack.Screen name="Main" component={BottomTabNavigator} />
+         
+         </>
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registration" component={RegistrationScreen} />
+           <Stack.Screen name="Language" component = {LanguageScreen}/>
           </>
         )}
       </Stack.Navigator>
