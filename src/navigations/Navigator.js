@@ -7,7 +7,7 @@ import Budget from "../screens/Budget";
 import Home from "../screens/HomeScreen/Home";
 import Report from "../screens/Report";
 import Other from "../screens/Other";
-import InputNavigation from "./InputNavigation";
+import InputNavigator from "./InputNavigator";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";
@@ -88,7 +88,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="+"
-        component={InputNavigation}
+        component={InputNavigator}
         options={{
           tabBarLabel: "+",
         }}
