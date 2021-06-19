@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import AddExpenseTransaction from "../screens/InputTransaction/AddExpenseTransaction";
@@ -8,6 +8,7 @@ import ChooseWallets from "../screens/InputTransaction/ChooseWallets";
 import Header from "../screens/InputTransaction/Header";
 
 import { primaryColor, textColor } from "../api/constants";
+import { addTransaction } from "../redux/slices/walletsSlice";
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,24 @@ function InputNavigator() {
     (state) => state.wallets.lastUsedWalletId
   );
   const [walletId, setWalletId] = useState(lastUsedWalletId);
+  const [eventId, setEventId] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    const dateString = date.toISOString();
+    dispatch(
+      addTransaction(
+        categoryId,
+        moneyAmount,
+        note,
+        dateString,
+        "", // image
+        walletId,
+        eventId
+      )
+    );
+  };
 
   return (
     <Stack.Navigator headerMode="screen" initialRouteName="expense">
@@ -49,6 +68,7 @@ function InputNavigator() {
             setNote={setNote}
             navigation={navigation}
             walletId={walletId}
+            handleSubmit={handleSubmit}
           />
         )}
       </Stack.Screen>

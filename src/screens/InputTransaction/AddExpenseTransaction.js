@@ -38,6 +38,7 @@ export default function AddExpenseTransaction({
   setNote,
   navigation,
   walletId,
+  handleSubmit,
 }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -100,15 +101,15 @@ export default function AddExpenseTransaction({
               {moment(date).format("DD/MM/YYYY")}
             </Text>
           </View>
-
-          <DateTimePickerModal
-            isVisible={showDatePicker}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
-            display="spinner"
-            style={{ color: "#000" }}
-          />
+          <View>
+            <DateTimePickerModal
+              isVisible={showDatePicker}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+              display="spinner"
+            />
+          </View>
         </View>
 
         <View
@@ -243,7 +244,12 @@ export default function AddExpenseTransaction({
             {tempCategory}
           </ScrollView>
         </View>
-        <TouchableOpacity style={styles.submitButton}>
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={() => {
+            handleSubmit();
+          }}
+        >
           <Text style={{ color: textColor, fontSize: 20 }}>Submit</Text>
         </TouchableOpacity>
       </View>

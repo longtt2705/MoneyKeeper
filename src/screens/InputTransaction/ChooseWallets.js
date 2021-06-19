@@ -10,6 +10,15 @@ import {
 
 import { itemBackgroundColor, backgroundColor } from "../../api/constants";
 
+const ListHeader = () => (
+  <View style={styles.header}>
+    <Text style={styles.title}>Title</Text>
+    <View>
+      <Text style={styles.balance}> Balance</Text>
+    </View>
+  </View>
+);
+
 const ChooseWallets = ({ setWalletId, navigation }) => {
   const data = useSelector((state) => state.wallets.wallets);
 
@@ -30,7 +39,11 @@ const ChooseWallets = ({ setWalletId, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <FlatList data={data} renderItem={renderItem} />
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        // ListHeaderComponent={ListHeader}
+      />
     </View>
   );
 };
@@ -47,11 +60,20 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 30,
+    paddingRight: 30,
     alignItems: "center",
     borderBottomWidth: 1,
     borderColor: "#000",
+  },
+  header: {
+    backgroundColor: itemBackgroundColor,
+    height: 50,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 30,
+    paddingRight: 30,
+    alignItems: "center",
   },
   title: {
     fontSize: 20,

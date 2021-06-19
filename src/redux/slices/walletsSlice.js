@@ -18,7 +18,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 25000,
           note: "breakfast in vietnam !!! Pho",
-          date: sub(new Date(), { minutes: 10 }),
+          date: "",
           image: "",
         },
         {
@@ -28,7 +28,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 50000,
           note: "coffee",
-          date: sub(new Date(), { minutes: 20 }),
+          date: "",
           image: "",
         },
       ],
@@ -47,7 +47,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 15000,
           note: "beamin order",
-          date: sub(new Date(), { minutes: 17 }),
+          date: "",
           image: "",
         },
         {
@@ -57,7 +57,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 29000,
           note: "foodie",
-          date: sub(new Date(), { minutes: 12 }),
+          date: "",
           image: "",
         },
       ],
@@ -72,28 +72,20 @@ const walletsSlice = createSlice({
     addTransaction: {
       reducer(state, action) {
         const { walletId, ...transaction } = action.payload;
+        console.log(action.payload);
         const existingWallet = state.wallets.find(
           (wallet) => wallet.id === walletId
         );
+        // console.log(existingWallet);
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
       },
-      prepare(
-        categoryId,
-        userCreatedCategoryId,
-        moneyAmount,
-        note,
-        date,
-        image,
-        walletId,
-        eventId
-      ) {
+      prepare(categoryId, moneyAmount, note, date, image, walletId, eventId) {
         return {
           payload: {
             id: nanoid(),
             categoryId,
-            userCreatedCategoryId,
             moneyAmount,
             note,
             date,
