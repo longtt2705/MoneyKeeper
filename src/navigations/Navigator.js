@@ -10,6 +10,7 @@ import Other from "../screens/Other";
 import InputNavigator from "./InputNavigator";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import { firebase } from "../firebase/config";
@@ -38,6 +39,16 @@ const BottomTabNavigator = () => {
                 ? "dots-horizontal-circle"
                 : "dots-horizontal-circle-outline";
               break;
+            case "Add":
+              return focused ? (
+                <Ionicons name="add-circle" size={iconSize * 2} color={color} />
+              ) : (
+                <Ionicons
+                  name="add-circle-outline"
+                  size={iconSize * 2}
+                  color={color}
+                />
+              );
             default:
               break;
           }
@@ -69,7 +80,7 @@ const BottomTabNavigator = () => {
         },
         tabStyle: { margin: 0, padding: 0, marginTop: 5 },
         labelStyle: { textTransform: "capitalize" },
-        iconStyle: { width: iconSize, height: iconSize },
+        // iconStyle: { width: iconSize, height: iconSize },
       }}
     >
       <Tab.Screen
@@ -87,10 +98,10 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="+"
+        name="Add"
         component={InputNavigator}
         options={{
-          tabBarLabel: "+",
+          tabBarLabel: () => null,
         }}
       />
       <Tab.Screen
@@ -124,7 +135,6 @@ const Navigator = () => {
     const usersRef = firebase.firestore().collection("users");
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         usersRef
           .doc(user.uid)
           .get()

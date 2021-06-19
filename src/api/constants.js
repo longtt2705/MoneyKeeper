@@ -7,6 +7,7 @@ export const inactiveColor = "#efefef";
 export const itemBackgroundColor = "#efefef";
 export const formBackgroundColor = "#fff";
 export const highlightColor = "#E666FF";
+export const buttonColor = "#FE346E";
 
 export const Colors = [
   "#FF6633",
@@ -60,3 +61,9 @@ export const Colors = [
   "#99E6E6",
   "#6666FF",
 ];
+
+export const Icons = {
+  salary: require("../assets/icons/money.svg"),
+  bonus: require("../assets/icons/money.svg"),
+  none: require("../assets/icons/question.svg"),
+};
