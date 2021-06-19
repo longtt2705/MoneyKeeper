@@ -18,7 +18,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 25000,
           note: "breakfast in vietnam !!! Pho",
-          date: sub(new Date(), { days: 30 }),
+          date: sub(new Date(), { minutes: 20 }).toISOString(),
           image: "",
         },
         {
@@ -28,7 +28,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 50000,
           note: "coffee",
-          date: sub(new Date(), { minutes: 20 }),
+          date: sub(new Date(), { days: 7 }).toISOString(),
           image: "",
         },
         {
@@ -38,7 +38,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 50000,
           note: "awfasfiashfoijasoifjaoisjfoiasjfoiajoisfjoiasjfoiajsoifjaiosf",
-          date: sub(new Date(), { days: 20 }),
+          date: sub(new Date(), { days: 20 }).toISOString(),
           image: "",
         },
       ],

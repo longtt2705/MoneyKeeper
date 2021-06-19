@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     maxHeight: 200,
   },
   legendText: {
-    color: focusedColor,
+    color: textColor,
     fontSize: 22,
     fontWeight: "bold",
     paddingLeft: 5,

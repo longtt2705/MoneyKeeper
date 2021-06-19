@@ -7,6 +7,7 @@ import Home from "../screens/HomeScreen/Home";
 import Report from "../screens/Report";
 import Other from "../screens/Other";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import { firebase } from "../firebase/config";
@@ -35,6 +36,16 @@ const BottomTabNavigator = () => {
                 ? "dots-horizontal-circle"
                 : "dots-horizontal-circle-outline";
               break;
+            case "Add":
+              return focused ? (
+                <Ionicons name="add-circle" size={iconSize * 2} color={color} />
+              ) : (
+                <Ionicons
+                  name="add-circle-outline"
+                  size={iconSize * 2}
+                  color={color}
+                />
+              );
             default:
               break;
           }
@@ -66,7 +77,7 @@ const BottomTabNavigator = () => {
         },
         tabStyle: { margin: 0, padding: 0, marginTop: 5 },
         labelStyle: { textTransform: "capitalize" },
-        iconStyle: { width: iconSize, height: iconSize },
+        // iconStyle: { width: iconSize, height: iconSize },
       }}
     >
       <Tab.Screen
@@ -81,6 +92,13 @@ const BottomTabNavigator = () => {
         component={Budget}
         options={{
           tabBarLabel: "Tài khoản",
+        }}
+      />
+      <Tab.Screen
+        name="Add"
+        component={Budget}
+        options={{
+          tabBarLabel: () => null,
         }}
       />
       <Tab.Screen
