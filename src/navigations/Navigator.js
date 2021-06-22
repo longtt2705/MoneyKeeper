@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
 import Budget from "../screens/Budget";
 import Home from "../screens/HomeScreen/Home";
-import Report from "../screens/Report";
+import Report from "../screens/ReportScreen/Report"
 import Other from "../screens/Other";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";

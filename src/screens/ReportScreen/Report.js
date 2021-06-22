@@ -7,9 +7,7 @@ import Expense_Income from './components/Expense_Income';
 import IncomeAnalysis from './components/IncomeAnalysis';
 import ExpenseAnalysis from './components/ExpenseAnalysis';
 import { createStackNavigator,NavagationContainer } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 const Stack = createStackNavigator();
-const Drawer=createDrawerNavigator();
 export default function Report({navigation}) {
 
   return (

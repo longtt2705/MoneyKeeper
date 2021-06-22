@@ -644,9 +644,9 @@ function renderChart() {
   
                   />
               </Svg>
-              <View style={{ position: 'absolute', top: '42%', left: "42%" }}>
-                  <Text style={{ ...FONTS.h1, textAlign: 'center' }}>10</Text>
-                  <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Expenses</Text>
+              <View style={{ position: 'absolute', top: '43%', left: "43%" }}>
+                  <Text style={{ ...FONTS.h1, textAlign: 'center' }}>19</Text>
+                  <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Income</Text>
               </View>
           </View>
       )
