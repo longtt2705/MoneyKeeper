@@ -7,42 +7,49 @@ const initialState = [
     title: "salary",
     icon: "",
     type: "income",
+    limit:1000000
   },
   {
     id: "2",
     title: "bonus",
     icon: "",
     type: "income",
+    limit:null
   },
   {
     id: "3",
     title: "invest",
     icon: "",
     type: "income",
+    limit:1000000
   },
   {
     id: "4",
     title: "side job",
     icon: "",
     type: "income",
+    limit:null
   },
   {
     id: "5",
     title: "shopping",
     icon: "",
     type: "expense",
+    limit:1000000
   },
   {
     id: "6",
     title: "food",
     icon: "",
     type: "expense",
+    limit:1000000
   },
   {
     id: "7",
     title: "transport",
     icon: "",
     type: "expense",
+    limit:1000000
   },
 ];
 

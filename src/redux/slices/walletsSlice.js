@@ -8,8 +8,11 @@ const initialState = {
       id: "1",
       title: "cash",
       icon: "",
+      name:"Tran Duc Nang",
       balance: 1000000,
-      limit: null,
+      limit: 1000000,
+      datestart:"01/07/2021",
+      dateend:"01/07/2021",
       transactions: [
         {
           id: "1",
@@ -36,9 +39,12 @@ const initialState = {
     {
       id: "2",
       title: "momo",
+      name:"Tran Thanh Long",
       icon: "",
       balance: 135000,
       limit: null,
+      datestart:null,
+      dateend:null,
       transactions: [
         {
           id: "3",
@@ -108,30 +114,37 @@ const walletsSlice = createSlice({
       reducer(state, action) {
         state.wallets.push(action.payload);
       },
-      prepare(title, icon, balance = 0, limit = null) {
+      prepare(name,title, balance = 0,note) {
+
+        console.log(title,balance,note)
         return {
           payload: {
             id: nanoid(),
+            name,
             title,
-            icon,
+            icon:0,
             balance,
-            limit,
+            limit:null,
+            datestart:null,
+            dateend:null,
+            note,
             transaction: [],
           },
         };
       },
     },
     updateWallet(state, action) {
-      const { walletId, ...updatingField } = action.payload;
-      const existingWallet = state.wallets.find(
-        (wallet) => wallet.id == walletId
-      );
-      if (existingWallet) {
-        for (let prop in updatingField) {
-          let val = updatingField[prop];
-          existingWallet[prop] = val;
-        }
-      }
+      // const { walletId, ...updatingField } = action.payload;
+      // const existingWallet = state.wallets.find(
+      //   (wallet) => wallet.id == walletId
+      // );
+      // if (existingWallet) {
+      //   for (let prop in updatingField) {
+      //     let val = updatingField[prop];
+      //     existingWallet[prop] = val;
+      //   }
+      // }
+      console.log(action)
     },
   },
 });
