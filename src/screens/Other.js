@@ -1,22 +1,20 @@
 import React from "react";
 import { Button, StyleSheet, Text,View,TouchableHighlight, ScrollView, Image } from "react-native";
-import { backgroundColor } from "../api/constants";
-import { firebase } from "../firebase/config";
+import { useSelector} from 'react-redux';
 
-import Language from "./OtherScreen/language";
-import { createStackNavigator } from '@react-navigation/stack';
 export default function Other({ navigation }) {
+  const user  = useSelector(state=>state.user)
   return (
     <View style={styles.container}>
       <ScrollView style = {styles.ScrollView} showsHorizontalScrollIndicator={false}>
         <View style = {styles.profile} >
           <TouchableHighlight style={styles.Account} onPress = {()=>{
-            console.log("view/edit");
+            navigation.navigate('Language')
           }}>
             <View style = {styles.alignImg}>
             <Image source = {require('../../assets/image/profile.png')} style = {styles.imgProfile}/>
             <View>
-              <Text style = {styles.text}>Luong Nhan</Text>
+              <Text style = {styles.text} >{user.fisrtName + " " + user.lastName}</Text>
               <Text style = {styles.text1}>View/edit your profile</Text>
             </View>
             </View>
@@ -75,7 +73,7 @@ export default function Other({ navigation }) {
           
           <View style = {styles.Language}>
             <TouchableHighlight style = {styles.BtnLanguage} onPress={()=>{
-              navigation.navigate("language",{screen:"Language"})
+              
             }
             }>
              <View style = {styles.alignImg}>
@@ -88,7 +86,7 @@ export default function Other({ navigation }) {
 
           <View style = {styles.Theme}>
             <TouchableHighlight style = {styles.BtnTheme} onPress={()=>{
-              console.log("done");
+              navigation.navigate('Theme')
             }}>
               <View style = {styles.alignImg}>
                 <Image source = {require('../../assets/image/theme.png')} style = {styles.img}/>
@@ -131,8 +129,8 @@ const styles = StyleSheet.create({
 
   },
   BtnChange:{
-    backgroundColor:"#1A2C65",
-    padding:30,
+    backgroundColor:"#EFEFEF",
+    padding:10,
     borderRadius:15,
     marginTop:5
   },
@@ -143,8 +141,8 @@ const styles = StyleSheet.create({
     marginTop:40
 } ,
 Account:{
-  backgroundColor:"#1A2C65",
-  padding:30,
+  backgroundColor:"#EFEFEF",
+  padding:20,
   borderRadius:15,
   marginTop:5
    
@@ -157,8 +155,8 @@ Account:{
  
 },
 BtnFeedback:{
-  backgroundColor:"#1A2C65",
-  padding:30,
+  backgroundColor:"#EFEFEF",
+  padding:20,
   borderRadius:15,
   marginTop:5,
    
@@ -175,11 +173,11 @@ Rating:{
 },
 textRating:{
   fontSize:25,
-  color:"#fff"
+  color:"black"
 },
 BtnRating:{
-  backgroundColor:"#1A2C65",
-  padding:30,
+  backgroundColor:"#EFEFEF",
+  padding:10,
   borderRadius:15,
   marginTop:5
 },
@@ -189,11 +187,11 @@ Language:{
 },
 textLanguage:{
   fontSize:25,
-  color:"#fff"
+  color:"black"
 },
 BtnLanguage:{
-  backgroundColor:"#1A2C65",
-  padding:30,
+  backgroundColor:"#EFEFEF",
+  padding:10,
   borderRadius:15,
   marginTop:5
 },
@@ -203,11 +201,11 @@ Theme:{
 },
 textTheme:{
   fontSize:25,
-  color:"#fff"
+  color:"black"
 },
 BtnTheme:{
-  backgroundColor:"#1A2C65",
-  padding:30,
+  backgroundColor:"#EFEFEF",
+  padding:10,
   borderRadius:15,
   marginTop:5
 },
@@ -217,25 +215,25 @@ Settings:{
 },
 textSettings:{
   fontSize:25,
-  color:"#fff"
+  color:'black'
 },
 BtnSettings:{
-  backgroundColor:"#1A2C65",
-  padding:30,
+  backgroundColor:"#EFEFEF",
+  padding:10,
   borderRadius:15,
   marginTop:5
 },
 text:{
-  color:'white',
+  color:'black',
   fontSize:35
 },
 text1:{
-  color:'white',
+  color:'black',
   fontSize:18
 },
 textExchange:{
   fontSize:25,
-  color:"#fff"
+  color:"black"
 },
 line:{
   color:"white",
