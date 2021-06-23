@@ -258,7 +258,7 @@ const IncomeCategory=()=> {
 }
 function renderCategoryHeaderSection() {
   return (
-      <View style={{ backgroundColor: COLORS.white,flexDirection: 'row', padding: SIZES.padding, justifyContent: 'space-between', alignItems: 'center' }}>
+      <View style={{ marginTop:-24,backgroundColor: COLORS.white,flexDirection: 'row', padding: SIZES.padding, justifyContent: 'space-between', alignItems: 'center' }}>
           {/* Title */}
           <View>
               <Text style={{ color: COLORS.darkgreen, ...FONTS.h3 }}>CATEGORIES</Text>
@@ -707,7 +707,6 @@ function renderExpenseSummary() {
   return (
     
     <View style={styles.container}>
-       {renderDate()}
        {renderCategoryHeaderSection()}
        <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
                 {

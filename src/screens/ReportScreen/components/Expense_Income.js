@@ -19,6 +19,7 @@ import ExpenseCategory from './ExpenseCategoy';
 import IncomeCategory from './IncomeCategory';
 import { AntDesign } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
+import { COLORS, FONTS, SIZES, icons, images } from '../../../api/constantsR';
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
 const Tab = createMaterialTopTabNavigator();
 
@@ -47,13 +48,66 @@ const Expense_Income=({navigation})=> {
             </View>
           )
     }
+    function renderDate() {
+      return (
+          <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
+  
+  
+              <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
+                  <View style={{
+                      backgroundColor: COLORS.lightGray,
+                      height: 50,
+                      width: 50,
+                      borderRadius: 25,
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                  }}>
+                      <Image
+                          source={icons.calendar}
+                          style={{
+                              width: 25,
+                              height: 25,
+                              tintColor: COLORS.lightBlue
+                          }}
+                      />
+                  </View>
+  
+                  <View style={{ marginLeft:SIZES.padding }}>
+                      
+                      <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>01/11/2020 - 30/11/2020</Text>
+                  </View>
+              </View>
+          </View>
+      )
+  }
+  function renderBalance(){
+    return (
+      <View style={{marginTop:-5,paddingHorizontal: SIZES.padding, paddingVertical:10, backgroundColor: COLORS.white }}>
+             
+             <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>Balance</Text>
+          <View style={{ marginTop:10,flexDirection: 'row', justifyContent:'space-around' }}>
+          <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>Begining balance</Text>
+          <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>Ending balance</Text>
+          </View>
+          <View style={{ marginTop:10,flexDirection: 'row', justifyContent:'space-around' }}>
+          <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>5,000,000</Text>
+          <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>1,250,000</Text>
+          </View>
+      </View>
+  )
+  }
   return (
     <View style={styles.container}>
     {Header()}
+    <ScrollView>
+    {renderDate()}
+    {renderBalance()}
     <Tab.Navigator>
       <Tab.Screen name="Expense" component={ExpenseCategory} />
       <Tab.Screen name="Income" component={IncomeCategory} />
     </Tab.Navigator>
+    </ScrollView>
+
     </View>
     
     

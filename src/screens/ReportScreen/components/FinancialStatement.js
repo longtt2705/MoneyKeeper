@@ -3,6 +3,7 @@ import {Button, StyleSheet, Text, View , Platform,SafeAreaView, ScrollView,Statu
 import { backgroundColor } from "../../../api/constants";
 import { AntDesign } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
+import { COLORS, FONTS, SIZES, icons, images } from '../../../api/constantsR';
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
 const FinancialStatement=({navigation}) =>{
   function Header() {
@@ -28,11 +29,40 @@ const FinancialStatement=({navigation}) =>{
         </View>
       )
 }
+ function renderFinancialRecent() {
+  return (
+    <View style={{ marginBottom:10,paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
+
+
+        <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
+            <Text style={{...FONTS.h2,fontWeight:'bold',color:COLORS.blue}}>FINANCIAL RECENT</Text>
+        </View>
+        <View style={{ marginTop:10,flexDirection: 'row', alignItems: 'center',justifyContent:'center' }}>
+            <Text style={{...FONTS.h2,fontWeight:'bold'}}>5,000,000 VNĐ</Text>
+        </View>
+    </View>
+)
+ }
+ function renderBudget() {
+  return (
+    <View style={{paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
+
+
+        <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
+        <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>Assets</Text>
+        </View>
+        <View style={{ marginTop:10,flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
+            <Text style={{...FONTS.h2,fontWeight:'bold'}}>5,000,000 VNĐ</Text>
+        </View>
+    </View>
+)
+ }
     return (
         <View style={styles.container}>
           
             {Header()}
-           <Text>FinancialStatement</Text>
+           {renderFinancialRecent()}
+           {renderBudget()}
            
         </View>
       );
