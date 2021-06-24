@@ -27,7 +27,10 @@ export const mergeColorToData = (data, colors) => {
 };
 
 export const formatNumber = (number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return number
+    .toString()
+    .replace(/,/g, "")
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const getCategoryName = (id, categories) => {
@@ -37,7 +40,9 @@ export const getCategoryName = (id, categories) => {
 };
 
 export const getIcon = (iconName) => {
-  const icon = iconName.toLowerCase();
-  if (Icons[icon] !== undefined) return Icons[icon];
-  return Icons["none"];
+  if (iconName) {
+    const icon = iconName.toLowerCase();
+    if (Icons[icon] !== undefined) return Icons[icon];
+    return Icons["none"];
+  }
 };

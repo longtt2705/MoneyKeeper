@@ -10,30 +10,18 @@ import {
 
 import { itemBackgroundColor, backgroundColor } from "../../api/constants";
 
-const ListHeader = () => (
-  <View style={styles.header}>
-    <Text style={styles.title}>Title</Text>
-    <View>
-      <Text style={styles.balance}> Balance</Text>
-    </View>
-  </View>
-);
-
-const ChooseWallets = ({ setWalletId, navigation }) => {
-  const data = useSelector((state) => state.wallets.wallets);
+const ChooseEvent = ({ setEventId, navigation }) => {
+  const data = useSelector((state) => state.events);
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      style={styles.item}
+      style={[styles.item, styles.padding]}
       onPress={() => {
-        setWalletId(item.id);
+        setEventId(item.id);
         navigation.goBack();
       }}
     >
       <Text style={styles.title}>{item.title}</Text>
-      <View>
-        <Text style={styles.balance}> {item.balance}</Text>
-      </View>
     </TouchableOpacity>
   );
 
@@ -48,7 +36,7 @@ const ChooseWallets = ({ setWalletId, navigation }) => {
   );
 };
 
-export default ChooseWallets;
+export default ChooseEvent;
 
 const styles = StyleSheet.create({
   container: {
@@ -60,8 +48,6 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingLeft: 30,
-    paddingRight: 30,
     alignItems: "center",
     borderBottomWidth: 1,
     borderColor: "#000",
@@ -80,5 +66,11 @@ const styles = StyleSheet.create({
   },
   balance: {
     fontSize: 20,
+  },
+  padding: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
   },
 });

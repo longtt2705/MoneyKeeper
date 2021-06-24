@@ -82,7 +82,6 @@ const walletsSlice = createSlice({
     addTransaction: {
       reducer(state, action) {
         const { walletId, ...transaction } = action.payload;
-        console.log(action.payload);
         const existingWallet = state.wallets.find(
           (wallet) => wallet.id === walletId
         );
@@ -90,13 +89,14 @@ const walletsSlice = createSlice({
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
+        existingWallet.balance += transaction.moneyAmount;
       },
       prepare(categoryId, moneyAmount, note, date, image, walletId, eventId) {
         return {
           payload: {
             id: nanoid(),
             categoryId,
-            moneyAmount,
+            moneyAmount: Number(moneyAmount),
             note,
             date,
             image,
@@ -124,6 +124,7 @@ const walletsSlice = createSlice({
       },
     },
     updateWallet(state, action) {
+      console.log(action.payload);
       const { walletId, ...updatingField } = action.payload;
       const existingWallet = state.wallets.find(
         (wallet) => wallet.id == walletId

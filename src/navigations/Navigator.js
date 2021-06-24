@@ -40,13 +40,36 @@ const BottomTabNavigator = () => {
                 : "dots-horizontal-circle-outline";
               break;
             case "Add":
+              // tabBarLabel = false;
               return focused ? (
-                <Ionicons name="add-circle" size={iconSize * 2} color={color} />
+                <Ionicons
+                  name="add-circle"
+                  size={iconSize * 2}
+                  color={color}
+                  style={{
+                    width: iconSize * 2,
+                    height: iconSize * 2,
+                    // alignSelf: "center",
+                    bottom: 20,
+                    right: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                />
               ) : (
                 <Ionicons
                   name="add-circle-outline"
                   size={iconSize * 2}
                   color={color}
+                  style={{
+                    width: iconSize * 2,
+                    height: iconSize * 2,
+                    // alignSelf: "center",
+                    bottom: 20,
+                    right: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
                 />
               );
             default:
@@ -80,7 +103,7 @@ const BottomTabNavigator = () => {
         },
         tabStyle: { margin: 0, padding: 0, marginTop: 5 },
         labelStyle: { textTransform: "capitalize" },
-        // iconStyle: { width: iconSize, height: iconSize },
+        iconStyle: { width: iconSize, height: iconSize },
       }}
     >
       <Tab.Screen

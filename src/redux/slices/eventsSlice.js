@@ -2,6 +2,13 @@ import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = [
   {
+    id: "0",
+    title: "None",
+    description: "",
+    date: "",
+    status: "pending",
+  },
+  {
     id: "1",
     title: "day la event title",
     description: "day la desciption cua event",

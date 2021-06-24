@@ -7,6 +7,7 @@ import {
   Button,
   ScrollView,
   TouchableOpacity,
+  Modal,
 } from "react-native";
 import moment from "moment";
 import Constants from "expo-constants";
@@ -21,13 +22,17 @@ import {
   textColorOnLightBg,
   inactiveColor,
   highlightColor,
+  buttonColor,
+  itemBackgroundColor,
 } from "../../api/constants";
 import { useSelector } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
 
 import MyInput from "./MyInput";
+import SuccessMessage from "./SuccessMessage";
+import { formatNumber } from "../../api/helper";
 
-export default function AddExpenseTransaction({
+export default function AddIncomeTransaction({
   date,
   setDate,
   moneyAmount,
@@ -36,12 +41,28 @@ export default function AddExpenseTransaction({
   setCategoryId,
   note,
   setNote,
+  navigation,
+  walletId,
+  eventId,
+  handleSubmit,
 }) {
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const buttonDisable = !(
+    Boolean(Number(moneyAmount.replace(/,/g, ""))) &&
+    Boolean(categoryId) &&
+    !modalVisible
+  );
 
   const categories = useSelector((state) => state.categories);
   const incomeCategories = categories.filter((c) => c.type === "income");
 
+  const wallets = useSelector((state) => state.wallets.wallets);
+  const events = useSelector((state) => state.events);
+
+  const currentWallet = wallets.find((wallet) => wallet.id == walletId);
+  const currentEvent = events.find((event) => event.id == eventId);
   // cái này là tạo categories trống để lấp đầy chỗ ở scrollView
   const tempCategory = [];
   let numOfTempCategory = (incomeCategories.length + 1) % 3;
@@ -50,6 +71,13 @@ export default function AddExpenseTransaction({
       <View key={nanoid()} style={styles.tempCategoryItem}></View>
     );
   }
+
+  const showModal = () => {
+    setModalVisible(true);
+    setTimeout(() => {
+      setModalVisible(false);
+    }, 1500);
+  };
 
   const hideDatePicker = () => {
     setShowDatePicker(false);
@@ -65,11 +93,12 @@ export default function AddExpenseTransaction({
   };
 
   const handleChangeMoney = (value) => {
-    setMoneyAmount(value);
+    const formatedNumber = formatNumber(value);
+    if (value.length < 15) setMoneyAmount(formatedNumber);
   };
 
   const handleChangeNote = (value) => {
-    setNote(value);
+    if (value.length < 255) setNote(value);
   };
 
   const handleChangeCategory = (categoryId) => {
@@ -78,31 +107,57 @@ export default function AddExpenseTransaction({
 
   return (
     <View style={styles.container}>
-      {/* <View>
-        <Button title="" />
-      </View> */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <SuccessMessage />
+      </Modal>
 
       <View style={styles.innerContainer}>
-        <View style={styles.row}>
+        <View style={[styles.row, styles.margin]}>
           <Text style={[styles.text, { width: 100 }]}>Date</Text>
-          <Text
-            style={[styles.input, styles.active, { textAlign: "center" }]}
-            onPress={openDatePicker}
+          <View
+            style={[
+              styles.input,
+              styles.active,
+              {
+                justifyContent: "center",
+                alignItems: "center",
+              },
+            ]}
           >
-            {moment(date).format("DD/MM/YYYY")}
-          </Text>
-          <DateTimePickerModal
-            isVisible={showDatePicker}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
-            display="spinner"
-            style={{ color: "#000" }}
-          />
+            <Text style={{ fontSize: 20 }} onPress={openDatePicker}>
+              {moment(date).format("DD/MM/YYYY")}
+            </Text>
+          </View>
+          <Text
+            style={{ width: 30, textAlign: "center", marginLeft: 10 }}
+          ></Text>
+          <View>
+            <DateTimePickerModal
+              isVisible={showDatePicker}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+              display="spinner"
+            />
+          </View>
         </View>
 
-        <View style={styles.row}>
-          <Text style={[styles.text, { width: 100 }]}>Expense</Text>
+        <View
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
+
+        <View style={[styles.row, styles.margin]}>
+          <Text style={[styles.text, { width: 100 }]}>Income</Text>
           <MyInput
             value={moneyAmount}
             textAlign={"center"}
@@ -110,46 +165,83 @@ export default function AddExpenseTransaction({
             onChangeText={handleChangeMoney}
             returnKeyType="done"
           />
+          <Text style={{ width: 30, textAlign: "center", marginLeft: 10 }}>
+            VND
+          </Text>
         </View>
 
-        <View style={styles.row}>
+        <View
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
+
+        <View style={[styles.row, styles.margin]}>
           <Text style={[styles.text, { width: 100 }]}>Note</Text>
           <MyInput
             value={note}
             onChangeText={handleChangeNote}
-            placeholder="enter note here"
             returnKeyType="done"
           />
         </View>
 
         <View
-          style={[styles.row, { height: 60, justifyContent: "space-between" }]}
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
+
+        <View
+          style={[
+            styles.row,
+            styles.margin,
+            { height: 60, justifyContent: "space-between" },
+          ]}
         >
-          <View style={styles.inputWithIcon}>
+          <TouchableOpacity
+            style={[styles.inputWithIcon]}
+            onPress={() => {
+              navigation.navigate("chooseWallet");
+            }}
+          >
             <View style={styles.inputIcon}>
               <MaterialCommunityIcons name="wallet" size={34} color="#000" />
             </View>
             <View style={{ flexDirection: "column" }}>
               <Text style={styles.text}>Wallet</Text>
-              <Text style={styles.text}>Cash</Text>
+              <Text style={styles.text}>{currentWallet.title}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
 
-          <View style={styles.inputWithIcon}>
+          <TouchableOpacity
+            style={styles.inputWithIcon}
+            onPress={() => {
+              navigation.navigate("chooseEvent");
+            }}
+          >
             <View style={styles.inputIcon}>
               <MaterialIcons name="update" size={34} color="#000" />
             </View>
-            <View style={{ flexDirection: "column", flex: 1 }}>
+            <View style={{ flexDirection: "column" }}>
               <Text style={styles.text}>Event</Text>
-              <Text style={styles.text}>None</Text>
+              <Text style={styles.text}>{currentEvent.title}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
 
+        <View
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
+
         <View>
-          <Text style={styles.text}>Category</Text>
+          <Text style={[styles.text, styles.margin]}>Category</Text>
           <ScrollView
-            style={styles.categoryContainer}
+            style={[styles.categoryContainer, styles.margin]}
             contentContainerStyle={{
               flexDirection: "row",
               flexWrap: "wrap",
@@ -177,6 +269,7 @@ export default function AddExpenseTransaction({
                   key={index}
                   style={styles.categoryItem}
                   onPress={() => handleChangeCategory(category.id)}
+                  activeOpacity={1}
                 >
                   <View>
                     <MaterialCommunityIcons
@@ -195,9 +288,22 @@ export default function AddExpenseTransaction({
             {tempCategory}
           </ScrollView>
         </View>
-        <View style={styles.submitButton}>
-          <Button color={backgroundColor} title="Submit" />
-        </View>
+        <View
+          style={{
+            borderBottomColor: inactiveColor,
+            borderBottomWidth: 1,
+          }}
+        />
+        <TouchableOpacity
+          disabled={buttonDisable}
+          style={buttonDisable ? styles.disabledButton : styles.submitButton}
+          onPress={() => {
+            showModal();
+            handleSubmit();
+          }}
+        >
+          <Text style={{ color: textColor, fontSize: 20 }}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -207,12 +313,18 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: backgroundColor,
     flex: 1,
-    paddingTop: Constants.statusBarHeight,
+    // paddingTop: Constants.statusBarHeight,
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
-    height: 50,
+    height: 40,
+  },
+  margin: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 5,
+    marginBottom: 5,
   },
   text: {
     color: textColorOnLightBg,
@@ -230,38 +342,43 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 20,
     flex: 1,
+    height: 35,
   },
   active: {
     backgroundColor: "#fff",
   },
   innerContainer: {
+    paddingTop: 5,
     backgroundColor: formBackgroundColor,
-    paddingLeft: 20,
-    paddingRight: 20,
+    borderRadius: 10,
   },
   inputWithIcon: {
     alignItems: "center",
+    justifyContent: "space-between",
     width: "45%",
-    borderColor: "#707070",
+    height: 60,
+    borderColor: "#000",
     borderWidth: 1,
     borderRadius: 5,
     flexDirection: "row",
+    paddingRight: 20,
   },
   inputIcon: {
-    width: 30,
+    width: 40,
     marginRight: 20,
     marginLeft: 10,
   },
   categoryContainer: {
-    height: 160,
+    height: 140,
   },
   categoryItem: {
-    borderColor: inactiveColor,
+    backgroundColor: itemBackgroundColor,
+    borderColor: "#707070",
     borderWidth: 1,
     borderRadius: 5,
-    height: 65,
-    width: 115,
-    marginBottom: 8,
+    height: 60,
+    width: "31%",
+    marginBottom: 5,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -269,24 +386,41 @@ const styles = StyleSheet.create({
     borderColor: highlightColor,
     borderWidth: 1,
     borderRadius: 5,
-    height: 65,
-    width: 115,
-    marginBottom: 8,
+    height: 60,
+    width: "31%",
+    marginBottom: 5,
     justifyContent: "center",
     alignItems: "center",
   },
   tempCategoryItem: {
-    height: 65,
-    width: 115,
-    marginBottom: 8,
+    height: 60,
+    width: "31%",
+    marginBottom: 5,
     justifyContent: "center",
     alignItems: "center",
   },
   submitButton: {
+    justifyContent: "center",
+    alignItems: "center",
     overflow: "hidden",
     alignSelf: "center",
-    width: 200,
-    margin: 20,
-    borderRadius: 5,
+    width: "70%",
+    height: 40,
+    marginBottom: 10,
+    marginTop: 10,
+    borderRadius: 15,
+    backgroundColor: buttonColor,
+  },
+  disabledButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    alignSelf: "center",
+    width: "70%",
+    height: 40,
+    marginBottom: 10,
+    marginTop: 10,
+    borderRadius: 15,
+    backgroundColor: inactiveColor,
   },
 });
