@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = [
   {
@@ -72,7 +72,25 @@ const initialState = [
 const categoriesSlice = createSlice({
   name: "categories",
   initialState,
-  reducers: {},
+  reducers: {
+    addCategory: {
+      reducer(state, action) {
+        state.push(action.payload);
+        // console.log(state);
+      },
+      prepare(title, icon, type) {
+        return {
+          payload: {
+            id: nanoid(),
+            title,
+            icon,
+            type,
+          },
+        };
+      },
+    },
+  },
 });
 
 export default categoriesSlice.reducer;
+export const { addCategory } = categoriesSlice.actions;

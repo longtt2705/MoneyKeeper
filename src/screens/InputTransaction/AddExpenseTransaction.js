@@ -289,7 +289,7 @@ export default function AddExpenseTransaction({
             <TouchableOpacity
               style={styles.categoryItem}
               onPress={() => {
-                navigation.navigate("Category");
+                navigation.navigate("Category", { type: "expense" });
               }}
             >
               <Text style={styles.normalText}>Edit</Text>

@@ -14,21 +14,24 @@ import {
 } from "../../api/constants";
 
 const CategoriesList = ({ route, navigation }) => {
+  const { type } = route.params;
   const categories = useSelector((state) => state.categories);
-
+  const filtedCategories = categories.filter(
+    (category) => category.type == type
+  );
   return (
     <View style={styles.container}>
       <ScrollView>
         <TouchableOpacity
           style={[styles.item, styles.padding]}
           onPress={() => {
-            navigation.navigate("NewCategory");
+            navigation.navigate("NewCategory", { type: type });
           }}
           key={0}
         >
           <Text style={styles.title}>Add new category</Text>
         </TouchableOpacity>
-        {categories.map((category) => (
+        {filtedCategories.map((category) => (
           <TouchableOpacity
             style={[styles.item, styles.padding]}
             key={category.id}

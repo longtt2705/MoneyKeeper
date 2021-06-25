@@ -26,7 +26,8 @@ const pReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   reducer: pReducer,
-  middleware: [thunk, logger],
+  middleware: [thunk],
 });
 
 export const persistor = persistStore(store);
+// persistor.purge(); // uncomment when want to clear redux persist local data

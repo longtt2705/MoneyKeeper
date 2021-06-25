@@ -1,19 +1,33 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
 import {
   backgroundColor,
   formBackgroundColor,
   textColorOnLightBg,
   inactiveColor,
+  buttonColor,
+  textColor,
 } from "../../api/constants";
 import MyInput from "../InputTransaction/MyInput";
+import { addCategory } from "../../redux/slices/categoriesSlice";
 
-const NewCategory = () => {
+const NewCategory = ({ route }) => {
+  const { type } = route.params;
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState("");
+
+  const handleSubmit = () => {
+    dispatch(addCategory(title, "", type));
+  };
 
   const handleChangeTitle = (value) => {
     if (value.length < 20) setTitle(value);
   };
+
+  const buttonDisable = !Boolean(title);
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
@@ -34,6 +48,15 @@ const NewCategory = () => {
         <View style={[styles.row, styles.margin]}>
           <Text style={[styles.text, { width: 100 }]}>Icon</Text>
         </View>
+        <TouchableOpacity
+          disabled={buttonDisable}
+          style={buttonDisable ? styles.disabledButton : styles.submitButton}
+          onPress={() => {
+            handleSubmit();
+          }}
+        >
+          <Text style={{ color: textColor, fontSize: 20 }}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -65,5 +88,29 @@ const styles = StyleSheet.create({
   text: {
     color: textColorOnLightBg,
     fontSize: 20,
+  },
+  submitButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    alignSelf: "center",
+    width: "70%",
+    height: 40,
+    marginBottom: 10,
+    marginTop: 10,
+    borderRadius: 15,
+    backgroundColor: buttonColor,
+  },
+  disabledButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    alignSelf: "center",
+    width: "70%",
+    height: 40,
+    marginBottom: 10,
+    marginTop: 10,
+    borderRadius: 15,
+    backgroundColor: inactiveColor,
   },
 });

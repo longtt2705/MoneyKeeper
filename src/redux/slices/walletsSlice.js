@@ -85,7 +85,6 @@ const walletsSlice = createSlice({
         const existingWallet = state.wallets.find(
           (wallet) => wallet.id === walletId
         );
-        // console.log(existingWallet);
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
@@ -124,7 +123,7 @@ const walletsSlice = createSlice({
       },
     },
     updateWallet(state, action) {
-      console.log(action.payload);
+      // console.log(action.payload);
       const { walletId, ...updatingField } = action.payload;
       const existingWallet = state.wallets.find(
         (wallet) => wallet.id == walletId
