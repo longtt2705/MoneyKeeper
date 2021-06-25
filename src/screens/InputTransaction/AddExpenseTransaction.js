@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Image
 } from "react-native";
 import moment from "moment";
 import Constants from "expo-constants";
@@ -275,13 +276,8 @@ export default function AddExpenseTransaction({
                   onPress={() => handleChangeCategory(category.id)}
                   activeOpacity={1}
                 >
-                  <View>
-                    <MaterialCommunityIcons
-                      name="wallet"
-                      size={34}
-                      color="#000"
-                    />
-                  </View>
+                    <Image source={category.icon} style={styles.icon}/>
+
                   <Text style={styles.normalText}>{category.title}</Text>
                 </TouchableOpacity>
               )
@@ -355,6 +351,10 @@ const styles = StyleSheet.create({
   },
   active: {
     backgroundColor: "#fff",
+  },
+  icon: {
+    width: 34, 
+    height: 34,
   },
   innerContainer: {
     paddingTop: 5,
