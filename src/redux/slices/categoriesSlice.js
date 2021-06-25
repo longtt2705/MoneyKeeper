@@ -1,5 +1,5 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import icons from "../../api/constantsR/icons";
+import icons from "../../api/icons";
 
 const initialState = [
   {

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {Button, StyleSheet, Text, View , Platform,SafeAreaView, ScrollView,StatusBar,} from 'react-native';
 import { backgroundColor } from "../../api/constants";
-import Header  from './components/Header';
 import FinancialStatement from './components/FinancialStatement';
 import Expense_Income from './components/Expense_Income';
 import IncomeAnalysis from './components/IncomeAnalysis';

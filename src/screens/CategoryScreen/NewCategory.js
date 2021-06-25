@@ -11,7 +11,7 @@ import {
 } from "../../api/constants";
 import MyInput from "../InputTransaction/MyInput";
 import { addCategory } from "../../redux/slices/categoriesSlice";
-import icons from "../../api/constantsR/icons"
+import icons from "../../api/icons"
 import {itemBackgroundColor} from "../../api/constants"
 
 const NewCategory = ({ route }) => {

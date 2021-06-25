@@ -4,7 +4,7 @@ import {Button,
   FlatList,} from 'react-native';
 import { backgroundColor } from "../../../api/constants";
 import { AntDesign } from '@expo/vector-icons';
-import { COLORS, FONTS, SIZES, icons } from '../../../api/constantsR';
+import { COLORS, FONTS, SIZES, icons } from '../../../api/index';
 import SelectDropdown from 'react-native-select-dropdown';
 import Svg from 'react-native-svg';
 import { VictoryTooltip,VictoryVoronoiContainer,VictoryBar, VictoryChart, VictoryTheme,VictoryAxis,VictoryLabel } from "victory-native";

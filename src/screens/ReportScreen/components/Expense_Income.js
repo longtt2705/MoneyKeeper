@@ -19,7 +19,7 @@ import ExpenseCategory from './ExpenseCategoy';
 import IncomeCategory from './IncomeCategory';
 import { AntDesign } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
-import { COLORS, FONTS, SIZES, icons, images } from '../../../api/constantsR';
+import { COLORS, FONTS, SIZES, icons, images } from '../../../api/index';
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
 const Tab = createMaterialTopTabNavigator();
 

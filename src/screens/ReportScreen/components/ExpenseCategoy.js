@@ -15,7 +15,7 @@ import {
   Platform
 } from 'react-native';
 import {Svg} from 'react-native-svg'
-import { COLORS, FONTS, SIZES, icons, images } from '../../../api/constantsR';
+import { COLORS, FONTS, SIZES, icons, images } from '../../../api/index';
 import { VictoryPie } from 'victory-native';
 
 
@@ -25,9 +25,9 @@ const ExpenseCategory=()=> {
   let categoriesData = [
     {
         id: 1,
-        name: "Education",
-        icon: icons.education,
-        color: COLORS.yellow,
+        name: "Food",
+        icon: icons.dish.source,
+        color: icons.dish.color,
         expenses: [
             {
                 id: 1,
@@ -65,9 +65,9 @@ const ExpenseCategory=()=> {
     },
     {
         id: 2,
-        name: "Nutrition",
-        icon: icons.food,
-        color: COLORS.lightBlue,
+        name: "Shopping",
+        icon: icons.shopping_cart.source,
+        color: icons.shopping_cart.color,
         expenses: [
             {
                 id: 5,
@@ -91,9 +91,9 @@ const ExpenseCategory=()=> {
     },
     {
         id: 3,
-        name: "Child",
-        icon: icons.baby_car,
-        color: COLORS.darkgreen,
+        name: "Education",
+        icon: icons.mortarboard.source,
+        color: icons.mortarboard.color,
         expenses: [
             {
                 id: 7,
@@ -131,9 +131,9 @@ const ExpenseCategory=()=> {
     },
     {
         id: 4,
-        name: "Beauty & Care",
-        icon: icons.healthcare,
-        color: COLORS.peach,
+        name: "Healthcare",
+        icon: icons.healthcare2.source,
+        color: icons.healthcare2.color,
         expenses: [
             {
                 id: 11,
@@ -171,9 +171,9 @@ const ExpenseCategory=()=> {
     },
     {
         id: 5,
-        name: "Sports",
-        icon: icons.sports_icon,
-        color: COLORS.purple,
+        name: "Phone",
+        icon: icons.phone.source,
+        color: icons.phone.color,
         expenses: [
             {
                 id: 15,
@@ -196,8 +196,8 @@ const ExpenseCategory=()=> {
     {
         id: 6,
         name: "Clothing",
-        icon: icons.cloth_icon,
-        color: COLORS.red,
+        icon: icons.shirt.source,
+        color: icons.shirt.color,
         expenses: [
             {
                 id: 17,

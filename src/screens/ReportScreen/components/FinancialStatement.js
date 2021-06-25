@@ -3,7 +3,7 @@ import {Button, StyleSheet, Text, View , Platform,SafeAreaView, ScrollView,Statu
 import { backgroundColor } from "../../../api/constants";
 import { AntDesign } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
-import { COLORS, FONTS, SIZES, icons, images } from '../../../api/constantsR';
+import { COLORS, FONTS, SIZES, icons, images } from '../../../api/index';
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
 const FinancialStatement=({navigation}) =>{
   function Header() {
