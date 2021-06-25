@@ -335,7 +335,7 @@ function renderCategoryList() {
               style={{
                   width: 20,
                   height: 20,
-                  tintColor: item.color
+                  
               }}
           />
           <Text style={{ marginLeft: SIZES.base, color: COLORS.primary, ...FONTS.h4 }}>{item.name}</Text>
