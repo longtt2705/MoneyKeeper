@@ -35,21 +35,25 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     const filterTransactions = (state) => {
+      const retypeDateTransactions = transactions.map((trans) => ({
+        ...trans,
+        date: new Date(trans.date),
+      }));
       let transactionsFiltered = null;
       const today = new Date();
       switch (value) {
         case "w":
-          transactionsFiltered = transactions.filter(
+          transactionsFiltered = retypeDateTransactions.filter(
             (transaction) => getWeek(today) === getWeek(transaction.date)
           );
           break;
         case "m":
-          transactionsFiltered = transactions.filter(
+          transactionsFiltered = retypeDateTransactions.filter(
             (transaction) => getMonth(today) === getMonth(transaction.date)
           );
           break;
         case "y":
-          transactionsFiltered = transactions.filter(
+          transactionsFiltered = retypeDateTransactions.filter(
             (transaction) => getYear(today) === getYear(transaction.date)
           );
           break;
