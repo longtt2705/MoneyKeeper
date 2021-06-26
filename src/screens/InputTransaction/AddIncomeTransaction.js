@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Image
 } from "react-native";
 import moment from "moment";
 import Constants from "expo-constants";
@@ -63,6 +64,7 @@ export default function AddIncomeTransaction({
 
   const currentWallet = wallets.find((wallet) => wallet.id == walletId);
   const currentEvent = events.find((event) => event.id == eventId);
+
   // cái này là tạo categories trống để lấp đầy chỗ ở scrollView
   const tempCategory = [];
   let numOfTempCategory = (incomeCategories.length + 1) % 3;
@@ -209,7 +211,11 @@ export default function AddIncomeTransaction({
             <View style={styles.inputIcon}>
               <MaterialCommunityIcons name="wallet" size={34} color="#000" />
             </View>
-            <View style={{ flexDirection: "column" }}>
+            <View
+              style={{
+                flexDirection: "column",
+              }}
+            >
               <Text style={styles.text}>Wallet</Text>
               <Text style={styles.text}>{currentWallet.title}</Text>
             </View>
@@ -249,40 +255,25 @@ export default function AddIncomeTransaction({
             }}
           >
             {incomeCategories.map((category, index) =>
-              category.id == categoryId ? (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.focusedCategoryItem}
-                  onPress={() => handleChangeCategory(category.id)}
-                >
-                  <View>
-                    <MaterialCommunityIcons
-                      name="wallet"
-                      size={34}
-                      color="#000"
-                    />
-                  </View>
-                  <Text style={styles.normalText}>{category.title}</Text>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.categoryItem}
-                  onPress={() => handleChangeCategory(category.id)}
-                  activeOpacity={1}
-                >
-                  <View>
-                    <MaterialCommunityIcons
-                      name="wallet"
-                      size={34}
-                      color="#000"
-                    />
-                  </View>
-                  <Text style={styles.normalText}>{category.title}</Text>
-                </TouchableOpacity>
-              )
+            (
+              <TouchableOpacity
+                key={index}
+                style={[styles.categoryItem, category.id == categoryId && styles.focusedCategoryItem]}
+                onPress={() => handleChangeCategory(category.id)}
+                activeOpacity={1}
+              >
+                <Image source={category.icon} style={styles.icon} />
+
+                <Text style={styles.normalText}>{category.title}</Text>
+              </TouchableOpacity>
+            )
             )}
-            <TouchableOpacity style={styles.categoryItem}>
+            <TouchableOpacity
+              style={styles.categoryItem}
+              onPress={() => {
+                navigation.navigate("Category", { type: "income" });
+              }}
+            >
               <Text style={styles.normalText}>Edit</Text>
             </TouchableOpacity>
             {tempCategory}
@@ -296,13 +287,13 @@ export default function AddIncomeTransaction({
         />
         <TouchableOpacity
           disabled={buttonDisable}
-          style={buttonDisable ? styles.disabledButton : styles.submitButton}
+          style={[styles.submitButton, buttonDisable && styles.disabledButton]}
           onPress={() => {
             showModal();
             handleSubmit();
           }}
         >
-          <Text style={{ color: textColor, fontSize: 20 }}>Submit</Text>
+          <Text style={{ color: textColor, fontSize: 20 }}>Save</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -313,7 +304,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: backgroundColor,
     flex: 1,
-    // paddingTop: Constants.statusBarHeight,
   },
   row: {
     flexDirection: "row",
@@ -346,6 +336,10 @@ const styles = StyleSheet.create({
   },
   active: {
     backgroundColor: "#fff",
+  },
+  icon: {
+    width: 34,
+    height: 34,
   },
   innerContainer: {
     paddingTop: 5,
@@ -383,21 +377,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   focusedCategoryItem: {
+    backgroundColor: formBackgroundColor,
     borderColor: highlightColor,
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 60,
-    width: "31%",
-    marginBottom: 5,
-    justifyContent: "center",
-    alignItems: "center",
   },
   tempCategoryItem: {
     height: 60,
     width: "31%",
     marginBottom: 5,
-    justifyContent: "center",
-    alignItems: "center",
   },
   submitButton: {
     justifyContent: "center",
@@ -407,20 +393,11 @@ const styles = StyleSheet.create({
     width: "70%",
     height: 40,
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 30,
     borderRadius: 15,
     backgroundColor: buttonColor,
   },
   disabledButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-    alignSelf: "center",
-    width: "70%",
-    height: 40,
-    marginBottom: 10,
-    marginTop: 10,
-    borderRadius: 15,
     backgroundColor: inactiveColor,
   },
 });

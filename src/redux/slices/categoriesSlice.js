@@ -35,21 +35,21 @@ const initialState = [
     title: "Shopping",
     icon: icons.shopping_cart.source,
     type: "expense",
-    color: icons.shopping_cart.color
+    color: icons.shopping_cart.color,
   },
   {
     id: "6",
     title: "Food",
     icon: icons.dish.source,
     type: "expense",
-    color: icons.dish.color
+    color: icons.dish.color,
   },
   {
     id: "7",
     title: "Transport",
     icon: icons.vehicles.source,
     type: "expense",
-    color: icons.vehicles.color
+    color: icons.vehicles.color,
   },
   {
     id: "8",
@@ -80,21 +80,30 @@ const categoriesSlice = createSlice({
   reducers: {
     addCategory: {
       reducer(state, action) {
+        // console.log(action.payload);
         state.push(action.payload);
       },
-      prepare(title, icon, type) {
+      prepare(title, icon, type, color) {
         return {
           payload: {
             id: nanoid(),
             title,
             icon,
             type,
+            color,
           },
         };
       },
+    },
+    deleteCategory(state, action) {
+      const deletedCategoryId = action.payload.id;
+      const indexOfDeleteCategory = state.findIndex(
+        (category) => category.id == deletedCategoryId
+      );
+      state.splice(indexOfDeleteCategory, 1);
     },
   },
 });
 
 export default categoriesSlice.reducer;
-export const { addCategory } = categoriesSlice.actions;
+export const { addCategory, deleteCategory } = categoriesSlice.actions;

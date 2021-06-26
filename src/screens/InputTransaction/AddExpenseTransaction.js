@@ -64,6 +64,7 @@ export default function AddExpenseTransaction({
 
   const currentWallet = wallets.find((wallet) => wallet.id == walletId);
   const currentEvent = events.find((event) => event.id == eventId);
+
   // cái này là tạo categories trống để lấp đầy chỗ ở scrollView
   const tempCategory = [];
   let numOfTempCategory = (expenseCategories.length + 1) % 3;
@@ -254,33 +255,18 @@ export default function AddExpenseTransaction({
             }}
           >
             {expenseCategories.map((category, index) =>
-              category.id == categoryId ? (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.focusedCategoryItem}
-                  onPress={() => handleChangeCategory(category.id)}
-                >
-                  <View>
-                    <MaterialCommunityIcons
-                      name="wallet"
-                      size={34}
-                      color="#000"
-                    />
-                  </View>
-                  <Text style={styles.normalText}>{category.title}</Text>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.categoryItem}
-                  onPress={() => handleChangeCategory(category.id)}
-                  activeOpacity={1}
-                >
-                    <Image source={category.icon} style={styles.icon}/>
+            (
+              <TouchableOpacity
+                key={index}
+                style={[styles.categoryItem, category.id == categoryId && styles.focusedCategoryItem]}
+                onPress={() => handleChangeCategory(category.id)}
+                activeOpacity={1}
+              >
+                <Image source={category.icon} style={styles.icon} />
 
-                  <Text style={styles.normalText}>{category.title}</Text>
-                </TouchableOpacity>
-              )
+                <Text style={styles.normalText}>{category.title}</Text>
+              </TouchableOpacity>
+            )
             )}
             <TouchableOpacity
               style={styles.categoryItem}
@@ -301,13 +287,13 @@ export default function AddExpenseTransaction({
         />
         <TouchableOpacity
           disabled={buttonDisable}
-          style={buttonDisable ? styles.disabledButton : styles.submitButton}
+          style={[styles.submitButton, buttonDisable && styles.disabledButton]}
           onPress={() => {
             showModal();
             handleSubmit();
           }}
         >
-          <Text style={{ color: textColor, fontSize: 20 }}>Submit</Text>
+          <Text style={{ color: textColor, fontSize: 20 }}>Save</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -318,7 +304,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: backgroundColor,
     flex: 1,
-    // paddingTop: Constants.statusBarHeight,
   },
   row: {
     flexDirection: "row",
@@ -353,7 +338,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   icon: {
-    width: 34, 
+    width: 34,
     height: 34,
   },
   innerContainer: {
@@ -392,21 +377,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   focusedCategoryItem: {
+    backgroundColor: formBackgroundColor,
     borderColor: highlightColor,
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 60,
-    width: "31%",
-    marginBottom: 5,
-    justifyContent: "center",
-    alignItems: "center",
   },
   tempCategoryItem: {
     height: 60,
     width: "31%",
     marginBottom: 5,
-    justifyContent: "center",
-    alignItems: "center",
   },
   submitButton: {
     justifyContent: "center",
@@ -416,20 +393,11 @@ const styles = StyleSheet.create({
     width: "70%",
     height: 40,
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 30,
     borderRadius: 15,
     backgroundColor: buttonColor,
   },
   disabledButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-    alignSelf: "center",
-    width: "70%",
-    height: 40,
-    marginBottom: 10,
-    marginTop: 10,
-    borderRadius: 15,
     backgroundColor: inactiveColor,
   },
 });
