@@ -102,7 +102,12 @@ export default function Other({ navigation }) {
         </View>
 
         <View style={styles.Language}>
-          <TouchableHighlight style={styles.BtnLanguage} onPress={() => {}}>
+          <TouchableHighlight
+            style={styles.BtnLanguage}
+            onPress={() => {
+              navigation.navigate("Language");
+            }}
+          >
             <View style={styles.alignImg}>
               <Image
                 source={require("../../assets/image/translate.png")}
@@ -179,7 +184,6 @@ const styles = StyleSheet.create({
     backgroundColor: itemBackgroundColor,
     padding: 20,
     borderRadius: 15,
-    marginTop: 5,
   },
   feedback: {
     padding: 5,
