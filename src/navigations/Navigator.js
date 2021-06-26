@@ -6,7 +6,6 @@ import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
 import Budget from "../screens/Budget";
 import Home from "../screens/HomeScreen/Home";
 import Report from "../screens/Report";
-import Other from "../screens/Other";
 import InputNavigation from "./InputNavigation";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
