@@ -9,41 +9,17 @@ import { isConstructorDeclaration } from 'typescript';
 
 
 
-export default function LimitOfCategory({ navigation }) {
+export default function LimitOfCategory({ navigation,setCateLimit }) {
     const listOfCate = useSelector(state => state.categories)
     const limitCate = listOfCate.filter(e => e.limit !== null);
-    return (
-        <View style={styles.bg}>
+    if (limitCate === undefined) {
+        return (
+            <View style={styles.bg}>
             <View style={styles.Cate}>
                 <Text style={styles.nameCate}>
                     Limit of Category
                 </Text>
             </View>
-            {
-                limitCate.map((element) => {
-                    return (
-                        <ScrollView>
-                            <View style={styles.container}>
-                                <Text style={styles.icon}>
-                                    abc
-                                </Text>
-                                <View style={styles.nameDate}>
-                                    <Text style={styles.nameCategory}>
-                                        {element.title}
-                                    </Text>
-                                    <Text style={styles.date}>
-                                        01/05-02/06
-                                    </Text>
-                                </View>
-                                <Text style={styles.money}>
-                                    {element.limit} VND
-                                </Text>
-                            </View>
-                        </ScrollView>
-                    )
-                })
-            }
-
             <View style={styles.buttonCotainer}>
                 <TouchableOpacity
                     style={styles.button}
@@ -56,9 +32,64 @@ export default function LimitOfCategory({ navigation }) {
                     </Text>
                 </TouchableOpacity>
             </View>
-
         </View>
-    );
+        );   
+    } else {
+        return (
+            <View style={styles.bg}>
+                <View style={styles.Cate}>
+                    <Text style={styles.nameCate}>
+                        Limit of Category
+                    </Text>
+                </View>
+                {
+                    limitCate.map((element) => {
+                        return (
+                            <TouchableOpacity 
+                            key={element.id}
+                            onPress={()=>{
+                                setCateLimit(element.id)
+                                navigation.navigate('updateLimitCate')
+                            }}
+                            >
+                                <View style={styles.container}>
+                                    <Text style={styles.icon}>
+                                        abc
+                                    </Text>
+                                    <View style={styles.nameDate}>
+                                        <Text style={styles.nameCategory}>
+                                            {element.title}
+                                        </Text>
+                                        <Text style={styles.date}>
+                                            {element.datestart}-{element.dateend}
+                                        </Text>
+                                    </View>
+                                    <Text style={styles.money}>
+                                        {element.limit} VND
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    })
+                }
+
+                <View style={styles.buttonCotainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.navigate("addLimitCate")
+                        }}
+                    >
+                        <Text style={styles.buttonName}>
+                            Add Limit
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -76,7 +107,9 @@ const styles = StyleSheet.create({
     nameCate: {
         color: 'white',
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        justifyContent:"center",
+        alignItems:"center"
     },
     container: {
         display: 'flex',
@@ -85,13 +118,15 @@ const styles = StyleSheet.create({
         marginTop: 15,
         backgroundColor: "white",
         alignItems: "center",
-        justifyContent:"space-around"
+        justifyContent: "space-around"
     },
     nameDate: {
         display: 'flex',
         flexDirection: 'column',
-        marginRight: 70,
-
+        width:"40%",
+        justifyContent:"center",
+        alignItems:"center",
+        marginLeft:-15
     },
     money: {
         fontSize: 18,
@@ -107,6 +142,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'gray',
         fontWeight: 'bold',
+        textAlign:"center",
+       
     },
     button: {
         alignContent: 'center',
@@ -135,7 +172,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         backgroundColor: "black",
-        marginLeft: 16,
+        marginLeft: 15,
         marginRight: 50
     },
 

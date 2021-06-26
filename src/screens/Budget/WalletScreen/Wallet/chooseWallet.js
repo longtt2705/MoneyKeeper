@@ -26,15 +26,9 @@ export default function ChooseWallet({ navigation,setWalletId }) {
                                 </View>
                                 <View style={styles.nameKind}>
                                     <Text style={styles.nameBudget}>
-                                        {element.name}
+                                        {element.title}
                                     </Text>
-                                    <View style={styles.kindOfBudget}>
-                                        <View style={styles.iconKindOfBudget}>
-                                        </View>
-                                        <Text style={styles.nameKindofBudget}>
-                                            {element.title}
-                                        </Text>
-                                    </View>
+                                   
                                 </View>
                                 <View style={styles.money}>
                                     <Text style={styles.valueOfMoney}>
@@ -82,22 +76,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: "center",
         fontWeight: "bold"
-    },
-    kindOfBudget: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    iconKindOfBudget: {
-        height: 20,
-        width: 20,
-        backgroundColor: "yellow",
-        marginRight: 5
-    },
-    nameKindofBudget: {
-        fontSize: 12,
-        fontWeight: "bold",
-        color: "gray"
     },
     money: {
         display: 'flex',

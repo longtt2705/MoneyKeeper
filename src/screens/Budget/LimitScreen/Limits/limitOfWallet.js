@@ -7,59 +7,97 @@ import AddLimitOfWallet from './addLimitOfWallet';
 import { useSelector } from 'react-redux';
 
 
-export default function LimitOfWallet({ navigation }) {
+export default function LimitOfWallet({ navigation, setLimitId }) {
 
     const listofWallet = useSelector(state => state.wallets).wallets;
     const limitWallet = listofWallet.filter(e => e.limit !== null);
 
-    return (
-        <View style={styles.bg}>
-            <View style={styles.Cate}>  
-                <Text style={styles.nameCate}>
-                    Limit of Budgets
-                </Text>
-            </View>
-            {limitWallet.map((element,index) => {
-                return(
-                    <ScrollView>
-                        <View style={styles.container}>
-                            <View style={styles.icon}>
-                            </View>
-                            <View style={styles.nameDate}>
-                                <Text style={styles.nameWallet}>
-                                    {element.name}
-                                </Text>
-                                <Text style={styles.date}>
-                                    01/05-02/06
-                                </Text>
-                            </View>
-                            <Text style={styles.money}>
-                                {element.limit} VND
-                            </Text>
-                        </View>
-                        <View style={styles.straightCotainer}>
-                            <Text style={styles.straight}></Text>
-                        </View>
-                    </ScrollView>
-
-                );
-            }
-            )}
-            <View style={styles.buttonCotainer}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        navigation.navigate("addLimitWallet");
-                    }}
-                >
-                    <Text style={styles.buttonName}>
-                        Add Limit
+    if (limitWallet == null) {
+        return (
+            <View style={styles.bg}>
+                <View style={styles.Cate}>
+                    <Text style={styles.nameCate}>
+                        Limit of Budgets
                     </Text>
-                </TouchableOpacity>
-            </View>
+                </View>
+                <View>
 
-        </View >
-    );
+                </View>
+                <View style={styles.buttonCotainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.navigate("addLimitWallet");
+                        }}
+                    >
+                        <Text style={styles.buttonName}>
+                            Add Limit
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
+    }
+    else {
+        return (
+            <View style={styles.bg}>
+                <View style={styles.Cate}>
+                    <Text style={styles.nameCate}>
+                        Limit of Budgets
+                    </Text>
+                </View>
+                <ScrollView>
+                    {limitWallet.map((element, index) => {
+                        return (
+                            <TouchableOpacity
+                                key={element.id}
+                                onPress={() => {
+                                    setLimitId(element.id)
+                                    navigation.navigate('updateLimitWallet')
+                                }}
+                            >
+                                <View style={styles.container}>
+                                    <View style={styles.icon}>
+                                    </View>
+                                    <View style={styles.nameDate}>
+                                        <Text style={styles.nameWallet}>
+                                            {element.title}
+                                        </Text>
+                                        <Text style={styles.date}>
+                                            {element.datestart}-{element.dateend}
+                                        </Text>
+                                    </View>
+                                    <Text style={styles.money}>
+                                        {element.limit} VND
+                                    </Text>
+                                </View>
+                                <View style={styles.straightCotainer}>
+                                    <Text style={styles.straight}></Text>
+                                </View>
+                            </TouchableOpacity>
+
+                        );
+                    }
+                    )}
+                </ScrollView>
+
+                <View style={styles.buttonCotainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.navigate("addLimitWallet");
+                        }}
+                    >
+                        <Text style={styles.buttonName}>
+                            Add Limit
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View >
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -89,12 +127,15 @@ const styles = StyleSheet.create({
     nameDate: {
         display: 'flex',
         flexDirection: 'column',
-        marginRight: 70
+        marginRight: 70,
+        alignItems: "center",
+        width: "34%"
     },
     money: {
         fontSize: 18,
         marginTop: 7,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginRight: 5
     },
     nameWallet: {
         fontSize: 18,

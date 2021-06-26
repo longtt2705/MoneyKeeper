@@ -1,12 +1,10 @@
-import { black } from 'chalk';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from 'react-native';
-import { color } from 'react-native-elements/dist/helpers';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
 import { useDispatch } from 'react-redux';
 import { addWallet } from '../../../../redux/slices/walletsSlice';
 
-export default function AddWallet({ navigation, chooseType }) {
+export default function AddWallet({ navigation }) {
     const [balance, setBalance] = useState(0);
     const [nameWallet, setNameWallet] = useState('');
     const [note, setNote] = useState("");
@@ -27,7 +25,7 @@ export default function AddWallet({ navigation, chooseType }) {
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
-        dispatch(addWallet(nameWallet,chooseType,balance,noteText))
+        dispatch(addWallet(nameWallet,balance,noteText))
     }
 
     return (
@@ -59,21 +57,6 @@ export default function AddWallet({ navigation, chooseType }) {
                                 handleNameWallet(text)
                             }}
                         />
-                    </View>
-                    <View style={styles.strainght}></View>
-                </View>
-                <View style={styles.itemContainer}>
-                    <View style={styles.item}>
-                        <View style={styles.icon}></View>
-                        <View style={styles.chooseType}>
-                            <Text style={styles.typeOfBudgets}>
-                                {chooseType}
-                            </Text>
-                            <TouchableOpacity style={styles.chooseTypeMore}
-                                onPress={() =>
-                                    navigation.navigate('chooseTypeBudget')}
-                            ></TouchableOpacity>
-                        </View>
                     </View>
                     <View style={styles.strainght}></View>
                 </View>

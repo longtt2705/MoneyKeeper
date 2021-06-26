@@ -4,19 +4,27 @@ import { color } from 'react-native-elements/dist/helpers';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
 import { useSelector } from 'react-redux'
 
-export default function Wallet({ navigation }) {
+export default function Wallet({ navigation,setidWallet }) {
 
     const listWallet = useSelector(state => state.wallets).wallets
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Text style={styles.listBudget}>
                 List of Budgets
             </Text>
             {
                 listWallet.map((element,index) => {
                     return (
-                        <ScrollView>
+                        <TouchableOpacity key={element.id}
+                        onPress={()=>
+                            {
+                                setidWallet(element.id)
+                                navigation.navigate("updateWallet")
+                            }
+                            
+                        }
+                        >
                             <View style={styles.wallet}>
                                 <View style={styles.iconBudget}>
                                     <Text>
@@ -25,15 +33,8 @@ export default function Wallet({ navigation }) {
                                 </View>
                                 <View style={styles.nameKind}>
                                     <Text style={styles.nameBudget}>
-                                        {element.name}
+                                        {element.title}
                                     </Text>
-                                    <View style={styles.kindOfBudget}>
-                                        <View style={styles.iconKindOfBudget}>
-                                        </View>
-                                        <Text style={styles.nameKindofBudget}>
-                                            {element.title}
-                                        </Text>
-                                    </View>
                                 </View>
                                 <View style={styles.money}>
                                     <Text style={styles.valueOfMoney}>
@@ -41,7 +42,7 @@ export default function Wallet({ navigation }) {
                                     </Text>
                                 </View>
                             </View>
-                        </ScrollView>
+                        </TouchableOpacity>
                     )
                 }
                 )}
@@ -59,7 +60,7 @@ export default function Wallet({ navigation }) {
                     </Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
 
     );
 }
@@ -100,22 +101,6 @@ const styles = StyleSheet.create({
     nameBudget: {
         fontSize: 18,
         textAlign: "center",
-        fontWeight: "bold"
-    },
-    kindOfBudget: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    iconKindOfBudget: {
-        height: 20,
-        width: 20,
-        backgroundColor: "yellow",
-        marginRight: 5,
-    },
-    nameKindofBudget: {
-        fontSize: 12,
-        color: 'gray',
         fontWeight: "bold"
     },
     money: {

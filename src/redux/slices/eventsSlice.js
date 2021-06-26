@@ -5,7 +5,7 @@ const initialState = [
     id: "1",
     title: "day la event title",
     description: "day la desciption cua event",
-    date: new Date(),
+    date: (new Date()).toISOString(),
     status: "pending",
   },
 ];
