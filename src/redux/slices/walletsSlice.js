@@ -18,7 +18,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 25000,
           note: "breakfast in vietnam !!! Pho",
-          date: sub(new Date(), { minutes: 10 }),
+          date: sub(new Date(), { minutes: 20 }).toISOString(),
           image: "",
         },
         {
@@ -28,7 +28,17 @@ const initialState = {
           eventId: null,
           moneyAmount: 50000,
           note: "coffee",
-          date: sub(new Date(), { minutes: 20 }),
+          date: sub(new Date(), { days: 7 }).toISOString(),
+          image: "",
+        },
+        {
+          id: "3",
+          categoryId: "3",
+          userCreatedCategoryId: "",
+          eventId: null,
+          moneyAmount: 50000,
+          note: "awfasfiashfoijasoifjoifjaiosf",
+          date: sub(new Date(), { days: 20 }).toISOString(),
           image: "",
         },
       ],
@@ -47,7 +57,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 15000,
           note: "beamin order",
-          date: sub(new Date(), { minutes: 17 }),
+          date: "",
           image: "",
         },
         {
@@ -57,7 +67,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 29000,
           note: "foodie",
-          date: sub(new Date(), { minutes: 12 }),
+          date: "",
           image: "",
         },
       ],
@@ -78,23 +88,14 @@ const walletsSlice = createSlice({
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
+        existingWallet.balance += transaction.moneyAmount;
       },
-      prepare(
-        categoryId,
-        userCreatedCategoryId,
-        moneyAmount,
-        note,
-        date,
-        image,
-        walletId,
-        eventId
-      ) {
+      prepare(categoryId, moneyAmount, note, date, image, walletId, eventId) {
         return {
           payload: {
             id: nanoid(),
             categoryId,
-            userCreatedCategoryId,
-            moneyAmount,
+            moneyAmount: Number(moneyAmount),
             note,
             date,
             image,
@@ -122,6 +123,7 @@ const walletsSlice = createSlice({
       },
     },
     updateWallet(state, action) {
+      // console.log(action.payload);
       const { walletId, ...updatingField } = action.payload;
       const existingWallet = state.wallets.find(
         (wallet) => wallet.id == walletId

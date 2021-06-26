@@ -8,6 +8,7 @@ import {
   textColor,
   focusedColor,
   textColorOnFocused,
+  buttonColor,
 } from "../../api/constants";
 import { back } from "react-native/Libraries/Animated/src/Easing";
 
@@ -24,8 +25,7 @@ const Header = ({ navigation, scene, setCategoryId }) => {
         >
           <Text
             style={{
-              color:
-                scene.route.name == "expense" ? textColorOnFocused : textColor,
+              color: textColor,
             }}
           >
             Expense
@@ -40,8 +40,7 @@ const Header = ({ navigation, scene, setCategoryId }) => {
         >
           <Text
             style={{
-              color:
-                scene.route.name == "income" ? textColorOnFocused : textColor,
+              color: textColor,
             }}
           >
             Income
@@ -70,9 +69,9 @@ const styles = StyleSheet.create({
     color: textColor,
     width: 120,
     height: 30,
+    borderRadius: 5,
   },
   focus: {
-    backgroundColor: focusedColor,
-    color: textColorOnFocused,
+    backgroundColor: buttonColor,
   },
 });

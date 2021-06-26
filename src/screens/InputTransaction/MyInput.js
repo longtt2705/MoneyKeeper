@@ -18,8 +18,6 @@ const MyInput = (props) => {
     props.onChangeText(value);
   };
 
-  console.log(props.value);
-
   return (
     <TextInput
       {...props}
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     paddingRight: 10,
-    height: 40,
+    height: 35,
   },
 });
 

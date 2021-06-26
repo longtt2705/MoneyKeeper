@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import {
+  Dimensions,
   Image,
+  ImageBackground,
+  Platform,
+  SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -8,7 +13,13 @@ import {
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { backgroundColor } from "../../api/constants";
+import {
+  backgroundColor,
+  buttonColor,
+  inactiveColor,
+  primaryColor,
+  textColor,
+} from "../../api/constants";
 import { firebase } from "../../firebase/config";
 
 export default function LoginScreen({ navigation }) {
@@ -47,36 +58,36 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={styles.scrollContainer}
         keyboardShouldPersistTaps="always"
       >
-        <Image
-          style={styles.logo}
-          source={require("../../../assets/icon.png")}
-        />
+        <Text style={styles.labelText}>Sign in</Text>
+        <Image style={styles.logo} source={require("../../assets/logo.png")} />
+        <Text style={styles.title}>E-mail</Text>
         <TextInput
           style={styles.input}
-          placeholder="E-mail"
-          placeholderTextColor="#aaaaaa"
+          placeholder="Type your e-mail here..."
+          placeholderTextColor={inactiveColor}
           onChangeText={(text) => setEmail(text)}
           value={email}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
+        <Text style={styles.title}>Password</Text>
         <TextInput
           style={styles.input}
-          placeholderTextColor="#aaaaaa"
+          placeholderTextColor={inactiveColor}
           secureTextEntry
-          placeholder="Password"
+          placeholder="Type your password here..."
           onChangeText={(text) => setPassword(text)}
           value={password}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
         <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>Log in</Text>
+          <Text style={styles.buttonTitle}>Sign in</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
@@ -86,37 +97,91 @@ export default function LoginScreen({ navigation }) {
             </Text>
           </Text>
         </View>
+        <View
+          style={{
+            marginTop: 30,
+            height: Dimensions.get("screen").height * 0.2,
+          }}
+        >
+          <ImageBackground
+            source={require("../../assets/wave.png")}
+            style={styles.imageBackground}
+          >
+            <Text
+              style={{
+                alignSelf: "center",
+                fontSize: 20,
+                marginTop: 25,
+                fontWeight: "bold",
+                color: primaryColor,
+              }}
+            >
+              or connect with
+            </Text>
+            <View style={styles.connect}>
+              <TouchableOpacity style={styles.buttonConnect}>
+                <Image
+                  style={styles.connectLogo}
+                  source={require("../../assets/twitter.png")}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonConnect}>
+                <Image
+                  style={styles.connectLogo}
+                  source={require("../../assets/facebook.png")}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonConnect}>
+                <Image
+                  style={styles.connectLogo}
+                  source={require("../../assets/google.png")}
+                />
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        </View>
       </KeyboardAwareScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  labelText: {
+    color: textColor,
+    fontWeight: "bold",
+    fontSize: 35,
+    margin: 10,
+    marginLeft: 20,
+  },
   container: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     flex: 1,
     alignItems: "center",
+    backgroundColor: backgroundColor,
+    justifyContent: "space-between",
   },
-  title: {},
-  logo: {
-    flex: 1,
-    height: 120,
-    width: 90,
-    alignSelf: "center",
-    margin: 30,
+  scrollContainer: {
+    width: "100%",
+    flex: 1, //added flexGrow
+  },
+  title: {
+    marginLeft: 30,
+    color: textColor,
   },
   input: {
     height: 48,
     borderRadius: 5,
     overflow: "hidden",
-    backgroundColor: "white",
-    marginTop: 10,
+    backgroundColor: primaryColor,
+    color: textColor,
+    marginTop: 5,
     marginBottom: 10,
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
   },
   button: {
-    backgroundColor: backgroundColor,
+    backgroundColor: buttonColor,
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,
@@ -137,11 +202,36 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    color: "#2e2e2d",
+    color: inactiveColor,
   },
   footerLink: {
-    color: backgroundColor,
+    color: textColor,
     fontWeight: "bold",
     fontSize: 16,
+  },
+  logo: {
+    alignSelf: "center",
+  },
+  connect: {
+    alignSelf: "center",
+    marginTop: 30,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+  },
+  connectLogo: {
+    width: 30,
+    height: 30,
+  },
+  buttonConnect: {
+    backgroundColor: "white",
+    borderRadius: 29,
+    padding: 10,
+    elevation: 10,
+  },
+  imageBackground: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
   },
 });

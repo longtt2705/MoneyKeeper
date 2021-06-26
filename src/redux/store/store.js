@@ -1,5 +1,9 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { persistStore, persistReducer } from "redux-persist";
+import thunk from "redux-thunk";
+import logger from "redux-logger";
 
 import categoriesReducer from "../slices/categoriesSlice";
 import eventsReducer from "../slices/eventsSlice";
@@ -13,8 +17,17 @@ const reducers = combineReducers({
   
 });
 
-const store = configureStore({
-  reducer: reducers,
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage,
+};
+
+const pReducer = persistReducer(persistConfig, reducers);
+
+export const store = configureStore({
+  reducer: pReducer,
+  middleware: [thunk],
 });
 
-export default store;
+export const persistor = persistStore(store);
+// persistor.purge(); // uncomment when want to clear redux persist local data
