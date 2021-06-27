@@ -139,7 +139,6 @@ const walletsSlice = createSlice({
           (transaction) => transaction.categoryId != deletedCategoryId
         );
       });
-      console.log(state);
     },
     addWallet: {
       reducer(state, action) {
