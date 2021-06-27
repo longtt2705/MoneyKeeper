@@ -91,7 +91,7 @@ export default function AddIncomeTransaction({
     });
   });
 
-  recentAdded = recentAdded.reverse();
+  recentAdded = recentAdded.reverse().slice(0, 5);
 
   const showModal = () => {
     setModalVisible(true);
