@@ -56,7 +56,7 @@ export default function Chart({ data, balance }) {
       <View>
         <Text style={styles.totalAmount}>
           <Text style={{ fontSize: 44 }}>{formatNumber(balance)}</Text>
-          <Text style={{ fontSize: 24 }}> vnd</Text>
+          <Text style={{ fontSize: 24 }}> VND</Text>
         </Text>
       </View>
     </View>

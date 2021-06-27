@@ -25,7 +25,7 @@ export default function Transaction({ transaction }) {
         <Text style={styles.strongTitle}>
           {formatNumber(transaction.moneyAmount)}
         </Text>
-        <Text style={[styles.lightTitle, { alignSelf: "flex-end" }]}>vnđ</Text>
+        <Text style={[styles.lightTitle, { alignSelf: "flex-end" }]}>VND</Text>
       </View>
     </View>
   );
