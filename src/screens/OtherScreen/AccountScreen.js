@@ -63,57 +63,63 @@ const ProfileScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.action}>
-          <FontAwesome name="user-o" style={styles.icon} />
           <Text style={styles.textName}>First Name: </Text>
           <TextInput
+            style={styles.textInput}
             value={textFName}
             onChangeText={(text) => setFName(text)}
           />
         </View>
 
         <View style={styles.action}>
-          <FontAwesome name="user-o" style={styles.icon} />
           <Text style={styles.textName}>Last Name: </Text>
           <TextInput
+            style={styles.textInput}
             value={textLName}
             onChangeText={(text) => setLName(text)}
           />
         </View>
 
         <View style={styles.action}>
-          <FontAwesome name="user-o" style={styles.icon} />
-          <Text style={styles.textName}>email: </Text>
+          <Text style={styles.textName}>Email: </Text>
           <TextInput
+            style={styles.textInput}
             value={textEmail}
             onChangeText={(text) => handleUser(text)}
           />
         </View>
 
         <View style={styles.action}>
-          <FontAwesome name="user-o" style={styles.icon} />
           <Text style={styles.textName}>Phone number: </Text>
           <TextInput
+            style={styles.textInput}
             value={textPhone}
             onChangeText={(text) => setPhone(text)}
           />
         </View>
 
         <View style={styles.action}>
-          <FontAwesome name="user-o" style={styles.icon} />
           <Text style={styles.textName}>Date of birth: </Text>
-          <TextInput value={textDOB} onChangeText={(text) => setDOB(text)} />
+          <TextInput
+            style={styles.textInput}
+            value={textDOB}
+            onChangeText={(text) => setDOB(text)}
+          />
         </View>
 
         <View style={styles.action}>
-          <FontAwesome name="user-o" style={styles.icon} />
           <Text style={styles.textName}>Address: </Text>
 
-          <TextInput value={textAd} onChangeText={(text) => setAd(text)} />
+          <TextInput
+            style={styles.textInput}
+            value={textAd}
+            onChangeText={(text) => setAd(text)}
+          />
         </View>
         <View style={styles.action}>
-          <FontAwesome name="user-o" style={styles.icon} />
           <Text style={styles.textName}>Career: </Text>
           <TextInput
+            style={styles.textInput}
             value={textCareer}
             onChangeText={(text) => setCareer(text)}
           />
@@ -147,7 +153,7 @@ const styles = StyleSheet.create({
   },
   textName: {
     marginTop: 4,
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: "bold",
   },
   button: {
@@ -185,5 +191,9 @@ const styles = StyleSheet.create({
   textAvatar: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  textInput: {
+    fontSize: 20,
+    marginTop: 3,
   },
 });
