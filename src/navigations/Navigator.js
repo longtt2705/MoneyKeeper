@@ -5,10 +5,11 @@ import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
 
 import Budget from "../screens/Budget";
 import Home from "../screens/HomeScreen/Home";
-import Report from "../screens/Report";
-import InputNavigation from "./InputNavigation";
+import Report from "../screens/ReportScreen/Report"
+import InputNavigator from "./InputNavigator";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen";
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import { firebase } from "../firebase/config";
@@ -37,6 +38,39 @@ const BottomTabNavigator = () => {
                 ? "dots-horizontal-circle"
                 : "dots-horizontal-circle-outline";
               break;
+            case "Add":
+              // tabBarLabel = false;
+              return focused ? (
+                <Ionicons
+                  name="add-circle"
+                  size={iconSize * 2}
+                  color={color}
+                  style={{
+                    width: iconSize * 2,
+                    height: iconSize * 2,
+                    // alignSelf: "center",
+                    bottom: 20,
+                    right: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                />
+              ) : (
+                <Ionicons
+                  name="add-circle-outline"
+                  size={iconSize * 2}
+                  color={color}
+                  style={{
+                    width: iconSize * 2,
+                    height: iconSize * 2,
+                    // alignSelf: "center",
+                    bottom: 20,
+                    right: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                />
+              );
             default:
               break;
           }
@@ -86,10 +120,10 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="+"
-        component={InputNavigation}
+        name="Add"
+        component={InputNavigator}
         options={{
-          tabBarLabel: "+",
+          tabBarLabel: () => null,
         }}
       />
       <Tab.Screen
@@ -123,7 +157,6 @@ const Navigator = () => {
     const usersRef = firebase.firestore().collection("users");
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user);
         usersRef
           .doc(user.uid)
           .get()

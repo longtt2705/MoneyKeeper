@@ -1,4 +1,4 @@
-import { Colors } from "./constants";
+import { Colors, Icons } from "./constants";
 
 export const generateListColor = (data) => {
   if (data.length > Colors.length) {
@@ -20,8 +20,29 @@ export const mergeColorToData = (data, colors) => {
   const len = Math.min(data.length, colors.length);
   const mergedData = [...data];
   for (let i = 0; i < len; i++) {
-    mergedData[i]["color"] = colors[i];
+    mergedData[i] = { ...mergedData[i], color: colors[i] };
   }
 
   return mergedData;
+};
+
+export const formatNumber = (number) => {
+  return number
+    .toString()
+    .replace(/,/g, "")
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+export const getCategoryName = (id, categories) => {
+  const category = categories.find((category) => category.id === id);
+  if (category) return category.title;
+  return null;
+};
+
+export const getIcon = (iconName) => {
+  if (iconName) {
+    const icon = iconName.toLowerCase();
+    if (Icons[icon] !== undefined) return Icons[icon];
+    return Icons["none"];
+  }
 };
