@@ -11,6 +11,8 @@ import {
   backgroundColor,
   itemBackgroundColor,
   primaryColor,
+  buttonColor,
+  textColor,
 } from "../../api/constants";
 const ReportScreen = ({ navigation }) => {
   return (
@@ -106,13 +108,19 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 25,
-    color: "black",
+    color: textColor,
   },
   BtnFeedback: {
-    backgroundColor: primaryColor,
-    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    alignSelf: "center",
+    width: "70%",
+    height: 40,
+    marginBottom: 10,
+    marginTop: 30,
     borderRadius: 15,
-    marginTop: 5,
+    backgroundColor: buttonColor,
   },
 
   alignImg: {

@@ -13,6 +13,8 @@ import {
   backgroundColor,
   itemBackgroundColor,
   primaryColor,
+  buttonColor,
+  textColor,
 } from "../../api/constants";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useSelector, useDispatch } from "react-redux";
@@ -124,9 +126,8 @@ const ProfileScreen = ({ navigation }) => {
             onChangeText={(text) => setCareer(text)}
           />
         </View>
-
         <TouchableOpacity style={styles.touchStyle} onPress={handleSubmit}>
-          <Text style={styles.text}>SAVE</Text>
+          <Text style={styles.text}>Save</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -165,19 +166,20 @@ const styles = StyleSheet.create({
     backgroundColor: backgroundColor,
   },
   touchStyle: {
-    padding: 20,
-    marginTop: 6,
-    width: "95%",
-    borderRadius: 15,
     justifyContent: "center",
-    alignContent: "center",
-    backgroundColor: primaryColor,
-    marginLeft: 10,
+    alignItems: "center",
+    overflow: "hidden",
+    alignSelf: "center",
+    width: "70%",
+    height: 40,
+    marginBottom: 10,
+    marginTop: 30,
+    borderRadius: 15,
+    backgroundColor: buttonColor,
   },
   text: {
-    fontSize: 40,
-    alignContent: "center",
-    marginLeft: 120,
+    fontSize: 20,
+    color: textColor,
   },
   imgAccount: {
     width: 80,
