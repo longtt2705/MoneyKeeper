@@ -6,8 +6,9 @@ import {
   backgroundColor,
   primaryColor,
   textColor,
-  focusedColor, 
+  focusedColor,
   textColorOnFocused,
+  buttonColor,
 } from "../../../../api/constants";
 import { back } from "react-native/Libraries/Animated/src/Easing";
 
@@ -23,9 +24,8 @@ const Header = ({ navigation, scene }) => {
         >
           <Text
             style={{
-              color:
-                scene.route.name == "limit" ? textColorOnFocused : textColor,
-              fontWeight:"bold"
+              color: textColor,
+              fontWeight: "bold",
             }}
           >
             Limits
@@ -39,9 +39,8 @@ const Header = ({ navigation, scene }) => {
         >
           <Text
             style={{
-              color:
-                scene.route.name == "wallet" ? textColorOnFocused : textColor,
-              fontWeight:"bold"
+              color: textColor,
+              fontWeight: "bold",
             }}
           >
             Budgets
@@ -70,9 +69,10 @@ const styles = StyleSheet.create({
     color: textColor,
     width: 120,
     height: 30,
+    borderRadius: 5,
   },
   focus: {
-    backgroundColor: focusedColor,
-    color: textColorOnFocused,
+    backgroundColor: buttonColor,
+    color: textColor,
   },
 });

@@ -18,8 +18,8 @@ export default function Picker({ value, setValue }) {
           style={styles}
           Icon={() => <AntDesign name="caretdown" size={12} color="#707070" />}
           items={[
+            { label: "This week", value: "w" },
             { label: "This month", value: "m" },
-            { label: "This quarter", value: "q" },
             { label: "This year", value: "y" },
           ]}
         />
