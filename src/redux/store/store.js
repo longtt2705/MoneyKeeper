@@ -14,7 +14,6 @@ const reducers = combineReducers({
   events: eventsReducer,
   user: userReducer,
   wallets: walletsReducer,
-  
 });
 
 const persistConfig = {

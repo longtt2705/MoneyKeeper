@@ -69,6 +69,16 @@ const part_time = {
   color: "#fff",
 };
 
+const book = {
+  source: require("../assets/icons/book.png"),
+  color: "#fff",
+};
+
+const controller = {
+  source: require("../assets/icons/controller.png"),
+  color: "#fff",
+};
+
 export default {
   back_arrow,
   calendar,
@@ -91,4 +101,6 @@ export default {
   part_time,
   healthcare2,
   remove,
+  book,
+  controller,
 };

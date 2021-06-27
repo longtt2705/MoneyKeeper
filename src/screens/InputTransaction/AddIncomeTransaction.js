@@ -31,6 +31,7 @@ import { nanoid } from "@reduxjs/toolkit";
 
 import MyInput from "./MyInput";
 import SuccessMessage from "./SuccessMessage";
+import RecentAddedItem from "./RecentAddedItem";
 import { formatNumber } from "../../api/helper";
 
 export default function AddIncomeTransaction({
@@ -73,6 +74,24 @@ export default function AddIncomeTransaction({
       <View key={nanoid()} style={styles.tempCategoryItem}></View>
     );
   }
+
+  // Recent added transaction
+  let recentAdded = [];
+  wallets.forEach((wallet) => {
+    wallet.transactions.forEach((transaction) => {
+      const categoryOfTransaction = categories.find(
+        (category) => category.id == transaction.categoryId
+      );
+      if (categoryOfTransaction.type == "income") {
+        const tempTransaction = { ...transaction };
+        tempTransaction.icon = categoryOfTransaction.icon;
+        tempTransaction.categoryTitle = categoryOfTransaction.title;
+        recentAdded.push(tempTransaction);
+      }
+    });
+  });
+
+  recentAdded = recentAdded.reverse();
 
   const showModal = () => {
     setModalVisible(true);
@@ -297,6 +316,20 @@ export default function AddIncomeTransaction({
           <Text style={{ color: textColor, fontSize: 20 }}>Save</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.recentAdded}>
+        <ScrollView horizontal={true}>
+          {recentAdded.map((item, index) => (
+            <RecentAddedItem
+              item={item}
+              key={index}
+              onPress={() => {
+                handleChangeMoney(item.moneyAmount.toString());
+                handleChangeCategory(item.categoryId);
+              }}
+            />
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 }
@@ -400,5 +433,9 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: inactiveColor,
+  },
+  recentAdded: {
+    marginTop: 20,
+    backgroundColor: primaryColor,
   },
 });

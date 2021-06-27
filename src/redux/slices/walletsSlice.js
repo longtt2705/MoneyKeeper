@@ -16,7 +16,7 @@ const initialState = {
       transactions: [
         {
           id: "1",
-          categoryId: "1",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 25000,
@@ -26,7 +26,7 @@ const initialState = {
         },
         {
           id: "2",
-          categoryId: "2",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 50000,
@@ -58,7 +58,7 @@ const initialState = {
       transactions: [
         {
           id: "3",
-          categoryId: "",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 15000,
@@ -68,7 +68,7 @@ const initialState = {
         },
         {
           id: "4",
-          categoryId: "",
+          categoryId: "3",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 29000,
