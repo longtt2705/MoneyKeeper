@@ -14,6 +14,7 @@ import {
   inactiveColor,
 } from "../../api/constants";
 import { deleteCategory } from "../../redux/slices/categoriesSlice";
+import { deleteTransactionOfCategory } from "../../redux/slices/walletsSlice";
 import icons from "../../api/icons";
 
 const CategoriesList = ({ route, navigation }) => {
@@ -25,6 +26,7 @@ const CategoriesList = ({ route, navigation }) => {
   );
   const dispatch = useDispatch();
   const deleteItem = (categoryId) => {
+    dispatch(deleteTransactionOfCategory({ id: categoryId }));
     dispatch(deleteCategory({ id: categoryId }));
   };
   return (

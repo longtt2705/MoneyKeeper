@@ -9,18 +9,17 @@ import {
   focusedColor,
   textColorOnFocused,
   buttonColor,
-} from "../../api/constants";
+} from "../../../../api/constants";
 import { back } from "react-native/Libraries/Animated/src/Easing";
 
-const Header = ({ navigation, scene, setCategoryId }) => {
+const Header = ({ navigation, scene }) => {
   if (scene)
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          style={[styles.button, scene.route.name == "expense" && styles.focus]}
+          style={[styles.button, scene.route.name == "limit" && styles.focus]}
           onPress={() => {
-            setCategoryId("");
-            navigation.navigate("expense");
+            navigation.navigate("limit");
           }}
         >
           <Text
@@ -29,14 +28,13 @@ const Header = ({ navigation, scene, setCategoryId }) => {
               fontWeight: "bold",
             }}
           >
-            Expense
+            Limits
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, scene.route.name == "income" && styles.focus]}
+          style={[styles.button, scene.route.name == "wallet" && styles.focus]}
           onPress={() => {
-            setCategoryId("");
-            navigation.navigate("income");
+            navigation.navigate("wallet");
           }}
         >
           <Text
@@ -45,7 +43,7 @@ const Header = ({ navigation, scene, setCategoryId }) => {
               fontWeight: "bold",
             }}
           >
-            Income
+            Budgets
           </Text>
         </TouchableOpacity>
       </View>
@@ -75,5 +73,6 @@ const styles = StyleSheet.create({
   },
   focus: {
     backgroundColor: buttonColor,
+    color: textColor,
   },
 });

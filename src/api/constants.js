@@ -9,6 +9,7 @@ export const formBackgroundColor = "#fff";
 export const highlightColor = "#FE346E";
 export const buttonColor = "#FE346E";
 
+
 export const Colors = [
   "#FF6633",
   "#FFB399",
@@ -60,6 +61,9 @@ export const Colors = [
   "#FF4D4D",
   "#99E6E6",
   "#6666FF",
+  "#DADBE0",
+  "#198754",
+  "#DC3545"
 ];
 
 export const Icons = {

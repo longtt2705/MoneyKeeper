@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  Image
+  Image,
 } from "react-native";
 import moment from "moment";
 import Constants from "expo-constants";
@@ -254,11 +254,13 @@ export default function AddIncomeTransaction({
               justifyContent: "space-between",
             }}
           >
-            {incomeCategories.map((category, index) =>
-            (
+            {incomeCategories.map((category, index) => (
               <TouchableOpacity
                 key={index}
-                style={[styles.categoryItem, category.id == categoryId && styles.focusedCategoryItem]}
+                style={[
+                  styles.categoryItem,
+                  category.id == categoryId && styles.focusedCategoryItem,
+                ]}
                 onPress={() => handleChangeCategory(category.id)}
                 activeOpacity={1}
               >
@@ -266,8 +268,7 @@ export default function AddIncomeTransaction({
 
                 <Text style={styles.normalText}>{category.title}</Text>
               </TouchableOpacity>
-            )
-            )}
+            ))}
             <TouchableOpacity
               style={styles.categoryItem}
               onPress={() => {
@@ -290,7 +291,7 @@ export default function AddIncomeTransaction({
           style={[styles.submitButton, buttonDisable && styles.disabledButton]}
           onPress={() => {
             showModal();
-            handleSubmit();
+            handleSubmit("income");
           }}
         >
           <Text style={{ color: textColor, fontSize: 20 }}>Save</Text>

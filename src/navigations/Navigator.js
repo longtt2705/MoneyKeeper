@@ -5,7 +5,7 @@ import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
 
 import Budget from "../screens/Budget";
 import Home from "../screens/HomeScreen/Home";
-import Report from "../screens/ReportScreen/Report"
+import Report from "../screens/ReportScreen/Report";
 import InputNavigator from "./InputNavigator";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -109,14 +109,14 @@ const BottomTabNavigator = () => {
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: "Tổng quan",
+          tabBarLabel: "Dashboard",
         }}
       />
       <Tab.Screen
         name="Budget"
         component={Budget}
         options={{
-          tabBarLabel: "Tài khoản",
+          tabBarLabel: "Wallet",
         }}
       />
       <Tab.Screen
@@ -130,14 +130,14 @@ const BottomTabNavigator = () => {
         name="Report"
         component={Report}
         options={{
-          tabBarLabel: "Báo cáo",
+          tabBarLabel: "Report",
         }}
       />
       <Tab.Screen
-        name = "Other"
+        name="Other"
         component={OtherNavigation}
         options={{
-          tabBarLabel: "Khác",
+          tabBarLabel: "Others",
         }}
       />
     </Tab.Navigator>
@@ -193,7 +193,6 @@ const Navigator = () => {
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Registration" component={RegistrationScreen} />
-           
           </>
         )}
       </Stack.Navigator>

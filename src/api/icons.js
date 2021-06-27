@@ -7,6 +7,7 @@ const more = require("../../assets/icons/more_icon.png");
 const pin = require("../../assets/icons/pin.png");
 const up_arrow = require("../../assets/icons/up_arrow.png");
 const remove = require("../assets/icons/remove.png");
+
 //{-----------------------------Category Icon-------------------------------------------------------}
 const dish = {
   source: require("../assets/icons/dish.png"),
