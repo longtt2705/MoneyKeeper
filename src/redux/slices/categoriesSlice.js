@@ -1,69 +1,106 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { sub } from "date-fns";
+import icons from "../../api/icons";
 
 const initialState = [
   {
     id: "1",
-    title: "salary",
-    icon: "",
+    title: "Salary",
+    icon: icons.portfolio.source,
     type: "income",
     limit:1000000,
     datestart:"05/03/2021",
     dateend:"05/05/2021",
+    color: icons.portfolio.color,
   },
   {
     id: "2",
-    title: "bonus",
-    icon: "",
+    title: "Bonus",
+    icon: icons.giftbox.source,
     type: "income",
     limit:null,
     datestart:null,
-    dateend:null
+    dateend:null,
+    color: icons.giftbox.color,
   },
   {
     id: "3",
-    title: "invest",
-    icon: "",
+    title: "Invest",
+    icon: icons.coins.source,
     type: "income",
     limit:1000000,
     datestart:"26/02/2021",
-    dateend:"30/03/2021"
+    dateend:"30/03/2021",
+    color: icons.coins.color,
   },
   {
     id: "4",
-    title: "side job",
-    icon: "",
+    title: "Side Job",
+    icon: icons.part_time.source,
     type: "income",
     limit:null,
     datestart:null,
-    dateend:null
+    dateend:null,
+    color: icons.part_time.color,
   },
   {
     id: "5",
-    title: "shopping",
-    icon: "",
+    title: "Shopping",
+    icon: icons.shopping_cart.source,
     type: "expense",
     limit:null,
     datestart:null,
-    dateend:null
+    dateend:null,
+    color: icons.shopping_cart.color,
   },
   {
     id: "6",
-    title: "food",
-    icon: "",
+    title: "Food",
+    icon: icons.dish.source,
     type: "expense",
     limit:null,
     datestart:null,
-    dateend:null
+    dateend:null,
+    color: icons.dish.color,
   },
   {
     id: "7",
-    title: "transport",
-    icon: "",
+    title: "Transport",
+    icon: icons.vehicles.source,
     type: "expense",
     limit:1000000,
     datestart:"18/05/2021",
-    dateend:"16/03/2021"
+    dateend:"16/03/2021",
+    color: icons.vehicles.color,
+  },
+  {
+    id: "8",
+    title: "Healthcare",
+    icon: icons.healthcare2.source,
+    type: "expense",
+    limit:null,
+    datestart:null,
+    dateend:null,
+    color: icons.healthcare2.color,
+  },
+  {
+    id: "9",
+    title: "Education",
+    icon: icons.mortarboard.source,
+    type: "expense",
+    limit:null,
+    datestart:null,
+    dateend:null,
+    color: "#fff",
+  },
+  {
+    id: "12",
+    title: "Contact fee",
+    icon: icons.phone.source,
+    type: "expense",
+    limit:null,
+    datestart:null,
+    dateend:null,
+    color: icons.phone.color,
   },
 ];
 
@@ -83,9 +120,34 @@ const categoriesSlice = createSlice({
         }
       }
     },
+    addCategory: {
+      reducer(state, action) {
+        // console.log(action.payload);
+        state.push(action.payload);
+      },
+      prepare(title, icon, type, color) {
+        return {
+          payload: {
+            id: nanoid(),
+            title,
+            icon,
+            type,
+            color,
+          },
+        };
+      },
+    },
+    deleteCategory(state, action) {
+      const deletedCategoryId = action.payload.id;
+      const indexOfDeleteCategory = state.findIndex(
+        (category) => category.id == deletedCategoryId
+      );
+      state.splice(indexOfDeleteCategory, 1);
+    },
   },
 });
 
 export const { updateCate } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
+export const { addCategory, deleteCategory } = categoriesSlice.actions;

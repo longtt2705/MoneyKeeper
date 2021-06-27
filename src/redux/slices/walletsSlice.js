@@ -10,9 +10,9 @@ const initialState = {
       icon: "",
       balance: 1000000,
       limit: 1000000,
-      datestart:"01/07/2021",
-      dateend:"01/08/2021",
-      note:"asd",
+      datestart: "01/07/2021",
+      dateend: "01/08/2021",
+      note: "asd",
       transactions: [
         {
           id: "1",
@@ -21,7 +21,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 25000,
           note: "breakfast in vietnam !!! Pho",
-          date: (sub(new Date(), { minutes: 10 })).toISOString(),
+          date: sub(new Date(), { minutes: 10 }).toISOString(),
           image: "",
         },
         {
@@ -31,7 +31,17 @@ const initialState = {
           eventId: null,
           moneyAmount: 50000,
           note: "coffee",
-          date: (sub(new Date(), { minutes: 20 })).toISOString(),
+          date: sub(new Date(), { days: 7 }).toISOString(),
+          image: "",
+        },
+        {
+          id: "3",
+          categoryId: "3",
+          userCreatedCategoryId: "",
+          eventId: null,
+          moneyAmount: 50000,
+          note: "awfasfiashfoijasoifjoifjaiosf",
+          date: sub(new Date(), { days: 20 }).toISOString(),
           image: "",
         },
       ],
@@ -42,9 +52,9 @@ const initialState = {
       icon: "",
       balance: 135000,
       limit: null,
-      datestart:null,
-      dateend:null,
-      note:"",
+      datestart: null,
+      dateend: null,
+      note: "",
       transactions: [
         {
           id: "3",
@@ -53,7 +63,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 15000,
           note: "beamin order",
-          date: (sub(new Date(), { minutes: 17 })).toISOString(),
+          date: sub(new Date(), { minutes: 17 }).toISOString(),
           image: "",
         },
         {
@@ -63,7 +73,7 @@ const initialState = {
           eventId: null,
           moneyAmount: 29000,
           note: "foodie",
-          date: (sub(new Date(), { minutes: 12 })).toISOString(),
+          date: sub(new Date(), { minutes: 12 }).toISOString(),
           image: "",
         },
       ],
@@ -84,23 +94,14 @@ const walletsSlice = createSlice({
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
+        existingWallet.balance += transaction.moneyAmount;
       },
-      prepare(
-        categoryId,
-        userCreatedCategoryId,
-        moneyAmount,
-        note,
-        date,
-        image,
-        walletId,
-        eventId
-      ) {
+      prepare(categoryId, moneyAmount, note, date, image, walletId, eventId) {
         return {
           payload: {
             id: nanoid(),
             categoryId,
-            userCreatedCategoryId,
-            moneyAmount,
+            moneyAmount: Number(moneyAmount),
             note,
             date,
             image,
@@ -114,17 +115,16 @@ const walletsSlice = createSlice({
       reducer(state, action) {
         state.wallets.push(action.payload);
       },
-      prepare(title, balance = 0,note) {
-
+      prepare(title, balance = 0, note) {
         return {
           payload: {
             id: nanoid(),
             title,
-            icon:0,
+            icon: 0,
             balance,
-            limit:null,
-            datestart:null,
-            dateend:null,
+            limit: null,
+            datestart: null,
+            dateend: null,
             note,
             transaction: [],
           },
@@ -132,6 +132,7 @@ const walletsSlice = createSlice({
       },
     },
     updateWallet(state, action) {
+      // console.log(action.payload);
       const { walletId, ...updatingField } = action.payload;
       const existingWallet = state.wallets.find(
         (wallet) => wallet.id == walletId
@@ -143,9 +144,24 @@ const walletsSlice = createSlice({
         }
       }
     },
+    deleteWallet(state, action) {
+      const { walletId } = action.payload;
+      console.log(walletId);
+      const indexOfDeletedWallet = state.wallets.findIndex(
+        (wallet) => wallet.id == walletId
+      );
+      if (indexOfDeletedWallet >= 0) {
+        state.wallets.splice(indexOfDeletedWallet, 1);
+      }
+    },
   },
 });
 
-export const { addTransaction, addWallet, updateWallet } = walletsSlice.actions;
+export const {
+  addTransaction,
+  addWallet,
+  updateWallet,
+  deleteWallet,
+} = walletsSlice.actions;
 
 export default walletsSlice.reducer;
