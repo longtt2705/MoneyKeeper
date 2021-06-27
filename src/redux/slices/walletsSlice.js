@@ -1,5 +1,6 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { sub } from "date-fns";
+import icons from "../../api/icons";
 
 const initialState = {
   lastUsedWalletId: "1",
@@ -7,7 +8,7 @@ const initialState = {
     {
       id: "1",
       title: "Cash",
-      icon: "",
+      icon: icons.wallet,
       balance: 1000000,
       limit: 1000000,
       datestart: "01/07/2021",
@@ -49,7 +50,7 @@ const initialState = {
     {
       id: "2",
       title: "momo",
-      icon: "",
+      icon: icons.wallet,
       balance: 135000,
       limit: null,
       datestart: null,
@@ -120,7 +121,7 @@ const walletsSlice = createSlice({
           payload: {
             id: nanoid(),
             title,
-            icon: 0,
+            icon: icons.wallet,
             balance,
             limit: null,
             datestart: null,

@@ -1,68 +1,84 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
 import { useSelector } from 'react-redux'
 
-export default function Wallet({ navigation,setidWallet }) {
+export default function Wallet({ navigation, setidWallet }) {
 
     const listWallet = useSelector(state => state.wallets).wallets
-
-    return (
-        <ScrollView style={styles.container}>
-            <Text style={styles.listBudget}>
-                List of Budgets
-            </Text>
-            {
-                listWallet.map((element,index) => {
-                    return (
-                        <TouchableOpacity key={element.id}
-                        onPress={()=>
-                            {
-                                setidWallet(element.id)
-                                navigation.navigate("updateWallet")
-                            }
-                            
-                        }
-                        >
-                            <View style={styles.wallet}>
-                                <View style={styles.iconBudget}>
-                                    <Text>
-                                        icon
-                                    </Text>
-                                </View>
-                                <View style={styles.nameKind}>
-                                    <Text style={styles.nameBudget}>
-                                        {element.title}
-                                    </Text>
-                                </View>
-                                <View style={styles.money}>
-                                    <Text style={styles.valueOfMoney}>
-                                        {element.balance} VND
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    )
-                }
-                )}
-
-
-            <View style={styles.buttonCotainer}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        navigation.navigate("addWallet")
-                    }}
-                >
-                    <Text style={styles.buttonName}>
-                        Add Budget
-                    </Text>
-                </TouchableOpacity>
+    if (listWallet[0] === undefined) {
+        return (
+            <View>
+                <View style={styles.buttonCotainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.navigate("addWallet")
+                        }}
+                    >
+                        <Text style={styles.buttonName}>
+                            Add Budget
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </ScrollView>
+        )
+    } else {
+        return (
+            <ScrollView style={styles.container}>
+                <Text style={styles.listBudget}>
+                    List of Budgets
+                </Text>
+                {
+                    listWallet.map((element, index) => {
+                        return (
+                            <TouchableOpacity key={element.id}
+                                onPress={() => {
+                                    setidWallet(element.id)
+                                    navigation.navigate("updateWallet")
+                                }
 
-    );
+                                }
+                            >
+                                <View style={styles.wallet}>
+                                    <Image
+                                        source={element.icon}
+                                        style={styles.iconBudget}
+                                    />
+                                    <View style={styles.nameKind}>
+                                        <Text style={styles.nameBudget}>
+                                            {element.title}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.money}>
+                                        <Text style={styles.valueOfMoney}>
+                                            {element.balance} VND
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }
+                    )}
+
+
+                <View style={styles.buttonCotainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => {
+                            navigation.navigate("addWallet")
+                        }}
+                    >
+                        <Text style={styles.buttonName}>
+                            Add Budget
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -85,16 +101,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginBottom: 10,
         marginTop: 5,
-        justifyContent:"space-around"
+        justifyContent: "space-around"
     },
     iconBudget: {
         height: 50,
         width: 50,
-        backgroundColor: 'yellow',
         marginLeft: 16
     },
     nameKind: {
-        width: 200,
+        width: "50%",
         display: 'flex',
         flexDirection: "column",
     },

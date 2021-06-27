@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput,Image } from 'react-native';
 import { backgroundColor, primaryColor, Colors, textColorOnLightBg, inactiveColor } from "../../../../api/constants";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import moment from "moment";
 import { updateCate } from '../../../../redux/slices/categoriesSlice';
+import icons from '../../../../api/icons';
 
 export default function UpdateLimitOfCategory({ navigation, idCateLimit }) {
     const categories = useSelector(state => state.categories);
@@ -55,9 +56,10 @@ export default function UpdateLimitOfCategory({ navigation, idCateLimit }) {
             <View >
                 <View style={styles.container}>
                     <View style={styles.nameContainer}>
-                        <View style={styles.icon}>
-
-                        </View>
+                        <Image
+                        source={icons.categories}
+                        style={styles.icon}
+                        />
                         <View>
                             <Text style={styles.nameCate}>
                                 Name of Cate:
@@ -75,9 +77,10 @@ export default function UpdateLimitOfCategory({ navigation, idCateLimit }) {
                 </View>
                 <View style={styles.container}>
                     <View style={styles.nameContainer}>
-                        <View style={styles.icon}>
-
-                        </View>
+                        <Image
+                        source={icons.balance}
+                        style={styles.icon}
+                        />
                         <View>
                             <Text style={styles.nameCate}>
                                 Balance of Limit
@@ -96,9 +99,10 @@ export default function UpdateLimitOfCategory({ navigation, idCateLimit }) {
                 </View>
                 <View style={styles.container}>
                     <View style={styles.nameContainer}>
-                        <View style={styles.icon}>
-
-                        </View>
+                        <Image
+                        source={icons.calendar1}
+                        style={styles.icon}
+                        />
                         <View>
                             <Text style={styles.nameCate}>
                                 Date start:
@@ -132,9 +136,10 @@ export default function UpdateLimitOfCategory({ navigation, idCateLimit }) {
                 </View>
                 <View style={styles.container}>
                     <View style={styles.nameContainer}>
-                        <View style={styles.icon}>
-
-                        </View>
+                        <Image
+                        source={icons.calendar1} 
+                        style={styles.icon}
+                        />
                         <View>
                             <Text style={styles.nameCate}>
                                 Date end:
@@ -229,7 +234,6 @@ const styles = StyleSheet.create({
     icon: {
         width: 50,
         height: 50,
-        backgroundColor: "#000",
         marginLeft: 15
     },
     nameCate: {

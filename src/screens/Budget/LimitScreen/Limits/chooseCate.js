@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView,Image } from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
 import { useSelector } from 'react-redux';
@@ -30,11 +30,10 @@ export default function ChooseCate({ navigation, setCateId }) {
                                 }}
                             >
                                 <View style={styles.wallet}>
-                                    <View style={styles.iconBudget}>
-                                        <Text>
-                                            icon
-                                        </Text>
-                                    </View>
+                                    <Image
+                                    source={element.icon}
+                                    style={styles.iconBudget}
+                                    />
                                     <View style={styles.nameKind}>
                                         <Text style={styles.nameBudget}>
                                             {element.title}

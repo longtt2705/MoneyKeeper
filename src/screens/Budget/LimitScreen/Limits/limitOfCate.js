@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Navigator, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, Navigator, TouchableOpacity, ScrollView,Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
@@ -53,9 +53,10 @@ export default function LimitOfCategory({ navigation,setCateLimit }) {
                             }}
                             >
                                 <View style={styles.container}>
-                                    <Text style={styles.icon}>
-                                        abc
-                                    </Text>
+                                    <Image
+                                    source={element.icon}
+                                    style={styles.icon}
+                                    />
                                     <View style={styles.nameDate}>
                                         <Text style={styles.nameCategory}>
                                             {element.title}
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
     icon: {
         height: 50,
         width: 50,
-        backgroundColor: "black",
         marginLeft: 15,
         marginRight: 50
     },

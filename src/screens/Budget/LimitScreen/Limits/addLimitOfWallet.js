@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput,Image } from 'react-native';
 import { backgroundColor, primaryColor, Colors, textColorOnLightBg, inactiveColor } from "../../../../api/constants";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import moment from "moment";
 import { updateWallet } from '../../../../redux/slices/walletsSlice';
+import icons from '../../../../api/icons';
 
 export default function AddLimitOfWallet({ navigation, walletId }) {
     const wallet = useSelector(state => state.wallets).wallets;
@@ -63,7 +64,10 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                 <View style={styles.bg}>
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
-                            <View style={styles.icon}></View>
+                            <Image
+                            source={icons.money}
+                            style={styles.icon}
+                            />
                             <TextInput
                                 placeholder="Enter Limit"
                                 onChangeText={text => setInput(parseInt(text))}
@@ -73,7 +77,10 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                     </View>
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
-                            <View style={styles.icon}></View>
+                            <Image
+                            source={nameWallet.icon}
+                            style={styles.icon}
+                            />
                             <Text style={styles.nameWallet}>
                                 {nameWallet.title}
                             </Text>
@@ -85,9 +92,10 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
 
                                     }
                                 >
-                                    <Text>
-                                        a
-                                    </Text>
+                                    <Image
+                                    style={styles.more}
+                                    source={icons.rightArrow}
+                                    />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -95,7 +103,10 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                     </View>
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
-                            <View style={styles.icon}></View>
+                            <Image
+                            source={icons.calendar1}
+                             style={styles.icon}
+                            />
                             <View>
                                 <Text style={styles.dateStart}>Date start</Text>
                                 <View
@@ -127,7 +138,10 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                     </View>
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
-                            <View style={styles.icon}></View>
+                            <Image
+                            source={icons.calendar1}
+                            style={styles.icon}
+                            />
                             <View>
                                 <Text style={styles.dateStart}>Date end</Text>
                                 <View
@@ -208,7 +222,6 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         marginRight: 30,
-        backgroundColor: "yellow",
         marginLeft: 15
     },
     itemContainer: {
@@ -234,7 +247,6 @@ const styles = StyleSheet.create({
     chooseWallet: {
         height: 20,
         width: 20,
-        backgroundColor: "yellow",
         marginLeft: 140
     },
     dateStart: {
@@ -279,6 +291,10 @@ const styles = StyleSheet.create({
     },
     active: {
         backgroundColor: "#fff",
+    },
+    more:{
+        height:25,
+        width:25
     },
 
 });

@@ -1,11 +1,12 @@
 import { black } from 'chalk';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput,Image } from 'react-native';
 import { backgroundColor, primaryColor, Colors, textColorOnLightBg, inactiveColor } from "../../../../api/constants";
 import { useSelector, useDispatch } from 'react-redux';
 import moment from "moment";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { updateCate } from '../../../../redux/slices/categoriesSlice';
+import icons from '../../../../api/icons';
 
 
 export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
@@ -61,7 +62,10 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                 <View style={styles.bg}>
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
-                            <View style={styles.icon}></View>
+                            <Image
+                            source={icons.money} 
+                            style={styles.icon}
+                            />
                             <TextInput
                                 placeholder="Enter Limit"
                                 onChangeText={(text)=>{
@@ -74,14 +78,19 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                     <View style={styles.itemContainer}>
                         <View>
                             <View style={styles.item}>
-                                <View style={styles.iconCate}>
-                                </View>
+                                <Image 
+                                source={icons.categories}
+                                style={styles.iconCate}
+                                />
                                 <Text style={styles.textChooseCate}>
                                     Choose Category:
                                 </Text>
                             </View>
                             <View style={styles.chooseCate}>
-                                <View style={styles.iconCate}></View>
+                                <Image
+                                source={cate.icon}
+                                style={styles.iconCate}
+                                />
                                 <Text style={styles.nameCatechoose}>
                                     {cate.title}
                                 </Text>
@@ -91,6 +100,10 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                                     navigation.navigate('choosecate')
                                 }}
                                 >
+                                    <Image
+                                    style={styles.moreicon}
+                                    source={icons.rightArrow}
+                                    />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -99,7 +112,10 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                     </View>
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
-                            <View style={styles.icon}></View>
+                            <Image
+                            source={icons.calendar1}
+                            style={styles.icon}
+                            />
                             <View>
                                 <Text style={styles.dateStart}>Date start</Text>
                                 <View
@@ -131,7 +147,10 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                     </View>
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
-                            <View style={styles.icon}></View>
+                            <Image
+                            source={icons.calendar1}
+                            style={styles.icon}
+                            />
                             <View>
                                 <Text style={styles.dateStart}>Date end</Text>
                                 <View
@@ -212,7 +231,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         marginRight: 30,
-        backgroundColor: "yellow",
+        marginLeft:15
     },
     itemContainer: {
         flexDirection: "column",
@@ -278,8 +297,8 @@ const styles = StyleSheet.create({
     iconCate: {
         width: 50,
         height: 50,
-        backgroundColor: 'yellow',
         marginRight: 30
+        ,marginLeft:15
     },
     textChooseCate: {
         fontSize: 17,
@@ -296,12 +315,12 @@ const styles = StyleSheet.create({
     more: {
         height: 30,
         width: 30,
-        backgroundColor: "yellow"
+
     },
     chooseCate: {
         display: "flex",
         flexDirection: "row",
-        marginLeft: 30,
+        marginLeft: 15,
         marginTop: 10,
         marginBottom: 10,
         alignItems: "center"
@@ -310,5 +329,9 @@ const styles = StyleSheet.create({
         width:"50%",
         fontSize:18,
         fontWeight:"bold"
+    },
+    moreicon:{
+        height:30,
+        width:30
     }
 });

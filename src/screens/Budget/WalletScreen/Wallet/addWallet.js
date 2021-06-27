@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput,Image } from 'react-native';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
 import { useDispatch } from 'react-redux';
 import { addWallet } from '../../../../redux/slices/walletsSlice';
+import icons from '../../../../api/icons';
 
 export default function AddWallet({ navigation }) {
     const [balance, setBalance] = useState(0);
@@ -49,7 +50,10 @@ export default function AddWallet({ navigation }) {
                 </View>
                 <View style={styles.itemContainer}>
                     <View style={styles.item}>
-                        <View style={styles.icon}></View>
+                        <Image
+                        source={icons.name} 
+                        style={styles.icon}
+                        />
                         <TextInput
                             placeholder="Name of Budget"
                             style={{ fontSize: 18 }}
@@ -62,7 +66,10 @@ export default function AddWallet({ navigation }) {
                 </View>
                 <View style={styles.itemContainer}>
                     <View style={styles.item}>
-                        <View style={styles.icon}></View>
+                        <Image
+                        source={icons.pencil} 
+                        style={styles.icon}
+                        />
                         <TextInput
                             placeholder="Note"
                             style={{ fontSize: 18 }}
@@ -117,8 +124,8 @@ const styles = StyleSheet.create({
     icon: {
         height: 50,
         width: 50,
-        marginRight: 30,
-        backgroundColor: "yellow",
+        marginRight:15,
+        marginLeft:15
     },
     itemContainer: {
         flexDirection: "column",
@@ -182,7 +189,8 @@ const styles = StyleSheet.create({
     },
     initalBalanceText: {
         marginLeft: 20,
-        fontSize: 18
+        fontSize: 18,
+        fontWeight:"bold"
     },
     strainghtIni: {
         borderWidth: 0.5,

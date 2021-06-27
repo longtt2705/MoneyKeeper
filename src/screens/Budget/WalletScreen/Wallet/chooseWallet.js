@@ -1,50 +1,56 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
 import { useSelector } from 'react-redux';
 
-export default function ChooseWallet({ navigation,setWalletId }) {
+export default function ChooseWallet({ navigation, setWalletId }) {
     const listWallet = useSelector(state => state.wallets).wallets
-    const listOfLimit=listWallet.filter(e=>e.limit===null)
-    return (
-        <ScrollView>
-            {
-                listOfLimit.map((element,index) => {
-                    return (
-                        <TouchableOpacity style={styles.container}
-                        onPress={()=>{
-                            setWalletId(element.id);
-                            navigation.goBack();
-                        }}
-                        >
-                            <View style={styles.wallet}>
-                                <View style={styles.iconBudget}>
-                                    <Text>
-                                        icon
-                                    </Text>
+    const listOfLimit = listWallet.filter(e => e.limit === null)
+    if (listOfLimit[0] === undefined) {
+        return (
+            <View></View>
+        )
+    } else {
+        return (
+            <ScrollView>
+                {
+                    listOfLimit.map((element, index) => {
+                        return (
+                            <TouchableOpacity style={styles.container}
+                                onPress={() => {
+                                    setWalletId(element.id);
+                                    navigation.goBack();
+                                }}
+                            >
+                                <View style={styles.wallet}>
+                                    <Image
+                                        source={element.icon}
+                                        style={styles.iconBudget}
+                                    />
+                                    <View style={styles.nameKind}>
+                                        <Text style={styles.nameBudget}>
+                                            {element.title}
+                                        </Text>
+
+                                    </View>
+                                    <View style={styles.money}>
+                                        <Text style={styles.valueOfMoney}>
+                                            {element.balance} VND
+                                        </Text>
+                                    </View>
                                 </View>
-                                <View style={styles.nameKind}>
-                                    <Text style={styles.nameBudget}>
-                                        {element.title}
-                                    </Text>
-                                   
-                                </View>
-                                <View style={styles.money}>
-                                    <Text style={styles.valueOfMoney}>
-                                        {element.balance} VND
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    )
-                })
-            }
-        </ScrollView>
+                            </TouchableOpacity>
+                        )
+                    })
+                }
+            </ScrollView>
 
 
 
-    );
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -64,7 +70,6 @@ const styles = StyleSheet.create({
     iconBudget: {
         height: 50,
         width: 50,
-        backgroundColor: 'yellow',
         marginLeft: 15
     },
     nameKind: {
