@@ -37,7 +37,7 @@ const initialState = {
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 50000,
-          note: "awfasfiashfoijasoifjaoisjfoiasjfoiajoisfjoiasjfoiajsoifjaiosf",
+          note: "Repair car",
           date: sub(new Date(), { days: 20 }).toISOString(),
           image: "",
         },

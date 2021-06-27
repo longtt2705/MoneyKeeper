@@ -44,6 +44,12 @@ const BottomTabNavigator = () => {
                   name="add-circle-outline"
                   size={iconSize * 2}
                   color={color}
+                  style={{
+                    width: iconSize * 2,
+                    height: iconSize * 2,
+                    bottom: 20,
+                    right: 10,
+                  }}
                 />
               );
             default:
