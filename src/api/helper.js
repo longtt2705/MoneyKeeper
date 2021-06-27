@@ -27,17 +27,14 @@ export const mergeColorToData = (data, colors) => {
 };
 
 export const formatNumber = (number) => {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return number
+    .toString()
+    .replace(/,/g, "")
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const getCategoryName = (id, categories) => {
   const category = categories.find((category) => category.id === id);
   if (category) return category.title;
   return null;
-};
-
-export const getIcon = (iconName) => {
-  const icon = iconName.toLowerCase();
-  if (Icons[icon] !== undefined) return Icons[icon];
-  return Icons["none"];
 };

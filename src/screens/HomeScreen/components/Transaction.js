@@ -1,29 +1,25 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import SvgUri from "react-native-svg-uri";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { itemBackgroundColor, primaryColor } from "../../../api/constants";
-import { formatNumber, getCategoryName, getIcon } from "../../../api/helper";
+import { formatNumber } from "../../../api/helper";
 
 export default function Transaction({ transaction }) {
-  const categories = useSelector((state) => state.categories);
-  const categoryName = getCategoryName(transaction.categoryId, categories);
+  const category = useSelector((state) =>
+    state.categories.find((category) => category.id === transaction.categoryId)
+  );
 
   return (
     <View style={styles.container}>
-      <SvgUri
-        width="40"
-        height="40"
-        source={getIcon(categoryName)}
-        style={{ margin: 10, marginBottom: 0, marginRight: 20 }}
-      />
+      <Image source={category.icon} style={styles.icon} />
+
       <View style={{ flex: 2 }}>
         <Text style={styles.strongTitle}>
           {transaction.note.length > 30
             ? transaction.note.slice(0, 30) + "..."
             : transaction.note}
         </Text>
-        <Text style={styles.lightTitle}>{categoryName}</Text>
+        <Text style={styles.lightTitle}>{category.title}</Text>
       </View>
       <View style={{ flexDirection: "column", marginRight: 5, marginLeft: 10 }}>
         <Text style={styles.strongTitle}>
@@ -55,5 +51,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "gray",
     fontSize: 15,
+  },
+  icon: {
+    margin: 10,
+    marginBottom: 0,
+    marginRight: 20,
+    width: 35,
+    height: 35,
   },
 });

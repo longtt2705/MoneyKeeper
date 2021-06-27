@@ -2,12 +2,12 @@ import React from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { useSelector } from "react-redux";
-import { focusedColor, primaryColor, textColor } from "../../../api/constants";
+import { primaryColor, textColor } from "../../../api/constants";
 import { formatNumber, getCategoryName } from "../../../api/helper";
 
 const width = Dimensions.get("window").width;
 
-export default function Chart({ data }) {
+export default function Chart({ data, balance }) {
   const categories = useSelector((state) => state.categories);
   const pieData = data.map((trans) => {
     return {
@@ -17,9 +17,10 @@ export default function Chart({ data }) {
     };
   });
 
-  const calculateTotal = () => {
-    return formatNumber(pieData.reduce((total, item) => total + item.price, 0));
-  };
+  // const calculateTotal = () => {
+  //   return formatNumber(pieData.reduce((total, item) => total + item.price, 0));
+  // };
+
   return (
     <View style={styles.chartContainer}>
       <PieChart
@@ -54,7 +55,7 @@ export default function Chart({ data }) {
       </View>
       <View>
         <Text style={styles.totalAmount}>
-          <Text style={{ fontSize: 44 }}>{calculateTotal()}</Text>
+          <Text style={{ fontSize: 44 }}>{formatNumber(balance)}</Text>
           <Text style={{ fontSize: 24 }}> vnd</Text>
         </Text>
       </View>

@@ -2,11 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   id: "1",
-  fisrtName: "day la first name",
-  lastName: "day la last name",
-  userName: "Trần Thành Long",
+  firstName: "Luong",
+  lastName: "Nhan",
+  userName: "day la username",
   email: "day la email",
   password: "day la password",
+  address: "day la dia chi",
+  career: "day la nghe nghiep",
+  DOB: "day la ngay sinh",
+  phone: "day la so dien thoai",
 };
 
 const userSlice = createSlice({
@@ -18,6 +22,7 @@ const userSlice = createSlice({
       for (let prop in data) {
         state[prop] = data[prop];
       }
+      console.log(state);
     },
   },
 });

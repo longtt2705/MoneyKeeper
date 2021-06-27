@@ -1,8 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { textColor } from "../../../api/constants";
 
-export default function Headlines({ name }) {
-  const maxLength = 16;
+const maxLength = 16;
+export default function Headlines({ user }) {
+  const name = user.firstName + " " + user.lastName;
   return (
     <View style={styles.headlineZone}>
       <Text style={styles.headline}>Hello,</Text>
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   headline: {
-    color: "#fff",
+    color: textColor,
     fontSize: 30,
     fontWeight: "bold",
   },
