@@ -28,7 +28,7 @@ function InputNavigator() {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handleSubmit = (type) => {
     const dateString = date.toISOString();
     dispatch(
       addTransaction(
@@ -38,13 +38,15 @@ function InputNavigator() {
         dateString,
         "", // image
         walletId,
-        eventId
+        eventId,
+        type
       )
     );
 
     setDate(new Date());
     setMoneyAmount("");
     setNote("");
+    setCategoryId("");
     setEventId("0");
   };
 

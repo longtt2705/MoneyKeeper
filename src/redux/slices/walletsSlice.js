@@ -91,12 +91,32 @@ const walletsSlice = createSlice({
         const existingWallet = state.wallets.find(
           (wallet) => wallet.id === walletId
         );
+
+        // Cập nhật số dư của ví
+        if (transaction.type == "expense") {
+          existingWallet.balance -= transaction.moneyAmount;
+        } else if (transaction.type == "income") {
+          existingWallet.balance += transaction.moneyAmount;
+        }
+
+        // Cập nhật ví sử dụng gần nhất
+        state.lastUsedWalletId = walletId;
+
+        // Thêm transaction vào ví
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
-        existingWallet.balance += transaction.moneyAmount;
       },
-      prepare(categoryId, moneyAmount, note, date, image, walletId, eventId) {
+      prepare(
+        categoryId,
+        moneyAmount,
+        note,
+        date,
+        image,
+        walletId,
+        eventId,
+        type
+      ) {
         return {
           payload: {
             id: nanoid(),
@@ -107,9 +127,19 @@ const walletsSlice = createSlice({
             image,
             walletId,
             eventId,
+            type,
           },
         };
       },
+    },
+    deleteTransactionOfCategory(state, action) {
+      const deletedCategoryId = action.payload.id;
+      state.wallets.forEach((wallet) => {
+        wallet.transactions = wallet.transactions.filter(
+          (transaction) => transaction.categoryId != deletedCategoryId
+        );
+      });
+      console.log(state);
     },
     addWallet: {
       reducer(state, action) {
@@ -162,6 +192,7 @@ export const {
   addWallet,
   updateWallet,
   deleteWallet,
+  deleteTransactionOfCategory,
 } = walletsSlice.actions;
 
 export default walletsSlice.reducer;
