@@ -3,12 +3,11 @@ export const backgroundColor = "#214B8F";
 export const focusedColor = "#fff";
 export const textColor = "#fff";
 export const textColorOnFocused = "#000";
-export const inactiveColor = "#efefef";
+export const inactiveColor = "#bfbfbf";
 export const itemBackgroundColor = "#efefef";
 export const formBackgroundColor = "#fff";
 export const highlightColor = "#FE346E";
 export const buttonColor = "#FE346E";
-
 
 export const Colors = [
   "#FF6633",
@@ -63,7 +62,7 @@ export const Colors = [
   "#6666FF",
   "#DADBE0",
   "#198754",
-  "#DC3545"
+  "#DC3545",
 ];
 
 export const Icons = {
