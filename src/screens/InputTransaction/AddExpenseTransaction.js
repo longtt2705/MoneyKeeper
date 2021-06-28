@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
-  Image
+  Image,
 } from "react-native";
 import moment from "moment";
 import Constants from "expo-constants";
@@ -31,6 +31,7 @@ import { nanoid } from "@reduxjs/toolkit";
 
 import MyInput from "./MyInput";
 import SuccessMessage from "./SuccessMessage";
+import RecentAddedItem from "./RecentAddedItem";
 import { formatNumber } from "../../api/helper";
 
 export default function AddExpenseTransaction({
@@ -73,6 +74,24 @@ export default function AddExpenseTransaction({
       <View key={nanoid()} style={styles.tempCategoryItem}></View>
     );
   }
+
+  // Recent added transaction
+  let recentAdded = [];
+  wallets.forEach((wallet) => {
+    wallet.transactions.forEach((transaction) => {
+      const categoryOfTransaction = categories.find(
+        (category) => category.id == transaction.categoryId
+      );
+      if (categoryOfTransaction.type == "expense") {
+        const tempTransaction = { ...transaction };
+        tempTransaction.icon = categoryOfTransaction.icon;
+        tempTransaction.categoryTitle = categoryOfTransaction.title;
+        recentAdded.push(tempTransaction);
+      }
+    });
+  });
+
+  recentAdded = recentAdded.reverse().slice(0, 5);
 
   const showModal = () => {
     setModalVisible(true);
@@ -254,11 +273,13 @@ export default function AddExpenseTransaction({
               justifyContent: "space-between",
             }}
           >
-            {expenseCategories.map((category, index) =>
-            (
+            {expenseCategories.map((category, index) => (
               <TouchableOpacity
                 key={index}
-                style={[styles.categoryItem, category.id == categoryId && styles.focusedCategoryItem]}
+                style={[
+                  styles.categoryItem,
+                  category.id == categoryId && styles.focusedCategoryItem,
+                ]}
                 onPress={() => handleChangeCategory(category.id)}
                 activeOpacity={1}
               >
@@ -266,8 +287,7 @@ export default function AddExpenseTransaction({
 
                 <Text style={styles.normalText}>{category.title}</Text>
               </TouchableOpacity>
-            )
-            )}
+            ))}
             <TouchableOpacity
               style={styles.categoryItem}
               onPress={() => {
@@ -290,11 +310,26 @@ export default function AddExpenseTransaction({
           style={[styles.submitButton, buttonDisable && styles.disabledButton]}
           onPress={() => {
             showModal();
-            handleSubmit();
+            handleSubmit("expense");
           }}
         >
           <Text style={{ color: textColor, fontSize: 20 }}>Save</Text>
         </TouchableOpacity>
+      </View>
+
+      <View style={styles.recentAdded}>
+        <ScrollView horizontal={true}>
+          {recentAdded.map((item, index) => (
+            <RecentAddedItem
+              item={item}
+              key={index}
+              onPress={() => {
+                handleChangeMoney(item.moneyAmount.toString());
+                handleChangeCategory(item.categoryId);
+              }}
+            />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -399,5 +434,9 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: inactiveColor,
+  },
+  recentAdded: {
+    marginTop: 20,
+    backgroundColor: primaryColor,
   },
 });

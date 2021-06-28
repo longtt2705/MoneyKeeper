@@ -36,7 +36,7 @@ function OtherNavigation() {
           headerStyle: {
             backgroundColor: primaryColor,
           },
-          headerTitleStyle: { alignSelf: "center" },
+          headerTitleAlign: "center",
           headerTintColor: "#fff",
           headerBackTitleVisible: false,
         }}
@@ -49,7 +49,7 @@ function OtherNavigation() {
           headerStyle: {
             backgroundColor: primaryColor,
           },
-          headerTitleStyle: { alignSelf: "center" },
+          headerTitleAlign: "center",
           headerTintColor: "#fff",
           headerBackTitleVisible: false,
         }}
@@ -62,7 +62,7 @@ function OtherNavigation() {
           headerStyle: {
             backgroundColor: primaryColor,
           },
-          headerTitleStyle: { alignSelf: "center" },
+          headerTitleAlign: "center",
           headerTintColor: "#fff",
           headerBackTitleVisible: false,
         }}
@@ -75,7 +75,7 @@ function OtherNavigation() {
           headerStyle: {
             backgroundColor: primaryColor,
           },
-          headerTitleStyle: { alignSelf: "center" },
+          headerTitleAlign: "center",
           headerTintColor: "#fff",
           headerBackTitleVisible: false,
         }}
@@ -88,7 +88,7 @@ function OtherNavigation() {
           headerStyle: {
             backgroundColor: primaryColor,
           },
-          headerTitleStyle: { alignSelf: "center" },
+          headerTitleAlign: "center",
           headerTintColor: "#fff",
           headerBackTitleVisible: false,
         }}
@@ -101,7 +101,7 @@ function OtherNavigation() {
           headerStyle: {
             backgroundColor: primaryColor,
           },
-          headerTitleStyle: { alignSelf: "center" },
+          headerTitleAlign: "center",
           headerTintColor: "#fff",
           headerBackTitleVisible: false,
         }}
@@ -114,7 +114,7 @@ function OtherNavigation() {
           headerStyle: {
             backgroundColor: primaryColor,
           },
-          headerTitleStyle: { alignSelf: "center" },
+          headerTitleAlign: "center",
           headerTintColor: "#fff",
           headerBackTitleVisible: false,
         }}

@@ -1,7 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React, { useEffect, useState } from "react";
-import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
+import {
+  backgroundColor,
+  focusedColor,
+  inactiveColor,
+  primaryColor,
+} from "../api/constants";
 
 import Budget from "../screens/Budget";
 import Home from "../screens/HomeScreen/Home";
@@ -90,7 +95,7 @@ const BottomTabNavigator = () => {
         style: {
           height: 60,
           justifyContent: "center",
-          backgroundColor: backgroundColor,
+          backgroundColor: primaryColor,
           elevation: 10,
         },
         activeTintColor: focusedColor,

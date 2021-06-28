@@ -17,7 +17,7 @@ const initialState = {
       transactions: [
         {
           id: "1",
-          categoryId: "1",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 25000,
@@ -27,7 +27,7 @@ const initialState = {
         },
         {
           id: "2",
-          categoryId: "2",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 50000,
@@ -59,7 +59,7 @@ const initialState = {
       transactions: [
         {
           id: "3",
-          categoryId: "",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 15000,
@@ -69,7 +69,7 @@ const initialState = {
         },
         {
           id: "4",
-          categoryId: "",
+          categoryId: "3",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 29000,
@@ -92,12 +92,32 @@ const walletsSlice = createSlice({
         const existingWallet = state.wallets.find(
           (wallet) => wallet.id === walletId
         );
+
+        // Cập nhật số dư của ví
+        if (transaction.type == "expense") {
+          existingWallet.balance -= transaction.moneyAmount;
+        } else if (transaction.type == "income") {
+          existingWallet.balance += transaction.moneyAmount;
+        }
+
+        // Cập nhật ví sử dụng gần nhất
+        state.lastUsedWalletId = walletId;
+
+        // Thêm transaction vào ví
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
-        existingWallet.balance += transaction.moneyAmount;
       },
-      prepare(categoryId, moneyAmount, note, date, image, walletId, eventId) {
+      prepare(
+        categoryId,
+        moneyAmount,
+        note,
+        date,
+        image,
+        walletId,
+        eventId,
+        type
+      ) {
         return {
           payload: {
             id: nanoid(),
@@ -108,9 +128,18 @@ const walletsSlice = createSlice({
             image,
             walletId,
             eventId,
+            type,
           },
         };
       },
+    },
+    deleteTransactionOfCategory(state, action) {
+      const deletedCategoryId = action.payload.id;
+      state.wallets.forEach((wallet) => {
+        wallet.transactions = wallet.transactions.filter(
+          (transaction) => transaction.categoryId != deletedCategoryId
+        );
+      });
     },
     addWallet: {
       reducer(state, action) {
@@ -163,6 +192,7 @@ export const {
   addWallet,
   updateWallet,
   deleteWallet,
+  deleteTransactionOfCategory,
 } = walletsSlice.actions;
 
 export default walletsSlice.reducer;

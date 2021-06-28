@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import {
   backgroundColor,
@@ -11,8 +19,8 @@ import {
 } from "../../api/constants";
 import MyInput from "../InputTransaction/MyInput";
 import { addCategory } from "../../redux/slices/categoriesSlice";
-import icons from "../../api/categoryIcons"
-import { itemBackgroundColor, highlightColor } from "../../api/constants"
+import icons from "../../api/categoryIcons";
+import { itemBackgroundColor, highlightColor } from "../../api/constants";
 
 const NewCategory = ({ route, navigation }) => {
   const { type } = route.params;
@@ -25,14 +33,14 @@ const NewCategory = ({ route, navigation }) => {
   const handleChangeIcon = (icon, color) => {
     setIcon(icon);
     setColor(color);
-  }
+  };
 
   const handleSubmit = () => {
     dispatch(addCategory(title, icon, type, color));
     setTitle("");
     setIcon("");
     setColor("");
-    navigation.navigate("Category", {type});
+    navigation.navigate("Category", { type });
   };
 
   const handleChangeTitle = (value) => {
@@ -41,11 +49,9 @@ const NewCategory = ({ route, navigation }) => {
 
   // cái này là tạo categories trống để lấp đầy chỗ ở scrollView
   const tempIcon = [];
-  let numOfTempIcon = (Object.keys(icons).length) % 3;
+  let numOfTempIcon = Object.keys(icons).length % 3;
   if (numOfTempIcon == 2) {
-    tempCategory.push(
-      <View key={nanoid()} style={styles.tempIconItem}></View>
-    );
+    tempIcon.push(<View key={nanoid()} style={styles.tempIconItem}></View>);
   }
 
   const buttonDisable = !(Boolean(title) && Boolean(icon) && Boolean(color));
@@ -79,21 +85,28 @@ const NewCategory = ({ route, navigation }) => {
           >
             {Object.keys(icons).map((key, index) => (
               <TouchableOpacity
-                style={[styles.iconItem, (icon == icons[key].source) && styles.focusedIconItem]}
+                style={[
+                  styles.iconItem,
+                  icon == icons[key].source && styles.focusedIconItem,
+                ]}
                 key={index}
                 onPress={() => {
                   handleChangeIcon(icons[key].source, icons[key].color);
                 }}
                 activeOpacity={1}
-                >
-                <Image source={icons[key].source || icons[key]} style={styles.icon} />
+              >
+                <Image
+                  source={icons[key].source || icons[key]}
+                  style={styles.icon}
+                />
               </TouchableOpacity>
             ))}
+            {tempIcon}
           </ScrollView>
         </View>
         <TouchableOpacity
           disabled={buttonDisable}
-          style={[styles.submitButton,buttonDisable && styles.disabledButton ]}
+          style={[styles.submitButton, buttonDisable && styles.disabledButton]}
           onPress={() => {
             handleSubmit();
           }}
@@ -114,7 +127,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 34,
-    height: 34
+    height: 34,
   },
   iconItem: {
     backgroundColor: itemBackgroundColor,
@@ -173,5 +186,5 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     height: 150,
-  }
+  },
 });

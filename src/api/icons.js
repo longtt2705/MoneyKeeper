@@ -7,15 +7,15 @@ const more = require("../../assets/icons/more_icon.png");
 const pin = require("../../assets/icons/pin.png");
 const up_arrow = require("../../assets/icons/up_arrow.png");
 const remove = require("../assets/icons/remove.png");
-const balance=require("../assets/icons/salary.png")
-const pencil=require("../assets/icons/pencil.png");
-const categories=require("../assets/icons/categories.png");
-const dollar=require("../assets/icons/dollar.png")
-const name=require("../assets/icons/name.png")
-const calendar1=require("../assets/icons/calendar.png")
-const money=require("../assets/icons/money.png")
-const rightArrow=require("../assets/icons/right-arrow.png");
-const wallet=require("../assets/icons/wallet.png")
+const balance = require("../assets/icons/salary.png");
+const pencil = require("../assets/icons/pencil.png");
+const categories = require("../assets/icons/categories.png");
+const dollar = require("../assets/icons/dollar.png");
+const name = require("../assets/icons/name.png");
+const calendar1 = require("../assets/icons/calendar.png");
+const money = require("../assets/icons/money.png");
+const rightArrow = require("../assets/icons/right-arrow.png");
+const wallet = require("../assets/icons/wallet.png");
 //{-----------------------------Category Icon-------------------------------------------------------}
 const dish = {
   source: require("../assets/icons/dish.png"),
@@ -77,6 +77,16 @@ const part_time = {
   color: "#fff",
 };
 
+const book = {
+  source: require("../assets/icons/book.png"),
+  color: "#fff",
+};
+
+const controller = {
+  source: require("../assets/icons/controller.png"),
+  color: "#fff",
+};
+
 export default {
   back_arrow,
   calendar,
@@ -108,4 +118,6 @@ export default {
   rightArrow,
   balance,
   wallet,
+  book,
+  controller,
 };
