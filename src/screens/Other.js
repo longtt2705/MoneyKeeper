@@ -7,11 +7,25 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { backgroundColor, itemBackgroundColor } from "../api/constants";
+import firebase from "firebase";
+import { logOut } from "../redux/slices/userSlice";
+
 export default function Other({ navigation }) {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch(logOut());
+      })
+      .catch(() => {});
+  };
   return (
     <View style={styles.container}>
       <ScrollView
@@ -139,7 +153,7 @@ export default function Other({ navigation }) {
           <TouchableHighlight
             style={styles.BtnSettings}
             onPress={() => {
-              console.log("done");
+              handleLogout();
             }}
           >
             <View style={styles.alignImg}>

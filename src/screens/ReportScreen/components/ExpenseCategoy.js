@@ -631,7 +631,7 @@ const ExpenseCategory = () => {
       0
     );
 
-    console.log("Check Chart");
+    // console.log("Check Chart");
     if (Platform.OS == "ios") {
       return (
         <View style={{ alignItems: "center", justifyContent: "center" }}>

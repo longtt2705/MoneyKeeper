@@ -16,6 +16,9 @@ import {
 } from "react-native-paper";
 
 import { store, persistor } from "./src/redux/store/store";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Setting a timer", "VirtualizedLists"]);
 
 //////////////////////////////
 
@@ -43,4 +46,4 @@ const App = () => {
 };
 
 export default App;
-persistor.purge();
+// persistor.purge();

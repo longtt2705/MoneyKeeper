@@ -31,7 +31,7 @@ function InputNavigator({ navigation }) {
     setWalletId(lastUsedWalletId);
   }, [lastUsedWalletId]);
 
-  console.log(walletId);
+  // console.log(walletId);
 
   const handleSubmit = (type) => {
     const dateString = date.toISOString();
