@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,7 +15,7 @@ import { addTransaction, updateWallet } from "../redux/slices/walletsSlice";
 
 const Stack = createStackNavigator();
 
-function InputNavigator() {
+function InputNavigator({ navigation }) {
   const [date, setDate] = useState(new Date());
   const [moneyAmount, setMoneyAmount] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -27,6 +27,11 @@ function InputNavigator() {
   const [eventId, setEventId] = useState("0");
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    setWalletId(lastUsedWalletId);
+  }, [lastUsedWalletId]);
+
+  console.log(walletId);
 
   const handleSubmit = (type) => {
     const dateString = date.toISOString();

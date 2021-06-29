@@ -49,7 +49,7 @@ const initialState = {
     },
     {
       id: "2",
-      title: "momo",
+      title: "Momo",
       icon: icons.wallet,
       balance: 135000,
       limit: null,
@@ -176,13 +176,27 @@ const walletsSlice = createSlice({
     },
     deleteWallet(state, action) {
       const { walletId } = action.payload;
-      console.log(walletId);
+
+      // cập nhật lastUsedWallet trước
+      if (walletId == state.lastUsedWalletId) {
+        const newLastUsedWalet = state.wallets.find(
+          (wallet) => wallet.id != walletId
+        );
+        if (!newLastUsedWalet) {
+          state.lastUsedWalletId = "";
+        } else {
+          state.lastUsedWalletId = newLastUsedWalet.id;
+        }
+      }
+
       const indexOfDeletedWallet = state.wallets.findIndex(
         (wallet) => wallet.id == walletId
       );
       if (indexOfDeletedWallet >= 0) {
         state.wallets.splice(indexOfDeletedWallet, 1);
       }
+
+      console.log(state);
     },
   },
 });

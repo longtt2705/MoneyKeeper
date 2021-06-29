@@ -27,7 +27,7 @@ import {
   itemBackgroundColor,
 } from "../../api/constants";
 import { useSelector } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
+import { current, nanoid } from "@reduxjs/toolkit";
 
 import MyInput from "./MyInput";
 import SuccessMessage from "./SuccessMessage";
@@ -64,6 +64,9 @@ export default function AddExpenseTransaction({
   const events = useSelector((state) => state.events);
 
   const currentWallet = wallets.find((wallet) => wallet.id == walletId);
+  if (!currentWallet) {
+    return null;
+  }
   const currentEvent = events.find((event) => event.id == eventId);
 
   // cái này là tạo categories trống để lấp đầy chỗ ở scrollView

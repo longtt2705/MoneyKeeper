@@ -64,6 +64,9 @@ export default function AddIncomeTransaction({
   const events = useSelector((state) => state.events);
 
   const currentWallet = wallets.find((wallet) => wallet.id == walletId);
+  if (!currentWallet) {
+    return null;
+  }
   const currentEvent = events.find((event) => event.id == eventId);
 
   // cái này là tạo categories trống để lấp đầy chỗ ở scrollView

@@ -28,123 +28,116 @@ import icons from "../../../../api/icons";
 
 export default function UpdateWallet({ navigation, walletId }) {
   const dispatch = useDispatch();
-  const wallets = useSelector((state) => state.wallets).wallets;
+  const wallets = useSelector((state) => state.wallets.wallets);
   const element = wallets.filter((e) => e.id === walletId)[0];
 
-  if (element!== undefined){
-    const [nameWallet, setNameWallet] = useState(element ? element.title : "");
-    const handleNameWallet = (name) => {
-      setNameWallet(name);
-    };
-  
-    const [balance, setBalance] = useState(element ? element.balance : "");
-    const handleBalance = (balance) => {
-      setBalance(balance);
-    };
-  
-    const [note, setNote] = useState(element ? element.note : "");
-    const handleNote = (note) => {
-      setNote(note);
-    };
-  
-    const handleDelete = (walletId) => {
-      dispatch(deleteWallet({ walletId }));
-      navigation.goBack();
-    };
-  
-    return (
-      <ScrollView style={styles.bg}>
-        <View style={styles.container}>
-          <View style={styles.element}>
-            <View style={styles.nameCate}>
-              <Image
-              source={icons.name}
-              style={styles.icon}
-              />
-              <View>
-                <Text style={styles.name}>Name of Budget:</Text>
-              </View>
-            </View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={nameWallet}
-                style={styles.input}
-                onChangeText={(text) => handleNameWallet(text)}
-              />
-            </View>
-          </View>
-          <View style={styles.element}>
-            <View style={styles.nameCate}>
-              <Image
-              source={icons.balance}
-              style={styles.icon}
-              />
-              <View>
-                <Text style={styles.name}>Balance of Budget:</Text>
-              </View>
-            </View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={balance.toString()}
-                style={styles.input}
-                onChangeText={(text) => handleBalance(parseInt(text))}
-              />
-            </View>
-          </View>
-          <View style={styles.element}>
-            <View style={styles.nameCate}>
-              <Image
-              source={icons.pencil}
-              style={styles.icon}
-              />
-              <View>
-                <Text style={styles.name}>Note:</Text>
-              </View>
-            </View>
-            <View style={styles.inputContainer}>
-              <TextInput
-                value={note}
-                style={styles.input}
-                onChangeText={(text) => handleNote(text)}
-              />
-            </View>
-          </View>
-        </View>
-        <View style={styles.buttonCotainer}>
-          <TouchableOpacity
-            style={styles.saveButton}
-            onPress={() => {
-              dispatch(
-                updateWallet({
-                  walletId: element.id,
-                  title: nameWallet,
-                  balance: balance,
-                  note: note,
-                })
-              );
-            }}
-          >
-            <Text style={styles.saveText}>Save</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.delButton}
-            onPress={() => {
-              handleDelete(element.id);
-            }}
-          >
-            <Text style={styles.delText}>Delete</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    );
-  }else {
-    return(
-      <View>
+  const [nameWallet, setNameWallet] = useState(element ? element.title : "");
+  const handleNameWallet = (name) => {
+    setNameWallet(name);
+  };
 
-      </View>
-    )
+  const [balance, setBalance] = useState(element ? element.balance : "");
+  const handleBalance = (balance) => {
+    setBalance(balance);
+  };
+
+  const [note, setNote] = useState(element ? element.note : "");
+  const handleNote = (note) => {
+    setNote(note);
+  };
+
+  const disableDelete = wallets.length <= 1;
+
+  const handleDelete = (walletId) => {
+    dispatch(deleteWallet({ walletId }));
+    navigation.goBack();
+  };
+  if (!element) {
+    return <View></View>;
   }
-  
+
+  return (
+    <ScrollView style={styles.bg}>
+      <View style={styles.container}>
+        <View style={styles.element}>
+          <View style={styles.nameCate}>
+            <Image source={icons.name} style={styles.icon} />
+            <View>
+              <Text style={styles.name}>Name of Budget:</Text>
+            </View>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={nameWallet}
+              style={styles.input}
+              onChangeText={(text) => handleNameWallet(text)}
+            />
+          </View>
+        </View>
+        <View style={styles.element}>
+          <View style={styles.nameCate}>
+            <Image source={icons.balance} style={styles.icon} />
+            <View>
+              <Text style={styles.name}>Balance of Budget:</Text>
+            </View>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={balance.toString()}
+              style={styles.input}
+              onChangeText={(text) => handleBalance(parseInt(text))}
+            />
+          </View>
+        </View>
+        <View style={styles.element}>
+          <View style={styles.nameCate}>
+            <Image source={icons.pencil} style={styles.icon} />
+            <View>
+              <Text style={styles.name}>Note:</Text>
+            </View>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              value={note}
+              style={styles.input}
+              onChangeText={(text) => handleNote(text)}
+            />
+          </View>
+        </View>
+      </View>
+      <View style={styles.buttonCotainer}>
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => {
+            dispatch(
+              updateWallet({
+                walletId: element.id,
+                title: nameWallet,
+                balance: balance,
+                note: note,
+              })
+            );
+          }}
+        >
+          <Text style={styles.saveText}>Save</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.delButton, disableDelete && styles.disabledDelButton]}
+          onPress={() => {
+            handleDelete(element.id);
+          }}
+          disabled={disableDelete}
+        >
+          <Text style={styles.delText}>Delete</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+  // if (element !== undefined) {
+
+  // } else {
+  //   return <View></View>;
+  // }
 }
 
 const styles = StyleSheet.create({
@@ -226,6 +219,9 @@ const styles = StyleSheet.create({
     borderColor: "white",
     alignItems: "center",
     justifyContent: "center",
+  },
+  disabledDelButton: {
+    backgroundColor: inactiveColor,
   },
   delText: {
     color: "#fff",
