@@ -11,8 +11,8 @@ const initialState = {
       icon: icons.wallet,
       balance: 1000000,
       limit: 1000000,
-      datestart: "01/07/2021",
-      dateend: "01/08/2021",
+      datestart: "07/01/2021",
+      dateend: "08/01/2021",
       note: "asd",
       transactions: [
         {
@@ -147,7 +147,7 @@ const walletsSlice = createSlice({
     },
     deleteWallet(state, action) {
       const { walletId } = action.payload;
-      console.log(walletId);
+      console.log(action.payload)
       const indexOfDeletedWallet = state.wallets.findIndex(
         (wallet) => wallet.id == walletId
       );

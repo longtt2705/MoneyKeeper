@@ -6,6 +6,7 @@ import { backgroundColor, primaryColor } from "../../../../api/constants";
 import AddLimitOfWallet from './addLimitOfWallet';
 import { useSelector } from 'react-redux';
 import icons from '../../../../api/icons';
+import moment from 'moment';
 
 
 export default function LimitOfWallet({ navigation, setLimitId }) {
@@ -67,7 +68,7 @@ export default function LimitOfWallet({ navigation, setLimitId }) {
                                             {element.title}
                                         </Text>
                                         <Text style={styles.date}>
-                                            {element.datestart}-{element.dateend}
+                                            {moment(element.datestart).format("DD/MM/YYYY")}-{moment(element.dateend).format("DD/MM/YYYY")}
                                         </Text>
                                     </View>
                                     <Text style={styles.money}>

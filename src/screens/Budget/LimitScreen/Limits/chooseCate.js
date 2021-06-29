@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     iconBudget: {
         height: 50,
         width: 50,
-        backgroundColor: 'yellow',
         marginLeft: 15
     },
     nameKind: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput,Image } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput, Image } from 'react-native';
 import { backgroundColor, primaryColor, Colors, textColorOnLightBg, inactiveColor } from "../../../../api/constants";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useSelector, useDispatch } from 'react-redux';
@@ -65,10 +65,11 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
                             <Image
-                            source={icons.money}
-                            style={styles.icon}
+                                source={icons.money}
+                                style={styles.icon}
                             />
                             <TextInput
+                                keyboardType="number-pad"
                                 placeholder="Enter Limit"
                                 onChangeText={text => setInput(parseInt(text))}
                             />
@@ -78,8 +79,8 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
                             <Image
-                            source={nameWallet.icon}
-                            style={styles.icon}
+                                source={nameWallet.icon}
+                                style={styles.icon}
                             />
                             <Text style={styles.nameWallet}>
                                 {nameWallet.title}
@@ -93,8 +94,8 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                                     }
                                 >
                                     <Image
-                                    style={styles.more}
-                                    source={icons.rightArrow}
+                                        style={styles.more}
+                                        source={icons.rightArrow}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -104,8 +105,8 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
                             <Image
-                            source={icons.calendar1}
-                             style={styles.icon}
+                                source={icons.calendar1}
+                                style={styles.icon}
                             />
                             <View>
                                 <Text style={styles.dateStart}>Date start</Text>
@@ -139,8 +140,8 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
                             <Image
-                            source={icons.calendar1}
-                            style={styles.icon}
+                                source={icons.calendar1}
+                                style={styles.icon}
                             />
                             <View>
                                 <Text style={styles.dateStart}>Date end</Text>
@@ -180,8 +181,8 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
                             dispatch(updateWallet({
                                 walletId: nameWallet.id,
                                 limit: input,
-                                datestart: moment(datestart).format("DD/MM/YYYY"),
-                                dateend: moment(dateend).format("DD/MM/YYYY")
+                                datestart: moment(datestart).format("MM/DD/YYYY"),
+                                dateend: moment(dateend).format("MM/DD/YYYY")
                             }))
                             navigation.goBack()
                         }}
@@ -292,9 +293,9 @@ const styles = StyleSheet.create({
     active: {
         backgroundColor: "#fff",
     },
-    more:{
-        height:25,
-        width:25
+    more: {
+        height: 25,
+        width: 25
     },
 
 });

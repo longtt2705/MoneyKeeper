@@ -1,6 +1,6 @@
 import { black } from 'chalk';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput,Image } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput, Image } from 'react-native';
 import { backgroundColor, primaryColor, Colors, textColorOnLightBg, inactiveColor } from "../../../../api/constants";
 import { useSelector, useDispatch } from 'react-redux';
 import moment from "moment";
@@ -13,11 +13,11 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
 
     const categories = useSelector(state => state.categories);
     const cate = categories.filter(e => e.id === cateId)[0];
-    const dispatch=useDispatch()
+    const dispatch = useDispatch()
     const [showDatePicker1, setShowDatePicker1] = useState(false);
     const [showDatePicker2, setShowDatePicker2] = useState(false);
-    const [limit,setlimit]=useState(0);
-    const handleLimit=(limit)=>{
+    const [limit, setlimit] = useState(0);
+    const handleLimit = (limit) => {
         setlimit(limit)
     }
 
@@ -63,12 +63,13 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
                             <Image
-                            source={icons.money} 
-                            style={styles.icon}
+                                source={icons.money}
+                                style={styles.icon}
                             />
                             <TextInput
+                                keyboardType="number-pad"
                                 placeholder="Enter Limit"
-                                onChangeText={(text)=>{
+                                onChangeText={(text) => {
                                     handleLimit(parseInt(text))
                                 }}
                             />
@@ -78,9 +79,9 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                     <View style={styles.itemContainer}>
                         <View>
                             <View style={styles.item}>
-                                <Image 
-                                source={icons.categories}
-                                style={styles.iconCate}
+                                <Image
+                                    source={icons.categories}
+                                    style={styles.iconCate}
                                 />
                                 <Text style={styles.textChooseCate}>
                                     Choose Category:
@@ -88,21 +89,21 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                             </View>
                             <View style={styles.chooseCate}>
                                 <Image
-                                source={cate.icon}
-                                style={styles.iconCate}
+                                    source={cate.icon}
+                                    style={styles.iconCate}
                                 />
                                 <Text style={styles.nameCatechoose}>
                                     {cate.title}
                                 </Text>
-                                <TouchableOpacity 
-                                style={styles.more}
-                                onPress={()=>{
-                                    navigation.navigate('choosecate')
-                                }}
+                                <TouchableOpacity
+                                    style={styles.more}
+                                    onPress={() => {
+                                        navigation.navigate('choosecate')
+                                    }}
                                 >
                                     <Image
-                                    style={styles.moreicon}
-                                    source={icons.rightArrow}
+                                        style={styles.moreicon}
+                                        source={icons.rightArrow}
                                     />
                                 </TouchableOpacity>
                             </View>
@@ -113,8 +114,8 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
                             <Image
-                            source={icons.calendar1}
-                            style={styles.icon}
+                                source={icons.calendar1}
+                                style={styles.icon}
                             />
                             <View>
                                 <Text style={styles.dateStart}>Date start</Text>
@@ -148,8 +149,8 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                     <View style={styles.itemContainer}>
                         <View style={styles.item}>
                             <Image
-                            source={icons.calendar1}
-                            style={styles.icon}
+                                source={icons.calendar1}
+                                style={styles.icon}
                             />
                             <View>
                                 <Text style={styles.dateStart}>Date end</Text>
@@ -187,10 +188,10 @@ export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
                         style={styles.saveButton}
                         onPress={() => {
                             dispatch(updateCate({
-                                cateId:cateId,
-                                limit:limit,
-                                datestart:moment(datestart).format("DD/MM/YYYY"),
-                                dateend:moment(dateend).format("DD/MM/YYYY")
+                                cateId: cateId,
+                                limit: limit,
+                                datestart: moment(datestart).format("MM/DD/YYYY"),
+                                dateend: moment(dateend).format("MM/DD/YYYY")
                             }))
                             navigation.goBack()
                         }}
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         marginRight: 30,
-        marginLeft:15
+        marginLeft: 15
     },
     itemContainer: {
         flexDirection: "column",
@@ -256,7 +257,6 @@ const styles = StyleSheet.create({
     chooseWallet: {
         height: 20,
         width: 20,
-        backgroundColor: "yellow",
         marginLeft: 140
     },
     dateStart: {
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         marginRight: 30
-        ,marginLeft:15
+        , marginLeft: 15
     },
     textChooseCate: {
         fontSize: 17,
@@ -325,13 +325,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignItems: "center"
     },
-    nameCatechoose:{
-        width:"50%",
-        fontSize:18,
-        fontWeight:"bold"
+    nameCatechoose: {
+        width: "50%",
+        fontSize: 18,
+        fontWeight: "bold"
     },
-    moreicon:{
-        height:30,
-        width:30
+    moreicon: {
+        height: 30,
+        width: 30
     }
 });

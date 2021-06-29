@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux'
 export default function Wallet({ navigation, setidWallet }) {
 
     const listWallet = useSelector(state => state.wallets).wallets
+
     if (listWallet[0] === undefined) {
         return (
             <View>
