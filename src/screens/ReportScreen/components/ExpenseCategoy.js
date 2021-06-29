@@ -1,4 +1,5 @@
-import React, { useRef} from 'react';
+import React, { useRef,useCallback, useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
 import { backgroundColor } from "../../../api/constants";
 import {
   SafeAreaView,
@@ -218,44 +219,14 @@ const ExpenseCategory=()=> {
         ],
     }
 ]
+  
   // dummy data
-  const [categories, setCategories] = React.useState(categoriesData)
+  const [categories, setCategories] = useState(categoriesData)
   const categoryListHeightAnimationValue = useRef(new Animated.Value(115)).current;
-  const [viewMode, setViewMode] = React.useState("chart")
-  const [selectedCategory, setSelectedCategory] = React.useState(null)
-  const [showMoreToggle, setShowMoreToggle] = React.useState(false)
-  function renderDate() {
-    return (
-        <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: SIZES.padding, backgroundColor: COLORS.white,marginTop:-24 }}>
+  const [viewMode, setViewMode] = useState("chart")
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [showMoreToggle, setShowMoreToggle] = useState(false)
 
-
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{
-                    backgroundColor: COLORS.lightGray,
-                    height: 50,
-                    width: 50,
-                    borderRadius: 25,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <Image
-                        source={icons.calendar}
-                        style={{
-                            width: 20,
-                            height: 20,
-                            tintColor: COLORS.lightBlue
-                        }}
-                    />
-                </View>
-
-                <View style={{ marginLeft: SIZES.padding }}>
-                    <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>11 Nov, 2020</Text>
-                    <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>18% more than last month</Text>
-                </View>
-            </View>
-        </View>
-    )
-}
 function renderCategoryHeaderSection() {
   return (
       <View style={{ marginTop:-24,backgroundColor: COLORS.white,flexDirection: 'row', padding: SIZES.padding, justifyContent: 'space-between', alignItems: 'center' }}>

@@ -1,29 +1,33 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { sub } from "date-fns";
+import icons from "../../api/icons";
 
 const initialState = {
   lastUsedWalletId: "1",
   wallets: [
     {
       id: "1",
-      title: "cash",
-      icon: "",
+      title: "Cash",
+      icon: icons.wallet,
       balance: 1000000,
-      limit: null,
+      limit: 1000000,
+      datestart: "01/07/2021",
+      dateend: "01/08/2021",
+      note: "asd",
       transactions: [
         {
           id: "1",
-          categoryId: "1",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 25000,
           note: "breakfast in vietnam !!! Pho",
-          date: sub(new Date(), { minutes: 20 }).toISOString(),
+          date: sub(new Date(), { minutes: 10 }).toISOString(),
           image: "",
         },
         {
           id: "2",
-          categoryId: "2",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 50000,
@@ -46,28 +50,31 @@ const initialState = {
     {
       id: "2",
       title: "momo",
-      icon: "",
+      icon: icons.wallet,
       balance: 135000,
       limit: null,
+      datestart: null,
+      dateend: null,
+      note: "",
       transactions: [
         {
           id: "3",
-          categoryId: "",
+          categoryId: "12",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 15000,
           note: "beamin order",
-          date: "",
+          date: sub(new Date(), { minutes: 17 }).toISOString(),
           image: "",
         },
         {
           id: "4",
-          categoryId: "",
+          categoryId: "3",
           userCreatedCategoryId: "",
           eventId: null,
           moneyAmount: 29000,
           note: "foodie",
-          date: "",
+          date: sub(new Date(), { minutes: 12 }).toISOString(),
           image: "",
         },
       ],
@@ -85,12 +92,32 @@ const walletsSlice = createSlice({
         const existingWallet = state.wallets.find(
           (wallet) => wallet.id === walletId
         );
+
+        // Cập nhật số dư của ví
+        if (transaction.type == "expense") {
+          existingWallet.balance -= transaction.moneyAmount;
+        } else if (transaction.type == "income") {
+          existingWallet.balance += transaction.moneyAmount;
+        }
+
+        // Cập nhật ví sử dụng gần nhất
+        state.lastUsedWalletId = walletId;
+
+        // Thêm transaction vào ví
         if (existingWallet) {
           existingWallet.transactions.push(transaction);
         }
-        existingWallet.balance += transaction.moneyAmount;
       },
-      prepare(categoryId, moneyAmount, note, date, image, walletId, eventId) {
+      prepare(
+        categoryId,
+        moneyAmount,
+        note,
+        date,
+        image,
+        walletId,
+        eventId,
+        type
+      ) {
         return {
           payload: {
             id: nanoid(),
@@ -101,22 +128,34 @@ const walletsSlice = createSlice({
             image,
             walletId,
             eventId,
+            type,
           },
         };
       },
+    },
+    deleteTransactionOfCategory(state, action) {
+      const deletedCategoryId = action.payload.id;
+      state.wallets.forEach((wallet) => {
+        wallet.transactions = wallet.transactions.filter(
+          (transaction) => transaction.categoryId != deletedCategoryId
+        );
+      });
     },
     addWallet: {
       reducer(state, action) {
         state.wallets.push(action.payload);
       },
-      prepare(title, icon, balance = 0, limit = null) {
+      prepare(title, balance = 0, note) {
         return {
           payload: {
             id: nanoid(),
             title,
-            icon,
+            icon: icons.wallet,
             balance,
-            limit,
+            limit: null,
+            datestart: null,
+            dateend: null,
+            note,
             transaction: [],
           },
         };
@@ -135,9 +174,25 @@ const walletsSlice = createSlice({
         }
       }
     },
+    deleteWallet(state, action) {
+      const { walletId } = action.payload;
+      console.log(walletId);
+      const indexOfDeletedWallet = state.wallets.findIndex(
+        (wallet) => wallet.id == walletId
+      );
+      if (indexOfDeletedWallet >= 0) {
+        state.wallets.splice(indexOfDeletedWallet, 1);
+      }
+    },
   },
 });
 
-export const { addTransaction, addWallet, updateWallet } = walletsSlice.actions;
+export const {
+  addTransaction,
+  addWallet,
+  updateWallet,
+  deleteWallet,
+  deleteTransactionOfCategory,
+} = walletsSlice.actions;
 
 export default walletsSlice.reducer;

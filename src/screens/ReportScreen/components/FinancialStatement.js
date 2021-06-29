@@ -1,18 +1,39 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {Button, StyleSheet, Text, View , Platform,SafeAreaView, ScrollView,StatusBar,} from 'react-native';
+import { useSelector } from "react-redux";
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  FlatList,
+  Animated,
+  Platform
+} from 'react-native';
 import { backgroundColor } from "../../../api/constants";
 import { AntDesign } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
 import { COLORS, FONTS, SIZES, icons, images } from '../../../api/index';
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
-const FinancialStatement=({navigation}) =>{
+const FinancialStatement=({ navigation}) =>{
+  const listWallet = useSelector(state => state.wallets).wallets
+  const transactions = useSelector(
+    (state) =>
+      state.wallets
+  ).wallets;
+  let sum =0;
+  transactions.map(e=>sum=sum+e.balance);
   function Header() {
     return (
         <View style = {styles.bgHeader}>
             <SelectDropdown
               data={report}
               onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index)
+      
               navigation.navigate(selectedItem)
               }}
               rowTextForSelection={(item, index) => {return item
@@ -38,7 +59,7 @@ const FinancialStatement=({navigation}) =>{
             <Text style={{...FONTS.h2,fontWeight:'bold',color:COLORS.blue}}>FINANCIAL RECENT</Text>
         </View>
         <View style={{ marginTop:10,flexDirection: 'row', alignItems: 'center',justifyContent:'center' }}>
-            <Text style={{...FONTS.h2,fontWeight:'bold'}}>5,000,000 VNĐ</Text>
+            <Text style={{...FONTS.h2,fontWeight:'bold'}}>{sum} VND</Text>
         </View>
     </View>
 )
@@ -52,7 +73,49 @@ const FinancialStatement=({navigation}) =>{
         <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>Assets</Text>
         </View>
         <View style={{ marginTop:10,flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
-            <Text style={{...FONTS.h2,fontWeight:'bold'}}>5,000,000 VNĐ</Text>
+        <ScrollView>
+
+                {
+                    listWallet.map((element, index) => {
+                        return (
+                            <TouchableOpacity key={element.id}
+                            >
+                                <View style={styles.wallet}>
+                                    <Image
+                                        source={element.icon}
+                                        style={styles.iconBudget}
+                                    />
+                                    <View style={styles.nameKind}>
+                                        <Text style={styles.nameBudget}>
+                                            {element.title}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.money}>
+                                        <Text style={styles.valueOfMoney}>
+                                            {element.balance} VND
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    }
+                    )}
+
+        </ScrollView>
+        </View>
+    </View>
+)
+ }
+ function renderEmptyBudget() {
+  return (
+    <View style={{paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
+
+
+        <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
+        <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>Assets</Text>
+        </View>
+        <View style={{ marginTop:10,flexDirection: 'row', alignItems: 'center',justifyContent:'center' }}>
+            <Text style={{...FONTS.h2,fontWeight:'bold'}}>No Wallet</Text>
         </View>
     </View>
 )
@@ -62,8 +125,21 @@ const FinancialStatement=({navigation}) =>{
           
             {Header()}
            {renderFinancialRecent()}
-           {renderBudget()}
-           
+           {
+                    listWallet[0] === undefined &&
+              <View>
+                {renderEmptyBudget()}
+              </View>
+               
+            }
+            {
+                    listWallet[0] !== undefined &&
+              <View>
+                {renderBudget()}
+              </View>
+               
+            }
+
         </View>
       );
   }
@@ -109,5 +185,39 @@ const styles = StyleSheet.create({
     fontSize:18,
     fontWeight:'bold'
   },
+  nameKind: {
+    width: "50%",
+    display: 'flex',
+    flexDirection: "column",
+},
+money: {
+  display: 'flex',
+  textAlign: "center",
+  justifyContent: "center",
+  marginLeft: 20,
+},
+wallet: {
+  backgroundColor: 'white',
+  display: 'flex',
+  flexDirection: "row",
+  alignItems: "center",
+  marginBottom: 10,
+  marginTop: 5,
+  justifyContent: "space-around"
+},
+valueOfMoney: {
+  fontSize: 16,
+  fontWeight: "bold"
+},
+iconBudget: {
+  height: 50,
+  width: 50,
+  marginLeft: 16
+},
+nameBudget: {
+  fontSize: 18,
+  textAlign: "center",
+  fontWeight: "bold"
+},
 });
 export default FinancialStatement;

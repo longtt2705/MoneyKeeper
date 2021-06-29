@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
 import {Button, 
   StyleSheet, Text, View ,Image, Platform,SafeAreaView, ScrollView,StatusBar,  TouchableOpacity,
   FlatList,} from 'react-native';
 import { backgroundColor } from "../../../api/constants";
+import { formatNumber } from "../../../api/helper";
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS, FONTS, SIZES, icons } from '../../../api/index';
 import SelectDropdown from 'react-native-select-dropdown';
 import Svg from 'react-native-svg';
+import moment from 'moment';
 import { VictoryTooltip,VictoryVoronoiContainer,VictoryBar, VictoryChart, VictoryTheme,VictoryAxis,VictoryLabel } from "victory-native";
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
 const ExpenseAnalysis=({navigation})=> {
-  let data={
+
+  let testdata={
     Expense:[
       { x: '01/11/2020', y: 13000 },
       { x: '02/11/2020', y: 16500 },
@@ -49,6 +53,24 @@ const ExpenseAnalysis=({navigation})=> {
     Income:[
     ],
   };
+  const [value, setValue] = useState("m");
+  let data=[]
+  const transactions = useSelector(
+    (state) =>
+      state.wallets.wallets.find(
+        (wallet) => wallet.id === state.wallets.lastUsedWalletId
+      ).transactions
+  );
+  
+  for (const id in transactions) {
+    data.push({id:id, x: moment(transactions[id].date).format("DD/MM/YYYY"), y: transactions[id].moneyAmount });
+  }
+  let totalAmount=0;
+  transactions.map(e=>totalAmount=totalAmount+e.moneyAmount);
+  totalAmount = formatNumber(totalAmount);
+  data.map(e=>new Date(e.x))
+  console.log({data});
+  
 
 
   function Header() {
@@ -57,7 +79,7 @@ const ExpenseAnalysis=({navigation})=> {
             <SelectDropdown
               data={report}
               onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index)
+              
               navigation.navigate(selectedItem)
               }}
               rowTextForSelection={(item, index) => {return item
@@ -120,7 +142,7 @@ const ExpenseAnalysis=({navigation})=> {
           
               <View>
                   
-                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>1,000,000 VND</Text>
+                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>{totalAmount} VND</Text>
               </View>
           </View>
       </View>
@@ -168,7 +190,7 @@ const ExpenseAnalysis=({navigation})=> {
         >
           <VictoryAxis   style={{tickLabels: {fill:'white'}}}/>
           <VictoryAxis dependentAxis/>
-           <VictoryBar  style={{data:{fill:COLORS.secondary},}} data={data.Expense}/>
+           <VictoryBar  style={{data:{fill:COLORS.secondary},}} data={data}/>
         </VictoryChart>
         
       </View>
@@ -182,7 +204,7 @@ const ExpenseAnalysis=({navigation})=> {
       <View style={{marginLeft:-10}}>      
         <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>History</Text>
         <FlatList
-              data={data.Expense}
+              data={data}
               renderItem={({item,index})=>(
                  item.y!=0?
                   <TouchableOpacity

@@ -1,4 +1,5 @@
-import React, { useRef} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
 import { backgroundColor } from "../../../api/constants";
 import {
   SafeAreaView,
@@ -22,15 +23,54 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { COLORS, FONTS, SIZES, icons, images } from '../../../api/index';
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
 const Tab = createMaterialTopTabNavigator();
-
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 const Expense_Income=({navigation})=> {
+  const [value, setValue] = useState("m");
+  const [data, setData] = useState(null);
+  const transactions = useSelector(
+    (state) =>
+      state.wallets
+  ).wallets;
+  const categories = useSelector((state) => state.categories);
+  const filtedCategories = categories.filter(
+    (category) => category.type == "income"
+  );
+  const [date1, setDate1] = useState(new Date());
+  const [date2, setDate2] = useState(new Date());
+  
+  const [show, setShow] = useState(false);
+  const [showDatePicker1, setShowDatePicker1] = useState(false);
+  const [showDatePicker2, setShowDatePicker2] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const hideDatePicker1 = () => {
+    setShowDatePicker1(false);
+  };
+  const openDatePicker1 = () => {
+    setShowDatePicker1(true);
+  };
+  const hideDatePicker2 = () => {
+    setShowDatePicker2(false);
+  };
+  const openDatePicker2 = () => {
+    setShowDatePicker2(true);
+  };
+  const handleConfirm1 = (date1) => {
+    setDate1(date1);
+    hideDatePicker1();
+  };  
+  const handleConfirm2 = (date2) => {
+    setDate2(date2);
+    hideDatePicker2();
+  };
+
     function Header() {
         return (
             <View style = {styles.bgHeader}>
                 <SelectDropdown
                   data={report}
                   onSelect={(selectedItem, index) => {
-                  console.log(selectedItem, index)
+                  
                   navigation.navigate(selectedItem)
                   }}
                   rowTextForSelection={(item, index) => {return item
@@ -50,11 +90,12 @@ const Expense_Income=({navigation})=> {
     }
     function renderDate() {
       return (
+        <SafeAreaView>
           <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
-  
-  
+
               <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
-                  <View style={{
+              
+              <View style={{
                       backgroundColor: COLORS.lightGray,
                       height: 50,
                       width: 50,
@@ -72,12 +113,33 @@ const Expense_Income=({navigation})=> {
                       />
                   </View>
   
-                  <View style={{ marginLeft:SIZES.padding }}>
-                      
-                      <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>01/11/2020 - 30/11/2020</Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
+                  
+                      <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}onPress={openDatePicker1}>{ moment(date1).format("DD/MM/YYYY")} - </Text>
+                      <Text style={{ ...FONTS.body3, color: COLORS.darkgray }} onPress={openDatePicker2}>{ moment(date2).format("DD/MM/YYYY")}</Text>
                   </View>
+             
+              <View>
+            <DateTimePickerModal
+              isVisible={showDatePicker1}
+              mode="date"
+              onConfirm={handleConfirm1}
+              onCancel={hideDatePicker1}
+              display="spinner"
+            />
+          </View>
+          <View>
+            <DateTimePickerModal
+              isVisible={showDatePicker2}
+              mode="date"
+              onConfirm={handleConfirm2}
+              onCancel={hideDatePicker2}
+              display="spinner"
+            />
+          </View>
               </View>
           </View>
+          </SafeAreaView>
       )
   }
   function renderBalance(){
@@ -90,7 +152,7 @@ const Expense_Income=({navigation})=> {
           <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>Ending balance</Text>
           </View>
           <View style={{ marginTop:10,flexDirection: 'row', justifyContent:'space-around' }}>
-          <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>5,000,000</Text>
+          <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>5,250,000</Text>
           <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>1,250,000</Text>
           </View>
       </View>
@@ -123,7 +185,7 @@ const styles = StyleSheet.create({
   bgHeader: {
     backgroundColor: '#1A2C65',
     height:50,
-    marginTop:-25,
+    marginTop:-35,
   },
   headerStyle: {
     fontSize: 25,

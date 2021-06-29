@@ -57,7 +57,7 @@ const ExpenseAnalysis=({navigation})=> {
             <SelectDropdown
               data={report}
               onSelect={(selectedItem, index) => {
-              console.log(selectedItem, index)
+              
               navigation.navigate(selectedItem)
               }}
               rowTextForSelection={(item, index) => {return item
