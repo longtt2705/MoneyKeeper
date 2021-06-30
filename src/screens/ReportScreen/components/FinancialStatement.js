@@ -17,6 +17,7 @@ import {
 import { backgroundColor } from "../../../api/constants";
 import { AntDesign } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
+import { formatNumber } from '../../../api/helper';
 import { COLORS, FONTS, SIZES, icons, images } from '../../../api/index';
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
 const FinancialStatement=({ navigation}) =>{
@@ -59,7 +60,7 @@ const FinancialStatement=({ navigation}) =>{
             <Text style={{...FONTS.h2,fontWeight:'bold',color:COLORS.blue}}>FINANCIAL RECENT</Text>
         </View>
         <View style={{ marginTop:10,flexDirection: 'row', alignItems: 'center',justifyContent:'center' }}>
-            <Text style={{...FONTS.h2,fontWeight:'bold'}}>{sum} VND</Text>
+            <Text style={{...FONTS.h2,fontWeight:'bold'}}>{formatNumber(sum)} VND</Text>
         </View>
     </View>
 )
@@ -92,7 +93,7 @@ const FinancialStatement=({ navigation}) =>{
                                     </View>
                                     <View style={styles.money}>
                                         <Text style={styles.valueOfMoney}>
-                                            {element.balance} VND
+                                            {formatNumber(element.balance)} VND
                                         </Text>
                                     </View>
                                 </View>

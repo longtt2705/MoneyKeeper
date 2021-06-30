@@ -63,10 +63,10 @@ const initialState = [
     title: "Education",
     icon: icons.mortarboard.source,
     type: "expense",
-    color: "#fff",
+    color: icons.mortarboard.color,
   },
   {
-    id: "12",
+    id: "10",
     title: "Contact fee",
     icon: icons.phone.source,
     type: "expense",

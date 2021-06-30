@@ -64,27 +64,27 @@ const giftbox = {
 
 const coins = {
   source: require("../assets/icons/coins.png"),
-  color: "#fff",
+  color: "#e9ad03",
 };
 
 const tip = {
   source: require("../assets/icons/tip.png"),
-  color: "#fff",
+  color: "#c2b280",
 };
 
 const part_time = {
   source: require("../assets/icons/part-time.png"),
-  color: "#fff",
+  color: "#FFB6C1",
 };
 
 const book = {
   source: require("../assets/icons/book.png"),
-  color: "#fff",
+  color: "#8b0000",
 };
 
 const controller = {
   source: require("../assets/icons/controller.png"),
-  color: "#fff",
+  color: "#7393B3",
 };
 
 export default {
