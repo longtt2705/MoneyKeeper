@@ -22,7 +22,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { updateCate } from "../../../../redux/slices/categoriesSlice";
 import icons from "../../../../api/icons";
 
-export default function AddLimitOfCate({ navigation }) {
+export default function AddLimitOfCate({ navigation, cateId }) {
   const categories = useSelector((state) => state.categories);
   const cate = categories.filter((e) => e.limit === null)[0];
   const dispatch = useDispatch();
@@ -62,7 +62,9 @@ export default function AddLimitOfCate({ navigation }) {
     setShowDatePicker2(true);
   };
 
-  if (cate === undefined) {
+  const limitCate = categories.filter((e) => e.limit === null)[0];
+
+  if (limitCate === undefined) {
     return (
       <View>
         <Text> Tat ca ca danh muc deu co gioi han chi tieu</Text>
@@ -76,6 +78,7 @@ export default function AddLimitOfCate({ navigation }) {
             <View style={styles.item}>
               <Image source={icons.money} style={styles.icon} />
               <TextInput
+                keyboardType="number-pad"
                 placeholder="Enter Limit"
                 onChangeText={(text) => {
                   handleLimit(parseInt(text));
@@ -179,8 +182,8 @@ export default function AddLimitOfCate({ navigation }) {
                 updateCate({
                   cateId: cateId,
                   limit: limit,
-                  datestart: moment(datestart).format("DD/MM/YYYY"),
-                  dateend: moment(dateend).format("DD/MM/YYYY"),
+                  datestart: moment(datestart).format("MM/DD/YYYY"),
+                  dateend: moment(dateend).format("MM/DD/YYYY"),
                 })
               );
               navigation.goBack();
@@ -241,7 +244,6 @@ const styles = StyleSheet.create({
   chooseWallet: {
     height: 20,
     width: 20,
-    backgroundColor: "yellow",
     marginLeft: 140,
   },
   dateStart: {

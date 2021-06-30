@@ -15,6 +15,7 @@ import { backgroundColor, primaryColor } from "../../../../api/constants";
 import AddLimitOfWallet from "./addLimitOfWallet";
 import { useSelector } from "react-redux";
 import icons from "../../../../api/icons";
+import moment from "moment";
 
 export default function LimitOfWallet({ navigation, setLimitId }) {
   const listofWallet = useSelector((state) => state.wallets).wallets;
@@ -59,7 +60,8 @@ export default function LimitOfWallet({ navigation, setLimitId }) {
                   <View style={styles.nameDate}>
                     <Text style={styles.nameWallet}>{element.title}</Text>
                     <Text style={styles.date}>
-                      {element.datestart}-{element.dateend}
+                      {moment(element.datestart).format("DD/MM/YYYY")}-
+                      {moment(element.dateend).format("DD/MM/YYYY")}
                     </Text>
                   </View>
                   <Text style={styles.money}>{element.limit} VND</Text>

@@ -10,7 +10,7 @@ const initialState = {
       title: "Cash",
       icon: icons.wallet,
       balance: 0,
-      limit: 0,
+      limit: null,
       datestart: null,
       dateend: null,
       note: "",

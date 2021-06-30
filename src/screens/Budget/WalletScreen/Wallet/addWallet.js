@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput,Image } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput, Image } from 'react-native';
 import { backgroundColor, primaryColor, Colors } from "../../../../api/constants";
 import { useDispatch } from 'react-redux';
 import { addWallet } from '../../../../redux/slices/walletsSlice';
@@ -26,7 +26,7 @@ export default function AddWallet({ navigation }) {
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
-        dispatch(addWallet(nameWallet,balance,noteText))
+        dispatch(addWallet(nameWallet, balance, note))
     }
 
     return (
@@ -37,6 +37,7 @@ export default function AddWallet({ navigation }) {
                         <Text style={styles.initalBalanceText}>Inital balance</Text>
                         <View style={styles.inputText}>
                             <TextInput
+                                keyboardType="number-pad"
                                 placeholder="0"
                                 style={styles.myInput}
                                 onChangeText={(text) => {
@@ -51,8 +52,8 @@ export default function AddWallet({ navigation }) {
                 <View style={styles.itemContainer}>
                     <View style={styles.item}>
                         <Image
-                        source={icons.name} 
-                        style={styles.icon}
+                            source={icons.name}
+                            style={styles.icon}
                         />
                         <TextInput
                             placeholder="Name of Budget"
@@ -67,8 +68,8 @@ export default function AddWallet({ navigation }) {
                 <View style={styles.itemContainer}>
                     <View style={styles.item}>
                         <Image
-                        source={icons.pencil} 
-                        style={styles.icon}
+                            source={icons.pencil}
+                            style={styles.icon}
                         />
                         <TextInput
                             placeholder="Note"
@@ -124,8 +125,8 @@ const styles = StyleSheet.create({
     icon: {
         height: 50,
         width: 50,
-        marginRight:15,
-        marginLeft:15
+        marginRight: 15,
+        marginLeft: 15
     },
     itemContainer: {
         flexDirection: "column",
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     initalBalanceText: {
         marginLeft: 20,
         fontSize: 18,
-        fontWeight:"bold"
+        fontWeight: "bold"
     },
     strainghtIni: {
         borderWidth: 0.5,
@@ -216,9 +217,9 @@ const styles = StyleSheet.create({
         backgroundColor: "yellow"
     },
     myInput: {
-        fontSize: 25, 
-        width: "92%", 
-        textAlign:"right"
+        fontSize: 25,
+        width: "92%",
+        textAlign: "right"
     }
 
 

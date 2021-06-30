@@ -6,6 +6,7 @@ import { backgroundColor, primaryColor, Colors } from "../../../../api/constants
 import AddLimitOfCate from './addLimitOfWallet';
 import { useSelector } from 'react-redux';
 import { isConstructorDeclaration } from 'typescript';
+import moment from 'moment';
 
 
 
@@ -62,7 +63,7 @@ export default function LimitOfCategory({ navigation,setCateLimit }) {
                                             {element.title}
                                         </Text>
                                         <Text style={styles.date}>
-                                            {element.datestart}-{element.dateend}
+                                            {moment(element.datestart).format("DD/MM/YYYY")}-{moment(element.dateend).format("DD/MM/YYYY")}
                                         </Text>
                                     </View>
                                     <Text style={styles.money}>

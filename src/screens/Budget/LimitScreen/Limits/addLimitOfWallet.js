@@ -76,6 +76,7 @@ export default function AddLimitOfWallet({ navigation }) {
             <View style={styles.item}>
               <Image source={icons.money} style={styles.icon} />
               <TextInput
+                keyboardType="number-pad"
                 placeholder="Enter Limit"
                 onChangeText={(text) => setInput(parseInt(text))}
               />
@@ -171,8 +172,8 @@ export default function AddLimitOfWallet({ navigation }) {
                 updateWallet({
                   walletId: nameWallet.id,
                   limit: input,
-                  datestart: moment(datestart).format("DD/MM/YYYY"),
-                  dateend: moment(dateend).format("DD/MM/YYYY"),
+                  datestart: moment(datestart).format("MM/DD/YYYY"),
+                  dateend: moment(dateend).format("MM/DD/YYYY"),
                 })
               );
               navigation.goBack();
@@ -181,6 +182,15 @@ export default function AddLimitOfWallet({ navigation }) {
             <Text style={styles.buttonName}>Save</Text>
           </TouchableOpacity>
         </View>
+
+        <DateTimePickerModal
+          isVisible={showDatePicker1}
+          mode="date"
+          onConfirm={handleConfirmDayStart}
+          onCancel={hideDatePicker1}
+          display="spinner"
+          style={{ color: "#000" }}
+        />
       </View>
     );
   }
