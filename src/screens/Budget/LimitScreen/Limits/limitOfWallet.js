@@ -17,9 +17,11 @@ import { useSelector } from "react-redux";
 import icons from "../../../../api/icons";
 import moment from "moment";
 
-export default function LimitOfWallet({ navigation, setLimitId }) {
+export default function LimitOfWallet({ navigation, setLimitId,setWalletId }) {
   const listofWallet = useSelector((state) => state.wallets).wallets;
   const limitWallet = listofWallet.filter((e) => e.limit !== null);
+  const limitNull=listofWallet.filter(e=>e.limit===null)[0];
+  
   if (limitWallet == null) {
     return (
       <View style={styles.bg}>
@@ -31,6 +33,9 @@ export default function LimitOfWallet({ navigation, setLimitId }) {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
+              if(typeof(limitNull)!=="undefined"){
+                setWalletId(limitNull.id)
+              }
               navigation.navigate("addLimitWallet");
             }}
           >
@@ -78,6 +83,9 @@ export default function LimitOfWallet({ navigation, setLimitId }) {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
+              if(typeof(limitNull)!=="undefined"){
+                setWalletId(limitNull.id)
+              }
               navigation.navigate("addLimitWallet");
             }}
           >

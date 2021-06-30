@@ -57,7 +57,6 @@ export default function ChooseWallet({ navigation, setWalletId }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors[50],
-    height: "40%",
   },
   wallet: {
     backgroundColor: "white",

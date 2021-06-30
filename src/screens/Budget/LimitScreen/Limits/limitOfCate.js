@@ -10,10 +10,10 @@ import moment from 'moment';
 
 
 
-export default function LimitOfCategory({ navigation,setCateLimit }) {
+export default function LimitOfCategory({ navigation,setCateLimit,setCateId }) {
     const listOfCate = useSelector(state => state.categories)
     const limitCate = listOfCate.filter(e => e.limit !== null);
-    if (limitCate === undefined) {
+    if (limitCate === []) {
         return (
             <View style={styles.bg}>
             <View style={styles.Cate}>
@@ -25,6 +25,9 @@ export default function LimitOfCategory({ navigation,setCateLimit }) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
+                        if (typeof(limitCate)!=="undefined"){
+                            setCateId(limitCate.id)
+                        }
                         navigation.navigate("addLimitCate")
                     }}
                 >
@@ -37,7 +40,7 @@ export default function LimitOfCategory({ navigation,setCateLimit }) {
         );   
     } else {
         return (
-            <View style={styles.bg}>
+            <ScrollView style={styles.bg}>
                 <View style={styles.Cate}>
                     <Text style={styles.nameCate}>
                         Limit of Category
@@ -79,6 +82,9 @@ export default function LimitOfCategory({ navigation,setCateLimit }) {
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => {
+                            if (typeof(limitCate)!=="undefined"){
+                                setCateId(limitCate.id)
+                            }
                             navigation.navigate("addLimitCate")
                         }}
                     >
@@ -88,7 +94,7 @@ export default function LimitOfCategory({ navigation,setCateLimit }) {
                     </TouchableOpacity>
                 </View>
 
-            </View>
+            </ScrollView>
         );
     }
 

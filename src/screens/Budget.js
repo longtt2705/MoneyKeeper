@@ -19,16 +19,17 @@ const Stack = createStackNavigator();
 
 function Budget() {
   const limit = useSelector((state) => state.wallets).wallets;
-  const limitNull = limit.filter((e) => e.limit === null)[0];
+  const limitNull = limit.filter(e => e.limit === null)[0];
   const [chooseWalletId, setChooseWalletId] = useState(() => {
-    if (limitNull !== undefined) {
+    if (typeof(limitNull)==="object") {
       return limitNull.id;
     } else return -1;
   });
 
+
   const limitnoNull = limit.filter((e) => e.limit !== null)[0];
   const [limitId, setLimitId] = useState(() => {
-    if (limitnoNull !== undefined) {
+    if (typeof(limitnoNull)==="object") {
       return limitnoNull.id;
     } else return -1;
   });
@@ -38,7 +39,7 @@ function Budget() {
   const cateNull = categories.filter((e) => e.limit === null)[0];
 
   const [cateId, setCateId] = useState(() => {
-    if (cateNull === undefined) {
+    if (typeof(cateNull)!=="object") {
       return -1;
     } else return cateNull.id;
   });
@@ -62,6 +63,8 @@ function Budget() {
             navigation={navigation}
             setLmId={setLimitId}
             setCateLimit={setCateLimit}
+            setWalletId={setChooseWalletId}
+            serCareId={setCateId}
           />
         )}
       </Stack.Screen>
@@ -89,7 +92,10 @@ function Budget() {
           headerBackTitleVisible: false,
         }}
       >
-        {({ navigation }) => <AddLimitOfWallet navigation={navigation} />}
+        {({ navigation }) => <AddLimitOfWallet 
+        navigation={navigation} 
+        walletId={chooseWalletId}
+        />}
       </Stack.Screen>
       <Stack.Screen
         name="addLimitCate"
@@ -102,7 +108,10 @@ function Budget() {
           headerBackTitleVisible: false,
         }}
       >
-        {({ navigation }) => <AddLimitOfCate navigation={navigation} />}
+        {({ navigation }) => <AddLimitOfCate 
+        navigation={navigation} 
+        cateId={cateId}
+        />}
       </Stack.Screen>
       <Stack.Screen
         name="addWallet"
@@ -115,7 +124,10 @@ function Budget() {
           headerBackTitleVisible: false,
         }}
       >
-        {({ navigation }) => <AddWallet navigation={navigation} />}
+        {({ navigation }) => <AddWallet 
+        navigation={navigation}
+        
+         />}
       </Stack.Screen>
       <Stack.Screen
         name="chooseWallet"

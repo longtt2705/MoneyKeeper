@@ -22,9 +22,9 @@ import moment from "moment";
 import { updateWallet } from "../../../../redux/slices/walletsSlice";
 import icons from "../../../../api/icons";
 
-export default function AddLimitOfWallet({ navigation }) {
+export default function AddLimitOfWallet({ navigation,walletId }) {
   const wallet = useSelector((state) => state.wallets).wallets;
-  const nameWallet = wallet.filter((e) => e.limit == null)[0];
+  const nameWallet = wallet.filter((e) => e.id===walletId)[0];
 
   const [input, setInput] = useState(0);
 
@@ -62,7 +62,7 @@ export default function AddLimitOfWallet({ navigation }) {
 
   const dispatch = useDispatch();
 
-  if (nameWallet === undefined) {
+  if (!nameWallet) {
     return (
       <View>
         <Text>Tất cả các ví đã có giới hạn</Text>
