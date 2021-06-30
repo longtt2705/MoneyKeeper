@@ -1,32 +1,53 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {Button, 
-  StyleSheet, Text, View ,Image, Platform,SafeAreaView, ScrollView,StatusBar,  TouchableOpacity,
-  FlatList,} from 'react-native';
-import { backgroundColor } from "../../../api/constants";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import { backgroundColor, primaryColor } from "../../../api/constants";
 import { formatNumber } from "../../../api/helper";
-import { AntDesign } from '@expo/vector-icons';
-import { COLORS, FONTS, SIZES, icons } from '../../../api/index';
-import SelectDropdown from 'react-native-select-dropdown';
-import Svg from 'react-native-svg';
-import moment from 'moment';
-import { VictoryTooltip,VictoryVoronoiContainer,VictoryBar, VictoryChart, VictoryTheme,VictoryAxis,VictoryLabel } from "victory-native";
-const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
-const IncomeAnalysis=({navigation})=> {
-
-//{Create empty array====================================================}
+import { AntDesign } from "@expo/vector-icons";
+import { COLORS, FONTS, SIZES, icons } from "../../../api/index";
+import SelectDropdown from "react-native-select-dropdown";
+import Svg from "react-native-svg";
+import moment from "moment";
+import {
+  VictoryTooltip,
+  VictoryVoronoiContainer,
+  VictoryBar,
+  VictoryChart,
+  VictoryTheme,
+  VictoryAxis,
+  VictoryLabel,
+} from "victory-native";
+const report = [
+  "Financial Statement",
+  "Expense Income",
+  "Expense Analysis",
+  "Income Analysis",
+];
+const IncomeAnalysis = ({ navigation }) => {
+  //{Create empty array====================================================}
   var dt = new Date();
-  var month = dt.getMonth()+1;
+  var month = dt.getMonth() + 1;
   var year = dt.getFullYear();
   var daysInMonth = new Date(year, month, 0).getDate();
-  let tdata=[]
+  let tdata = [];
   for (let i = 1; i <= daysInMonth; i++) {
-    var t=i;
-    if (i<10) {
-      t='0'+`${i}`
+    var t = i;
+    if (i < 10) {
+      t = "0" + `${i}`;
     }
-    tdata.push({id:i, x: `${t}/${month}/${year}`, y: 0 });
-    
+    tdata.push({ id: i, x: `${t}/${month}/${year}`, y: 0 });
   }
   //{Load data============================================================}
   const loadtransactions = useSelector(
@@ -35,220 +56,291 @@ const IncomeAnalysis=({navigation})=> {
         (wallet) => wallet.id === state.wallets.lastUsedWalletId
       ).transactions
   );
-  const transactions=loadtransactions.filter(x=>x.type=="Income")
-  
+  const transactions = loadtransactions.filter((x) => x.type == "Income");
+
   for (const id in transactions) {
-    var tempDate=new Date(transactions[id].date);
-    var tempmonth = tempDate.getMonth()+1;
+    var tempDate = new Date(transactions[id].date);
+    var tempmonth = tempDate.getMonth() + 1;
     var tempyear = tempDate.getFullYear();
-    var tdate=tempDate.getDate();
-    if(tempyear==year)
-    {
-      if (tempmonth==month) {
-        tdata[tdate-1].y+=transactions[id].moneyAmount;
+    var tdate = tempDate.getDate();
+    if (tempyear == year) {
+      if (tempmonth == month) {
+        tdata[tdate - 1].y += transactions[id].moneyAmount;
       }
     }
   }
   //{Calculate total & avenge============================================}
-  let totalAmount=0;
-  let avengeAmount=0;
-  transactions.map(e=>totalAmount=totalAmount+e.moneyAmount);
-  avengeAmount=Math.floor(totalAmount/daysInMonth);
+  let totalAmount = 0;
+  let avengeAmount = 0;
+  transactions.map((e) => (totalAmount = totalAmount + e.moneyAmount));
+  avengeAmount = Math.floor(totalAmount / daysInMonth);
   totalAmount = formatNumber(totalAmount);
-  let chartdata= tdata;
+  let chartdata = tdata;
 
-  chartdata.map((e)=>{
-    if(e.y>=1000)
-    {
-      e.y=e.y/1000;
+  chartdata.map((e) => {
+    if (e.y >= 1000) {
+      e.y = e.y / 1000;
     }
-  })
-  
-
+  });
 
   function Header() {
     return (
-        <View style = {styles.bgHeader}>
-            <SelectDropdown
-              data={report}
-              onSelect={(selectedItem, index) => {
-              
-              navigation.navigate(selectedItem)
-              }}
-              rowTextForSelection={(item, index) => {return item
-              }}
-              renderDropdownIcon={() => <AntDesign name="caretdown" size={12} color="#707070" />}
-              defaultButtonText={report[3]}
-              buttonStyle={styles.dropdownButtonStyle}
-              buttonTextAfterSelection={() => {
-                return report[3]
-            }}
-              dropdownStyle={styles.dropdownStyle}
-              buttonTextStyle={styles.dropdownButtonTextStyle}
-            />
-        </View>
-      )
-}
+      <View style={styles.bgHeader}>
+        <SelectDropdown
+          data={report}
+          onSelect={(selectedItem, index) => {
+            navigation.navigate(selectedItem);
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+          renderDropdownIcon={() => (
+            <AntDesign name="caretdown" size={12} color="#707070" />
+          )}
+          defaultButtonText={report[3]}
+          buttonStyle={styles.dropdownButtonStyle}
+          buttonTextAfterSelection={() => {
+            return report[3];
+          }}
+          dropdownStyle={styles.dropdownStyle}
+          buttonTextStyle={styles.dropdownButtonTextStyle}
+        />
+      </View>
+    );
+  }
   function renderDate() {
-      return (
-          <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
-  
-  
-              <View style={{ flexDirection: 'row', alignItems: 'center',justifyContent:'space-between' }}>
-                  <View style={{
-                      backgroundColor: COLORS.lightGray,
-                      height: 50,
-                      width: 50,
-                      borderRadius: 25,
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                  }}>
-                      <Image
-                          source={icons.calendar}
-                          style={{
-                              width: 25,
-                              height: 25,
-                              tintColor: COLORS.lightBlue
-                          }}
-                      />
-                  </View>
-  
-                  <View style={{ marginLeft:SIZES.padding }}>
-                      
-                      <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>{tdata[0].x} - {tdata[daysInMonth-1].x}</Text>
-                  </View>
-              </View>
-          </View>
-      )
-  }
-  function renderTotalEstimate(){
     return (
-      <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
-
-
-          <View style={{ flexDirection: 'row',justifyContent:'space-between'}}>
-
-          <View style={{marginLeft:-15}}>
-                  
-                  <Text style={{ ...FONTS.h3, color: COLORS.darkgreen }}>Total Expense</Text>
-              </View>
-          
-              <View>
-                  
-                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>{totalAmount} VND</Text>
-              </View>
+      <View
+        style={{
+          paddingHorizontal: SIZES.padding,
+          paddingVertical: 10,
+          backgroundColor: COLORS.white,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: COLORS.lightGray,
+              height: 50,
+              width: 50,
+              borderRadius: 25,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={icons.calendar}
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: COLORS.lightBlue,
+              }}
+            />
           </View>
+
+          <View style={{ marginLeft: SIZES.padding }}>
+            <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>
+              {tdata[0].x} - {tdata[daysInMonth - 1].x}
+            </Text>
+          </View>
+        </View>
       </View>
-  )
+    );
   }
-  function renderAvangeEstimate(){
+  function renderTotalEstimate() {
     return (
-      <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
-
-
-          <View style={{ flexDirection: 'row',justifyContent:'space-between'}}>
-
-          <View style={{marginLeft:-15}}>
-                  
-                  <Text style={{ ...FONTS.h3, color: COLORS.darkgreen }}>Avenge Expense</Text>
-              </View>
-          
-              <View>
-                  
-                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>{formatNumber(avengeAmount)} VND</Text>
-              </View>
+      <View
+        style={{
+          paddingHorizontal: SIZES.padding,
+          paddingVertical: 10,
+          backgroundColor: COLORS.white,
+        }}
+      >
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ marginLeft: -15 }}>
+            <Text style={{ ...FONTS.h3, color: COLORS.darkgreen }}>
+              Total Expense
+            </Text>
           </View>
+
+          <View>
+            <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>
+              {totalAmount} VND
+            </Text>
+          </View>
+        </View>
       </View>
-  )
+    );
+  }
+  function renderAvangeEstimate() {
+    return (
+      <View
+        style={{
+          paddingHorizontal: SIZES.padding,
+          paddingVertical: 10,
+          backgroundColor: COLORS.white,
+        }}
+      >
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ marginLeft: -15 }}>
+            <Text style={{ ...FONTS.h3, color: COLORS.darkgreen }}>
+              Avenge Expense
+            </Text>
+          </View>
+
+          <View>
+            <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>
+              {formatNumber(avengeAmount)} VND
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
   }
   function renderChart() {
-    return (<ScrollView horizontal={true}>
-      <View style={{paddingLeft:15,marginTop:15,marginBottom:15,backgroundColor: COLORS.white}}>
-      
-        <View style={{marginBottom:-30,marginTop:15}}>
-                  
-                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>Money(Unit: Thousand)</Text>
-              </View>
-              <View style={{}}>
-              <VictoryChart  domainPadding={10} width={1000} theme={VictoryTheme.material}
-          containerComponent={
-            <VictoryVoronoiContainer
-              labels={({ datum }) => `${datum.y}k \n ${datum.x}`}
-              
-              labelComponent={
-                <VictoryTooltip cornerRadius={10} flyoutStyle={{ stroke: "white",fill: "white"}} style={{ fill: "green", backgroundColor:'white' }} constrainToVisibleArea />
-              }
-            />
-            
-          }
+    return (
+      <ScrollView horizontal={true}>
+        <View
+          style={{
+            paddingLeft: 15,
+            marginTop: 15,
+            marginBottom: 15,
+            backgroundColor: COLORS.white,
+          }}
         >
-          <VictoryAxis   style={{tickLabels: {fill:'white'}}}/>
-          <VictoryAxis dependentAxis/>
-           <VictoryBar  style={{data:{fill:COLORS.darkgreen},}} data={chartdata}/>
-        </VictoryChart>
-              </View>
-
-        
-      </View>
+          <View style={{ marginBottom: -30, marginTop: 15 }}>
+            <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>
+              Money(Unit: Thousand)
+            </Text>
+          </View>
+          <View style={{}}>
+            <VictoryChart
+              domainPadding={10}
+              width={1000}
+              theme={VictoryTheme.material}
+              containerComponent={
+                <VictoryVoronoiContainer
+                  labels={({ datum }) => `${datum.y}k \n ${datum.x}`}
+                  labelComponent={
+                    <VictoryTooltip
+                      cornerRadius={10}
+                      flyoutStyle={{ stroke: "white", fill: "white" }}
+                      style={{ fill: "green", backgroundColor: "white" }}
+                      constrainToVisibleArea
+                    />
+                  }
+                />
+              }
+            >
+              <VictoryAxis style={{ tickLabels: { fill: "white" } }} />
+              <VictoryAxis dependentAxis />
+              <VictoryBar
+                style={{ data: { fill: COLORS.darkgreen } }}
+                data={chartdata}
+              />
+            </VictoryChart>
+          </View>
+        </View>
       </ScrollView>
-  )   
+    );
   }
   function renderHistory() {
-
-    return(
-      <View style={{paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
-      <View style={{marginLeft:-10}}>      
-        <Text style={{ ...FONTS.h2,marginBottom:20, color:'black',fontWeight:'bold' }}>History</Text>
-        <FlatList
-              data={tdata}
-              renderItem={({item,index})=>(
-                 item.y!=0?
-                  <TouchableOpacity
+    return (
+      <View
+        style={{
+          paddingHorizontal: SIZES.padding,
+          paddingVertical: 10,
+          backgroundColor: COLORS.white,
+        }}
+      >
+        <View style={{ marginLeft: -10 }}>
+          <Text
+            style={{
+              ...FONTS.h2,
+              marginBottom: 20,
+              color: "black",
+              fontWeight: "bold",
+            }}
+          >
+            History
+          </Text>
+          <FlatList
+            data={tdata}
+            renderItem={({ item, index }) =>
+              item.y != 0 ? (
+                <TouchableOpacity
                   style={{
-                      flexDirection: 'row',
-                      marginBottom:15,
-                      height: 40,
-                      paddingHorizontal: SIZES.radius,
-                      borderRadius: 10,
-                      backgroundColor: COLORS.white,
-                      ...styles.shadow
+                    flexDirection: "row",
+                    marginBottom: 15,
+                    height: 40,
+                    paddingHorizontal: SIZES.radius,
+                    borderRadius: 10,
+                    backgroundColor: COLORS.white,
+                    ...styles.shadow,
                   }}
-              >
+                >
                   {/* Name/Category */}
-                  <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                      <View
-                          style={{
-                              width: 40,
-                              height: 40,
-                              backgroundColor: COLORS.darkgreen,
-                              borderRadius: 25,
-                              justifyContent: 'center',
-                              alignItems: 'center'
-                          }}
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 40,
+                        height: 40,
+                        backgroundColor: COLORS.darkgreen,
+                        borderRadius: 25,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          color: "white",
+                          ...FONTS.h2,
+                        }}
                       >
-                        <Text style={{fontWeight:'bold',color:'white', ...FONTS.h2}}>{item.x.substring(0,2)}</Text>
-                      </View>
-        
-                      <Text style={{ marginLeft: SIZES.base, color:COLORS.primary, ...FONTS.h3 }}>{item.x}</Text>
+                        {item.x.substring(0, 2)}
+                      </Text>
+                    </View>
+
+                    <Text
+                      style={{
+                        marginLeft: SIZES.base,
+                        color: COLORS.primary,
+                        ...FONTS.h3,
+                      }}
+                    >
+                      {item.x}
+                    </Text>
                   </View>
-        
+
                   {/* Expenses */}
-                  <View style={{ justifyContent: 'center' }}>
-                      <Text style={{ color:COLORS.darkgreen, ...FONTS.h3 }}>{formatNumber(item.y)} VND </Text>
+                  <View style={{ justifyContent: "center" }}>
+                    <Text style={{ color: COLORS.darkgreen, ...FONTS.h3 }}>
+                      {formatNumber(item.y)} VND{" "}
+                    </Text>
                   </View>
-              </TouchableOpacity>
-                :null
-               
-              )}
-              keyExtractor={item => `${item.x}`}
+                </TouchableOpacity>
+              ) : null
+            }
+            keyExtractor={(item) => `${item.x}`}
           />
+        </View>
       </View>
-    </View>
-    )
-    
+    );
   }
   return (
-    
     <View style={styles.container}>
       {Header()}
       {renderDate()}
@@ -260,46 +352,46 @@ const IncomeAnalysis=({navigation})=> {
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: backgroundColor,
+    backgroundColor: primaryColor,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   bgHeader: {
-    backgroundColor: '#1A2C65',
-    height:50,
-    marginTop:-25,
+    backgroundColor: "#1A2C65",
+    height: 50,
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 50,
   },
   headerStyle: {
     fontSize: 25,
-    textAlign: 'center',
+    textAlign: "center",
     margin: 10,
-    color: '#fff',
+    color: "#fff",
   },
-  dropdown:{
-    width:210,
-    height:35,
-    alignSelf:"center",
-    borderRadius:40,
-    marginTop:7,
+  dropdown: {
+    width: 210,
+    height: 35,
+    alignSelf: "center",
+    borderRadius: 40,
+    marginTop: 7,
   },
-  dropdownButtonStyle:{
-    width:210,
-    height:35,
-    alignSelf:"center",
-    borderRadius:40,
-    marginTop:7,
+  dropdownButtonStyle: {
+    width: 210,
+    height: 35,
+    alignSelf: "center",
+    borderRadius: 40,
+    marginTop: 7,
   },
-  dropdownStyle:{
-    width:210,
-    marginTop:-30
+  dropdownStyle: {
+    width: 210,
+    marginTop: -30,
   },
-  dropdownButtonTextStyle:{
-    fontSize:18,
-    fontWeight:'bold'
+  dropdownButtonTextStyle: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
 export default IncomeAnalysis;
