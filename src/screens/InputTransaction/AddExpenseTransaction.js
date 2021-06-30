@@ -80,6 +80,7 @@ export default function AddExpenseTransaction({
 
   // Recent added transaction
   let recentAdded = [];
+  // console.log(wallets);
   wallets.forEach((wallet) => {
     wallet.transactions.forEach((transaction) => {
       const categoryOfTransaction = categories.find(

@@ -46,4 +46,4 @@ const App = () => {
 };
 
 export default App;
-// persistor.purge();
+persistor.purge();

@@ -38,7 +38,9 @@ export default function UpdateWallet({ navigation, walletId }) {
 
   const [balance, setBalance] = useState(element ? element.balance : "");
   const handleBalance = (balance) => {
-    setBalance(balance);
+    if (!balance) {
+      setBalance(0);
+    } else setBalance(balance);
   };
 
   const [note, setNote] = useState(element ? element.note : "");
@@ -117,6 +119,7 @@ export default function UpdateWallet({ navigation, walletId }) {
                 note: note,
               })
             );
+            navigation.goBack();
           }}
         >
           <Text style={styles.saveText}>Save</Text>

@@ -69,19 +69,19 @@ const ExpenseAnalysis = ({ navigation }) => {
       }
     }
   }
+
   //{Calculate total & avenge============================================}
   let totalAmount = 0;
   let avengeAmount = 0;
   transactions.map((e) => (totalAmount = totalAmount + e.moneyAmount));
   avengeAmount = Math.floor(totalAmount / daysInMonth);
   totalAmount = formatNumber(totalAmount);
-  let chartdata = tdata;
-
-  chartdata.map((e) => {
-    if (e.y >= 1000) {
-      e.y = e.y / 1000;
-    }
+  let chartdata = tdata.map((e) => {
+    if (e.y >= 1000) return e.y / 1000;
+    return e.y;
   });
+
+  console.log(tdata);
 
   function Header() {
     return (
@@ -267,10 +267,9 @@ const ExpenseAnalysis = ({ navigation }) => {
           >
             History
           </Text>
-          <FlatList
-            data={tdata}
-            renderItem={({ item, index }) =>
-              item.y != 0 ? (
+          <ScrollView>
+            {tdata.map((item, index) => {
+              return item.y != 0 ? (
                 <TouchableOpacity
                   style={{
                     flexDirection: "row",
@@ -281,6 +280,7 @@ const ExpenseAnalysis = ({ navigation }) => {
                     backgroundColor: COLORS.white,
                     ...styles.shadow,
                   }}
+                  key={index}
                 >
                   {/* Name/Category */}
                   <View
@@ -329,10 +329,9 @@ const ExpenseAnalysis = ({ navigation }) => {
                     </Text>
                   </View>
                 </TouchableOpacity>
-              ) : null
-            }
-            keyExtractor={(item) => `${item.x}`}
-          />
+              ) : null;
+            })}
+          </ScrollView>
         </View>
       </View>
     );
@@ -360,7 +359,7 @@ const styles = StyleSheet.create({
   bgHeader: {
     backgroundColor: "#1A2C65",
     height: 50,
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 50,
+    marginTop: Platform.OS === "android" ? -30 : 50,
   },
   headerStyle: {
     fontSize: 25,

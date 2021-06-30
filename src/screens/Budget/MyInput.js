@@ -18,8 +18,6 @@ const MyInput = (props) => {
     props.onChangeText(value);
   };
 
-  console.log(props.value);
-
   return (
     <TextInput
       {...props}

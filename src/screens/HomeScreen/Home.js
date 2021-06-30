@@ -11,9 +11,10 @@ import {
   StatusBar,
   StyleSheet,
   View,
+  Text,
 } from "react-native";
 import { useSelector } from "react-redux";
-import { backgroundColor } from "../../api/constants";
+import { backgroundColor, primaryColor, textColor } from "../../api/constants";
 import { generateListColor, mergeColorToData } from "../../api/helper";
 import Chart from "./components/Chart";
 import Headlines from "./components/Headlines";
@@ -88,6 +89,31 @@ export default function Home({ navigation }) {
     const listColor = generateListColor(chartData);
     return mergeColorToData(chartData, listColor);
   }, [data]);
+
+  if (transactions.length == 0) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
+          <Headlines user={user} />
+          <Notifications />
+          <View
+            style={{
+              alignSelf: "center",
+              marginTop: 30,
+              height: 300,
+              width: 300,
+              borderRadius: 50,
+              backgroundColor: primaryColor,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: textColor, fontSize: 30 }}>No Record</Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>

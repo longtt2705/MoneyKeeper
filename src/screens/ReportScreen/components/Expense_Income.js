@@ -42,8 +42,6 @@ const Expense_Income = ({ navigation }) => {
   const [showDatePicker1, setShowDatePicker1] = useState(false);
   const [showDatePicker2, setShowDatePicker2] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(date1);
-  console.log(date2);
   const hideDatePicker1 = () => {
     setShowDatePicker1(false);
   };
@@ -240,7 +238,7 @@ const styles = StyleSheet.create({
   bgHeader: {
     backgroundColor: "#1A2C65",
     height: 50,
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 50,
+    marginTop: Platform.OS === "android" ? -30 : 50,
   },
   headerStyle: {
     fontSize: 25,

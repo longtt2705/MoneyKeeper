@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { itemBackgroundColor, backgroundColor } from "../../api/constants";
+import { formatNumber } from "../../api/helper";
 
 const ChooseWallet = ({ setWalletId, navigation }) => {
   const data = useSelector((state) => state.wallets.wallets);
@@ -23,7 +24,7 @@ const ChooseWallet = ({ setWalletId, navigation }) => {
     >
       <Text style={styles.title}>{item.title}</Text>
       <View>
-        <Text style={styles.balance}> {item.balance}</Text>
+        <Text style={styles.balance}> {formatNumber(item.balance)} VND</Text>
       </View>
     </TouchableOpacity>
   );

@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   bgHeader: {
     backgroundColor: "#1A2C65",
     height: 50,
-    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 50,
+    marginTop: Platform.OS === "android" ? -30 : 50,
   },
   headerStyle: {
     fontSize: 25,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
     marginTop: 5,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   valueOfMoney: {
     fontSize: 16,

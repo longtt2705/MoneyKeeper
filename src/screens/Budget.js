@@ -1,52 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Limit from "../screens/Budget/LimitScreen/Limits";
 import Wallet from "../screens/Budget/WalletScreen/Wallet/Wallet";
-import Header from './Budget/LimitScreen/Limits/Header';
-import AddLimitOfWallet from './Budget/LimitScreen/Limits/addLimitOfWallet';
-import AddLimitOfCate from './Budget/LimitScreen/Limits/addLimitOfCategory';
-import ChooseWallet from './Budget/WalletScreen/Wallet/chooseWallet';
-import AddWallet from './Budget/WalletScreen/Wallet/addWallet';
-import UpdateWallet from "../screens/Budget/WalletScreen/Wallet/updateWallet"
-import UpdateLimitOfWallet from './Budget/LimitScreen/Limits/updateLimitWallet';
-import ChooseCate from './Budget/LimitScreen/Limits/chooseCate';
-import UpdateLimitOfCategory from './Budget/LimitScreen/Limits/updateLimitCate';
+import Header from "./Budget/LimitScreen/Limits/Header";
+import AddLimitOfWallet from "./Budget/LimitScreen/Limits/addLimitOfWallet";
+import AddLimitOfCate from "./Budget/LimitScreen/Limits/addLimitOfCategory";
+import ChooseWallet from "./Budget/WalletScreen/Wallet/chooseWallet";
+import AddWallet from "./Budget/WalletScreen/Wallet/addWallet";
+import UpdateWallet from "../screens/Budget/WalletScreen/Wallet/updateWallet";
+import UpdateLimitOfWallet from "./Budget/LimitScreen/Limits/updateLimitWallet";
+import ChooseCate from "./Budget/LimitScreen/Limits/chooseCate";
+import UpdateLimitOfCategory from "./Budget/LimitScreen/Limits/updateLimitCate";
 
 import { primaryColor, backgroundColor, textColor } from "../api/constants";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 
-
 function Budget() {
-  const limit = useSelector(state => state.wallets).wallets;
-  const limitNull = limit.filter(e => e.limit === null)[0];
+  const limit = useSelector((state) => state.wallets).wallets;
+  const limitNull = limit.filter((e) => e.limit === null)[0];
   const [chooseWalletId, setChooseWalletId] = useState(() => {
     if (limitNull !== undefined) {
-      return limitNull.id
+      return limitNull.id;
     } else return -1;
-  }
-  );
+  });
 
-  const limitnoNull = limit.filter(e => e.limit !== null)[0];
+  const limitnoNull = limit.filter((e) => e.limit !== null)[0];
   const [limitId, setLimitId] = useState(() => {
     if (limitnoNull !== undefined) {
-      return limitnoNull.id
+      return limitnoNull.id;
     } else return -1;
+  });
 
-  })
+  const [idWallet, setIdWallet] = useState(limit[0].id);
+  const categories = useSelector((state) => state.categories);
+  const cateNull = categories.filter((e) => e.limit === null)[0];
 
-  const [idWallet,setIdWallet]=useState(limit[0].id)
-  const categories=useSelector(state=>state.categories)
-  const cateNull=categories.filter(e=>e.limit===null)[0];
-
-  const [cateId,setCateId]=useState(()=>{
-    if (cateNull===undefined){
+  const [cateId, setCateId] = useState(() => {
+    if (cateNull === undefined) {
       return -1;
-    }else return cateNull.id
-  })
+    } else return cateNull.id;
+  });
 
-  const [idCateLimit,setCateLimit]=useState(categories[0].id)
+  const [idCateLimit, setCateLimit] = useState(categories[0].id);
 
   return (
     <Stack.Navigator headerMode="screen" initialRouteName="limit">
@@ -54,10 +51,7 @@ function Budget() {
         name="limit"
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header
-              navigation={navigation}
-              scene={scene}
-            />
+            <Header navigation={navigation} scene={scene} />
           ),
 
           animationEnabled: false,
@@ -75,21 +69,13 @@ function Budget() {
         name="wallet"
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header
-              navigation={navigation}
-              scene={scene}
-
-            />
+            <Header navigation={navigation} scene={scene} />
           ),
           animationEnabled: false,
         }}
       >
         {({ navigation }) => (
-          <Wallet
-            navigation={navigation}
-            setidWallet={setIdWallet}
-
-          />
+          <Wallet navigation={navigation} setidWallet={setIdWallet} />
         )}
       </Stack.Screen>
       <Stack.Screen
@@ -103,12 +89,7 @@ function Budget() {
           headerBackTitleVisible: false,
         }}
       >
-        {({ navigation }) => (
-          <AddLimitOfWallet
-            navigation={navigation}
-            walletId={chooseWalletId}
-          />
-        )}
+        {({ navigation }) => <AddLimitOfWallet navigation={navigation} />}
       </Stack.Screen>
       <Stack.Screen
         name="addLimitCate"
@@ -121,13 +102,7 @@ function Budget() {
           headerBackTitleVisible: false,
         }}
       >
-        {({ navigation }) => (
-          <AddLimitOfCate 
-          navigation={navigation}
-          cateId={cateId}
-          setIdCate={setCateId}
-          />
-        )}
+        {({ navigation }) => <AddLimitOfCate navigation={navigation} />}
       </Stack.Screen>
       <Stack.Screen
         name="addWallet"
@@ -140,11 +115,7 @@ function Budget() {
           headerBackTitleVisible: false,
         }}
       >
-        {({ navigation }) => (
-          <AddWallet
-            navigation={navigation}
-          />
-        )}
+        {({ navigation }) => <AddWallet navigation={navigation} />}
       </Stack.Screen>
       <Stack.Screen
         name="chooseWallet"
@@ -177,10 +148,7 @@ function Budget() {
         }}
       >
         {({ navigation }) => (
-          <UpdateWallet
-            navigation={navigation}
-            walletId={idWallet}
-          />
+          <UpdateWallet navigation={navigation} walletId={idWallet} />
         )}
       </Stack.Screen>
       <Stack.Screen
@@ -195,10 +163,7 @@ function Budget() {
         }}
       >
         {({ navigation }) => (
-          <UpdateLimitOfWallet
-            navigation={navigation}
-            limitId={limitId}
-          />
+          <UpdateLimitOfWallet navigation={navigation} limitId={limitId} />
         )}
       </Stack.Screen>
       <Stack.Screen
@@ -213,10 +178,7 @@ function Budget() {
         }}
       >
         {({ navigation }) => (
-          <ChooseCate
-            navigation={navigation}
-            setCateId={setCateId}
-          />
+          <ChooseCate navigation={navigation} setCateId={setCateId} />
         )}
       </Stack.Screen>
       <Stack.Screen
@@ -237,11 +199,8 @@ function Budget() {
           />
         )}
       </Stack.Screen>
-
     </Stack.Navigator>
   );
 }
 
 export default Budget;
-
-
