@@ -64,7 +64,7 @@ function Budget() {
             setLmId={setLimitId}
             setCateLimit={setCateLimit}
             setWalletId={setChooseWalletId}
-            serCareId={setCateId}
+            serCateId={setCateId}
           />
         )}
       </Stack.Screen>
