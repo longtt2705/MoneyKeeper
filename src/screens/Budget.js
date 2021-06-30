@@ -106,7 +106,6 @@ function Budget() {
         {({ navigation }) => (
           <AddLimitOfWallet
             navigation={navigation}
-            walletId={chooseWalletId}
           />
         )}
       </Stack.Screen>
@@ -124,8 +123,6 @@ function Budget() {
         {({ navigation }) => (
           <AddLimitOfCate 
           navigation={navigation}
-          cateId={cateId}
-          setIdCate={setCateId}
           />
         )}
       </Stack.Screen>

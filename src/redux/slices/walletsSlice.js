@@ -52,9 +52,9 @@ const initialState = {
       title: "momo",
       icon: icons.wallet,
       balance: 135000,
-      limit: null,
-      datestart: null,
-      dateend: null,
+      limit: 10000,
+      datestart: "01/05/2020",
+      dateend: "02/04/2020",
       note: "",
       transactions: [
         {

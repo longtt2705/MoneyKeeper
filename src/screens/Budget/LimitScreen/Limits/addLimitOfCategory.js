@@ -9,10 +9,10 @@ import { updateCate } from '../../../../redux/slices/categoriesSlice';
 import icons from '../../../../api/icons';
 
 
-export default function AddLimitOfCate({ navigation, cateId, setCateId }) {
+export default function AddLimitOfCate({ navigation }) {
 
     const categories = useSelector(state => state.categories);
-    const cate = categories.filter(e => e.id === cateId)[0];
+    const cate = categories.filter(e => e.limit===null)[0];
     const dispatch = useDispatch()
     const [showDatePicker1, setShowDatePicker1] = useState(false);
     const [showDatePicker2, setShowDatePicker2] = useState(false);

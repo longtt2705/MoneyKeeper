@@ -8,10 +8,9 @@ import moment from "moment";
 import { updateWallet } from '../../../../redux/slices/walletsSlice';
 import icons from '../../../../api/icons';
 
-export default function AddLimitOfWallet({ navigation, walletId }) {
+export default function AddLimitOfWallet({ navigation}) {
     const wallet = useSelector(state => state.wallets).wallets;
-    const nameWallet = wallet.filter(e => e.id == walletId)[0];
-
+    const nameWallet = wallet.filter(e => e.limit===null)[0];
 
     const [input, setInput] = useState(0);
 
@@ -49,7 +48,7 @@ export default function AddLimitOfWallet({ navigation, walletId }) {
 
     const dispatch = useDispatch();
 
-    if (nameWallet === null) {
+    if (nameWallet === undefined) {
         return (
             <View>
                 <Text>
