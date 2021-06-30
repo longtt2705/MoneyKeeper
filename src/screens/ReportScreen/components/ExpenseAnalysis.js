@@ -56,7 +56,7 @@ const ExpenseAnalysis = ({ navigation }) => {
         (wallet) => wallet.id === state.wallets.lastUsedWalletId
       ).transactions
   );
-  const transactions = loadtransactions.filter((x) => x.type == "Expense");
+  const transactions = loadtransactions.filter((x) => x.type == "expense");
 
   for (const id in transactions) {
     var tempDate = new Date(transactions[id].date);

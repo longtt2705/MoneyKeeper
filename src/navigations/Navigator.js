@@ -1,12 +1,17 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import React, { useEffect, useState } from "react";
-import { backgroundColor, focusedColor, inactiveColor } from "../api/constants";
+import {
+  backgroundColor,
+  focusedColor,
+  inactiveColor,
+  primaryColor,
+} from "../api/constants";
+import { useSelector, useDispatch } from "react-redux";
 
 import Budget from "../screens/Budget";
 import Home from "../screens/HomeScreen/Home";
-import Report from "../screens/ReportScreen/Report"
-import Other from "../screens/Other";
+import Report from "../screens/ReportScreen/Report";
 import InputNavigator from "./InputNavigator";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -15,6 +20,8 @@ import RegistrationScreen from "../screens/RegistrationScreen/RegistrationScreen
 import LoginScreen from "../screens/LoginScreen/LoginScreen";
 import { firebase } from "../firebase/config";
 import { Text, View } from "react-native";
+import OtherNavigation from "./OtherNavigation";
+import { logIn } from "../redux/slices/userSlice";
 
 const iconSize = 25;
 const Tab = createMaterialTopTabNavigator();
@@ -91,7 +98,7 @@ const BottomTabNavigator = () => {
         style: {
           height: 60,
           justifyContent: "center",
-          backgroundColor: backgroundColor,
+          backgroundColor: primaryColor,
           elevation: 10,
         },
         activeTintColor: focusedColor,
@@ -110,14 +117,14 @@ const BottomTabNavigator = () => {
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: "Tổng quan",
+          tabBarLabel: "Dashboard",
         }}
       />
       <Tab.Screen
         name="Budget"
         component={Budget}
         options={{
-          tabBarLabel: "Tài khoản",
+          tabBarLabel: "Wallet",
         }}
       />
       <Tab.Screen
@@ -131,14 +138,14 @@ const BottomTabNavigator = () => {
         name="Report"
         component={Report}
         options={{
-          tabBarLabel: "Báo cáo",
+          tabBarLabel: "Report",
         }}
       />
       <Tab.Screen
         name="Other"
-        component={Other}
+        component={OtherNavigation}
         options={{
-          tabBarLabel: "Khác",
+          tabBarLabel: "Others",
         }}
       />
     </Tab.Navigator>
@@ -152,7 +159,14 @@ const screenOptionStyle = {
 
 const Navigator = () => {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+
+  const userInfo = useSelector((state) => state.user);
+  // console.log(userInfo);
+  // console.log(userInfo.isLogedIn);
+  // console.log("render", userInfo);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const usersRef = firebase.firestore().collection("users");
@@ -164,7 +178,8 @@ const Navigator = () => {
           .then((document) => {
             const userData = document.data();
             setLoading(false);
-            setUser(userData);
+            // setUser(userData);
+            dispatch(logIn(userData));
           })
           .catch((error) => {
             setLoading(false);
@@ -188,7 +203,7 @@ const Navigator = () => {
   } else
     return (
       <Stack.Navigator screenOptions={screenOptionStyle}>
-        {user ? (
+        {userInfo.isLogedIn ? (
           <Stack.Screen name="Main" component={BottomTabNavigator} />
         ) : (
           <>

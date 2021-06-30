@@ -9,7 +9,6 @@ import categoriesReducer from "../slices/categoriesSlice";
 import eventsReducer from "../slices/eventsSlice";
 import userReducer from "../slices/userSlice";
 import walletsReducer from "../slices/walletsSlice";
-
 const reducers = combineReducers({
   categories: categoriesReducer,
   events: eventsReducer,

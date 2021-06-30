@@ -26,6 +26,7 @@ const Header = ({ navigation, scene, setCategoryId }) => {
           <Text
             style={{
               color: textColor,
+              fontWeight: "bold",
             }}
           >
             Expense
@@ -41,6 +42,7 @@ const Header = ({ navigation, scene, setCategoryId }) => {
           <Text
             style={{
               color: textColor,
+              fontWeight: "bold",
             }}
           >
             Income

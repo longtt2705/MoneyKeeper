@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Dimensions,
   Image,
@@ -21,6 +22,7 @@ import {
   textColor,
 } from "../../api/constants";
 import { firebase } from "../../firebase/config";
+import { logIn } from "../../redux/slices/userSlice";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -29,6 +31,8 @@ export default function LoginScreen({ navigation }) {
   const onFooterLinkPress = () => {
     navigation.navigate("Registration");
   };
+
+  const dispatch = useDispatch();
 
   const onLoginPress = () => {
     firebase
@@ -46,7 +50,8 @@ export default function LoginScreen({ navigation }) {
               return;
             }
             const user = firestoreDocument.data();
-            navigation.navigate("Main", { user });
+            dispatch(logIn(user));
+            // navigation.navigate("Main", { user });
           })
           .catch((error) => {
             alert(error);

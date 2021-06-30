@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-import { TextInput, StyleSheet } from "react-native";
-
-import {
-  backgroundColor,
-  primaryColor,
-  textColor,
-  focusedColor,
-  formBackgroundColor,
-  textColorOnLightBg,
-  inactiveColor,
-} from "../../api/constants";
+import { StyleSheet, TextInput } from "react-native";
+import { inactiveColor, textColorOnLightBg } from "../../api/constants";
 
 const MyInput = (props) => {
   const [isFocused, setIsFocused] = useState(false);

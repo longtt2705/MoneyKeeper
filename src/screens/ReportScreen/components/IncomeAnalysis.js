@@ -56,7 +56,7 @@ const IncomeAnalysis = ({ navigation }) => {
         (wallet) => wallet.id === state.wallets.lastUsedWalletId
       ).transactions
   );
-  const transactions = loadtransactions.filter((x) => x.type == "Income");
+  const transactions = loadtransactions.filter((x) => x.type == "income");
 
   for (const id in transactions) {
     var tempDate = new Date(transactions[id].date);

@@ -24,7 +24,7 @@ const initialState = {
           note: "breakfast in vietnam !!! Pho",
           date: sub(new Date(), { minutes: 10 }).toISOString(),
           image: "",
-          type:"Expense",
+          type:"expense",
         },
         {
           id: "2",
@@ -35,7 +35,7 @@ const initialState = {
           note: "coffee",
           date: sub(new Date(), { days: 7 }).toISOString(),
           image: "",
-          type:"Expense",
+          type:"expense",
         },
         {
           id: "3",
@@ -46,7 +46,7 @@ const initialState = {
           note: "awfasfiashfoijasoifjoifjaiosf",
           date: sub(new Date(), { days: 20 }).toISOString(),
           image: "",
-          type:"Expense",
+          type:"expense",
         },
         {
           id: "4",
@@ -57,7 +57,7 @@ const initialState = {
           note: "helo",
           date: sub(new Date(), { days: 20 }).toISOString(),
           image: "",
-          type:"Expense",
+          type:"expense",
         },
         {
           id: "5",
@@ -68,13 +68,13 @@ const initialState = {
           note: "OLA",
           date: sub(new Date(), { days: 7 }).toISOString(),
           image: "",
-          type:"Expense",
+          type:"expense",
         },
       ],
     },
     {
       id: "2",
-      title: "momo",
+      title: "Momo",
       icon: icons.wallet,
       balance: 135000,
       limit: null,
@@ -91,6 +91,7 @@ const initialState = {
           note: "beamin order",
           date: sub(new Date(), { minutes: 17 }).toISOString(),
           image: "",
+          type: "expense"
         },
         {
           id: "4",
@@ -101,6 +102,7 @@ const initialState = {
           note: "foodie",
           date: sub(new Date(), { minutes: 12 }).toISOString(),
           image: "",
+          type: "expense"
         },
       ],
     },
@@ -201,13 +203,27 @@ const walletsSlice = createSlice({
     },
     deleteWallet(state, action) {
       const { walletId } = action.payload;
-      console.log(walletId);
+
+      // cập nhật lastUsedWallet trước
+      if (walletId == state.lastUsedWalletId) {
+        const newLastUsedWalet = state.wallets.find(
+          (wallet) => wallet.id != walletId
+        );
+        if (!newLastUsedWalet) {
+          state.lastUsedWalletId = "";
+        } else {
+          state.lastUsedWalletId = newLastUsedWalet.id;
+        }
+      }
+
       const indexOfDeletedWallet = state.wallets.findIndex(
         (wallet) => wallet.id == walletId
       );
       if (indexOfDeletedWallet >= 0) {
         state.wallets.splice(indexOfDeletedWallet, 1);
       }
+
+      // console.log(state);
     },
   },
 });

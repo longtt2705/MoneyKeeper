@@ -38,11 +38,3 @@ export const getCategoryName = (id, categories) => {
   if (category) return category.title;
   return null;
 };
-
-export const getIcon = (iconName) => {
-  if (iconName) {
-    const icon = iconName.toLowerCase();
-    if (Icons[icon] !== undefined) return Icons[icon];
-    return Icons["none"];
-  }
-};

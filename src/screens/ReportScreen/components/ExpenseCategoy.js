@@ -32,7 +32,7 @@ const ExpenseCategory = () => {
         (wallet) => wallet.id === state.wallets.lastUsedWalletId
       ).transactions
   );
-  const loadtransactions = transactions.filter((x) => x.type == "Expense");
+  const loadtransactions = transactions.filter((x) => x.type == "expense");
 
   const loadcategories = useSelector((state) => state.categories);
   let tcategories = [];

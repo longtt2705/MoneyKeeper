@@ -7,6 +7,9 @@ const initialState = [
     title: "Salary",
     icon: icons.portfolio.source,
     type: "income",
+    limit: 1000000,
+    datestart: "05/03/2021",
+    dateend: "05/05/2021",
     color: icons.portfolio.color,
   },
   {
@@ -14,6 +17,9 @@ const initialState = [
     title: "Bonus",
     icon: icons.giftbox.source,
     type: "income",
+    limit: null,
+    datestart: null,
+    dateend: null,
     color: icons.giftbox.color,
   },
   {
@@ -21,6 +27,9 @@ const initialState = [
     title: "Invest",
     icon: icons.coins.source,
     type: "income",
+    limit: 1000000,
+    datestart: "26/02/2021",
+    dateend: "30/03/2021",
     color: icons.coins.color,
   },
   {
@@ -28,6 +37,9 @@ const initialState = [
     title: "Side Job",
     icon: icons.part_time.source,
     type: "income",
+    limit: null,
+    datestart: null,
+    dateend: null,
     color: icons.part_time.color,
   },
   {
@@ -35,6 +47,9 @@ const initialState = [
     title: "Shopping",
     icon: icons.shopping_cart.source,
     type: "expense",
+    limit: null,
+    datestart: null,
+    dateend: null,
     color: icons.shopping_cart.color,
   },
   {
@@ -42,6 +57,9 @@ const initialState = [
     title: "Food",
     icon: icons.dish.source,
     type: "expense",
+    limit: null,
+    datestart: null,
+    dateend: null,
     color: icons.dish.color,
   },
   {
@@ -49,6 +67,9 @@ const initialState = [
     title: "Transport",
     icon: icons.vehicles.source,
     type: "expense",
+    limit: 1000000,
+    datestart: "18/05/2021",
+    dateend: "16/03/2021",
     color: icons.vehicles.color,
   },
   {
@@ -56,6 +77,9 @@ const initialState = [
     title: "Healthcare",
     icon: icons.healthcare2.source,
     type: "expense",
+    limit: null,
+    datestart: null,
+    dateend: null,
     color: icons.healthcare2.color,
   },
   {
@@ -63,6 +87,9 @@ const initialState = [
     title: "Education",
     icon: icons.mortarboard.source,
     type: "expense",
+    limit: null,
+    datestart: null,
+    dateend: null,
     color: icons.mortarboard.color,
   },
   {
@@ -70,6 +97,9 @@ const initialState = [
     title: "Contact fee",
     icon: icons.phone.source,
     type: "expense",
+    limit: null,
+    datestart: null,
+    dateend: null,
     color: icons.phone.color,
   },
 ];
@@ -78,6 +108,16 @@ const categoriesSlice = createSlice({
   name: "categories",
   initialState,
   reducers: {
+    updateCate(state, action) {
+      const { cateId, ...updatingField } = action.payload;
+      const existingCate = state.find((cate) => cate.id == cateId);
+      if (existingCate) {
+        for (let prop in updatingField) {
+          let val = updatingField[prop];
+          existingCate[prop] = val;
+        }
+      }
+    },
     addCategory: {
       reducer(state, action) {
         // console.log(action.payload);
@@ -100,10 +140,13 @@ const categoriesSlice = createSlice({
       const indexOfDeleteCategory = state.findIndex(
         (category) => category.id == deletedCategoryId
       );
+
       state.splice(indexOfDeleteCategory, 1);
     },
   },
 });
+
+export const { updateCate } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
 export const { addCategory, deleteCategory } = categoriesSlice.actions;

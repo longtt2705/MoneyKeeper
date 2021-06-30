@@ -24,13 +24,19 @@ import { getMonth, getWeek, getYear } from "date-fns";
 
 export default function Home({ navigation }) {
   const [value, setValue] = useState("m");
-  const username = useSelector((state) => state.user.userName);
+  const user = useSelector((state) => state.user);
   const [data, setData] = useState(null);
   const transactions = useSelector(
     (state) =>
       state.wallets.wallets.find(
         (wallet) => wallet.id === state.wallets.lastUsedWalletId
       ).transactions
+  );
+  const balance = useSelector(
+    (state) =>
+      state.wallets.wallets.find(
+        (wallet) => wallet.id === state.wallets.lastUsedWalletId
+      ).balance
   );
 
   useEffect(() => {
@@ -86,13 +92,13 @@ export default function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Headlines name={username} />
+        <Headlines user={user} />
         <Notifications />
         {data && data.length > 0 && (
           <>
             <Picker value={value} setValue={setValue} />
             <View style={styles.walletContainer}>
-              <Chart data={generateChartData()} />
+              <Chart data={generateChartData()} balance={balance} />
               <TransactionList transactions={data} />
             </View>
           </>
