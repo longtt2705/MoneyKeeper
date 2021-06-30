@@ -26,23 +26,20 @@ const Tab = createMaterialTopTabNavigator();
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 const Expense_Income=({navigation})=> {
-  const [value, setValue] = useState("m");
-  const [data, setData] = useState(null);
-  const transactions = useSelector(
-    (state) =>
-      state.wallets
-  ).wallets;
-  const categories = useSelector((state) => state.categories);
-  const filtedCategories = categories.filter(
-    (category) => category.type == "income"
-  );
-  const [date1, setDate1] = useState(new Date());
-  const [date2, setDate2] = useState(new Date());
-  
+
+
+  var dt = new Date();
+  var month = dt.getMonth()+1;
+  var year = dt.getFullYear();
+  var daysInMonth = new Date(year, month, 0).getDate();
+  const [date1, setDate1] = useState(new Date(year,month,-daysInMonth+1));
+  const [date2, setDate2] = useState(new Date(year,month,0));
   const [show, setShow] = useState(false);
   const [showDatePicker1, setShowDatePicker1] = useState(false);
   const [showDatePicker2, setShowDatePicker2] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  console.log(date1);
+  console.log(date2);
   const hideDatePicker1 = () => {
     setShowDatePicker1(false);
   };

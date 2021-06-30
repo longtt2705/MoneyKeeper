@@ -14,62 +14,56 @@ import { VictoryTooltip,VictoryVoronoiContainer,VictoryBar, VictoryChart, Victor
 const report = ["Financial Statement", "Expense Income", "Expense Analysis", "Income Analysis"]
 const ExpenseAnalysis=({navigation})=> {
 
-  let testdata={
-    Expense:[
-      { x: '01/11/2020', y: 13000 },
-      { x: '02/11/2020', y: 16500 },
-      { x: '03/11/2020', y: 14250 },
-      { x: '04/11/2020', y: 19000 },
-      { x: '05/11/2020', y: 13000 },
-      { x: '06/11/2020', y: 16500 },
-      { x: '07/11/2020', y: 0},
-      { x: '08/11/2020', y: 19000 },
-      { x: '09/11/2020', y:0 },
-      { x: '10/11/2020', y:0 },
-      { x: '11/11/2020', y:0 },
-      { x: '12/11/2020', y:0 },
-      { x: '13/11/2020', y:0 },
-      { x: '14/11/2020', y:0 },
-      { x: '15/11/2020', y:0 },
-      { x: '16/11/2020', y:0 },
-      { x: '17/11/2020', y:0 },
-      { x: '18/11/2020', y:0 },
-      { x: '19/11/2020', y:0 },
-      { x: '20/11/2020', y:0 },
-      { x: '21/11/2020', y:0 },
-      { x: '22/11/2020', y:0 },
-      { x: '23/11/2020', y:0 },
-      { x: '24/11/2020', y:0 },
-      { x: '25/11/2020', y:0 },
-      { x: '26/11/2020', y:0 },
-      { x: '27/11/2020', y:0 },
-      { x: '28/11/2020', y:0 },
-      { x: '29/11/2020', y:0 },
-      { x: '30/11/2020', y:0 },
-      { x: '31/11/2020', y:0 },
-
-
-    ],
-    Income:[
-    ],
-  };
-  const [value, setValue] = useState("m");
-  let data=[]
-  const transactions = useSelector(
+//{Create empty array====================================================}
+  var dt = new Date();
+  var month = dt.getMonth()+1;
+  var year = dt.getFullYear();
+  var daysInMonth = new Date(year, month, 0).getDate();
+  let tdata=[]
+  for (let i = 1; i <= daysInMonth; i++) {
+    var t=i;
+    if (i<10) {
+      t='0'+`${i}`
+    }
+    tdata.push({id:i, x: `${t}/${month}/${year}`, y: 0 });
+    
+  }
+  //{Load data============================================================}
+  const loadtransactions = useSelector(
     (state) =>
       state.wallets.wallets.find(
         (wallet) => wallet.id === state.wallets.lastUsedWalletId
       ).transactions
   );
+  const transactions=loadtransactions.filter(x=>x.type=="Expense")
   
   for (const id in transactions) {
-    data.push({id:id, x: moment(transactions[id].date).format("DD/MM/YYYY"), y: transactions[id].moneyAmount });
+    var tempDate=new Date(transactions[id].date);
+    var tempmonth = tempDate.getMonth()+1;
+    var tempyear = tempDate.getFullYear();
+    var tdate=tempDate.getDate();
+    if(tempyear==year)
+    {
+      if (tempmonth==month) {
+        tdata[tdate-1].y+=transactions[id].moneyAmount;
+      }
+    }
   }
+  //{Calculate total & avenge============================================}
   let totalAmount=0;
+  let avengeAmount=0;
   transactions.map(e=>totalAmount=totalAmount+e.moneyAmount);
+  avengeAmount=Math.floor(totalAmount/daysInMonth);
   totalAmount = formatNumber(totalAmount);
-  data.map(e=>new Date(e.x))
-  console.log({data});
+  let chartdata= tdata;
+
+  chartdata.map((e)=>{
+    if(e.y>=1000)
+    {
+      e.y=e.y/1000;
+    }
+  })
+  
   
 
 
@@ -122,7 +116,7 @@ const ExpenseAnalysis=({navigation})=> {
   
                   <View style={{ marginLeft:SIZES.padding }}>
                       
-                      <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>01/11/2020 - 30/11/2020</Text>
+                      <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>{tdata[0].x} - {tdata[daysInMonth-1].x}</Text>
                   </View>
               </View>
           </View>
@@ -162,7 +156,7 @@ const ExpenseAnalysis=({navigation})=> {
           
               <View>
                   
-                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>100,000 VND</Text>
+                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>{formatNumber(avengeAmount)} VND</Text>
               </View>
           </View>
       </View>
@@ -174,12 +168,12 @@ const ExpenseAnalysis=({navigation})=> {
       
         <View style={{marginBottom:-30,marginTop:15}}>
                   
-                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>Money(USD)</Text>
+                  <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>Money(Unit: Thousand)</Text>
               </View>
-        <VictoryChart domainPadding={20} width={1000} theme={VictoryTheme.material}
+        <VictoryChart  domainPadding={10} width={1000} theme={VictoryTheme.material}
           containerComponent={
             <VictoryVoronoiContainer
-              labels={({ datum }) => `${datum.y}$ \n ${datum.x}`}
+              labels={({ datum }) => `${datum.y}k \n ${datum.x}`}
               
               labelComponent={
                 <VictoryTooltip cornerRadius={10} flyoutStyle={{ stroke: "white",fill: "white"}} style={{ fill: "tomato", backgroundColor:'white' }} constrainToVisibleArea />
@@ -190,7 +184,7 @@ const ExpenseAnalysis=({navigation})=> {
         >
           <VictoryAxis   style={{tickLabels: {fill:'white'}}}/>
           <VictoryAxis dependentAxis/>
-           <VictoryBar  style={{data:{fill:COLORS.secondary},}} data={data}/>
+           <VictoryBar  style={{data:{fill:COLORS.secondary},}} data={chartdata}/>
         </VictoryChart>
         
       </View>
@@ -202,9 +196,9 @@ const ExpenseAnalysis=({navigation})=> {
     return(
       <View style={{paddingHorizontal: SIZES.padding, paddingVertical: 10, backgroundColor: COLORS.white}}>
       <View style={{marginLeft:-10}}>      
-        <Text style={{ ...FONTS.h2, color:'black',fontWeight:'bold' }}>History</Text>
+        <Text style={{ ...FONTS.h2,marginBottom:20, color:'black',fontWeight:'bold' }}>History</Text>
         <FlatList
-              data={data}
+              data={tdata}
               renderItem={({item,index})=>(
                  item.y!=0?
                   <TouchableOpacity
@@ -238,7 +232,7 @@ const ExpenseAnalysis=({navigation})=> {
         
                   {/* Expenses */}
                   <View style={{ justifyContent: 'center' }}>
-                      <Text style={{ color:COLORS.secondary, ...FONTS.h3 }}>{item.y} USD </Text>
+                      <Text style={{ color:COLORS.secondary, ...FONTS.h3 }}>{formatNumber(item.y)} VND </Text>
                   </View>
               </TouchableOpacity>
                 :null

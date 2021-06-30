@@ -24,6 +24,7 @@ const initialState = {
           note: "breakfast in vietnam !!! Pho",
           date: sub(new Date(), { minutes: 10 }).toISOString(),
           image: "",
+          type:"Expense",
         },
         {
           id: "2",
@@ -34,6 +35,7 @@ const initialState = {
           note: "coffee",
           date: sub(new Date(), { days: 7 }).toISOString(),
           image: "",
+          type:"Expense",
         },
         {
           id: "3",
@@ -44,6 +46,7 @@ const initialState = {
           note: "awfasfiashfoijasoifjoifjaiosf",
           date: sub(new Date(), { days: 20 }).toISOString(),
           image: "",
+          type:"Expense",
         },
       ],
     },
