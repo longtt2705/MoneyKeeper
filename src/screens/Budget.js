@@ -39,11 +39,10 @@ function Budget() {
   const cateNull = categories.filter((e) => e.limit === null)[0];
 
   const [cateId, setCateId] = useState(() => {
-    if (typeof(cateNull)!=="object") {
-      return -1;
-    } else return cateNull.id;
+    if (typeof(cateNull)==="object") {
+      return cateNull.id;
+    } else return -1;
   });
-
   const [idCateLimit, setCateLimit] = useState(categories[0].id);
 
   return (
@@ -52,7 +51,7 @@ function Budget() {
         name="limit"
         options={{
           header: ({ scene, previous, navigation }) => (
-            <Header navigation={navigation} scene={scene} />
+            <Header navigation={navigation} scene={scene} /> 
           ),
 
           animationEnabled: false,
@@ -64,7 +63,7 @@ function Budget() {
             setLmId={setLimitId}
             setCateLimit={setCateLimit}
             setWalletId={setChooseWalletId}
-            serCateId={setCateId}
+            setCateId={setCateId}
           />
         )}
       </Stack.Screen>

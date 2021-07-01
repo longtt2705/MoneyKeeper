@@ -22,7 +22,7 @@ export default function LimitOfWallet({ navigation, setLimitId,setWalletId }) {
   const limitWallet = listofWallet.filter((e) => e.limit !== null);
   const limitNull=listofWallet.filter(e=>e.limit===null)[0];
   
-  if (limitWallet == null) {
+  if (!limitWallet) {
     return (
       <View style={styles.bg}>
         <View style={styles.Cate}>

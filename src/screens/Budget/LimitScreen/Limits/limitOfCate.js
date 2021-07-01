@@ -13,7 +13,9 @@ import moment from 'moment';
 export default function LimitOfCategory({ navigation,setCateLimit,setCateId }) {
     const listOfCate = useSelector(state => state.categories)
     const limitCate = listOfCate.filter(e => e.limit !== null);
-    if (limitCate === []) {
+    const limitCateNull=listOfCate.filter(e=>e.limit===null)[0];
+
+    if (!limitCate[0]) {
         return (
             <View style={styles.bg}>
             <View style={styles.Cate}>
@@ -83,7 +85,7 @@ export default function LimitOfCategory({ navigation,setCateLimit,setCateId }) {
                         style={styles.button}
                         onPress={() => {
                             if (typeof(limitCate)!=="undefined"){
-                                setCateId(limitCate.id)
+                                setCateId(limitCateNull.id)
                             }
                             navigation.navigate("addLimitCate")
                         }}
