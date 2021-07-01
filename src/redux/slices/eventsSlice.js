@@ -8,13 +8,6 @@ const initialState = [
     date: "",
     status: "pending",
   },
-  {
-    id: "1",
-    title: "day la event title",
-    description: "day la desciption cua event",
-    date: (new Date()).toISOString(),
-    status: "pending",
-  },
 ];
 
 const eventsSlice = createSlice({

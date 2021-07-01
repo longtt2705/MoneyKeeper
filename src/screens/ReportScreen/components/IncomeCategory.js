@@ -39,7 +39,7 @@ const ExpenseCategory = () => {
   for (const id in loadcategories) {
     tcategories.push({
       expenses: [],
-      id: id,
+      id: loadcategories[id].id,
       name: loadcategories[id].title,
       icon: loadcategories[id].icon,
       color: loadcategories[id].color,
@@ -47,7 +47,11 @@ const ExpenseCategory = () => {
   }
   for (const id in loadtransactions) {
     var t = loadtransactions[id].categoryId;
-    tcategories[t - 1].expenses.push({
+    const indexOfCategory = tcategories.findIndex(
+      (tcategory) => tcategory.id == t
+    );
+
+    tcategories[indexOfCategory].expenses.push({
       id: id,
       title: loadtransactions[id].note,
       date: moment(loadtransactions[id].date).format("DD/MM/YYYY"),
@@ -288,7 +292,11 @@ const ExpenseCategory = () => {
         {/* Expense Description */}
         <View style={{ paddingHorizontal: SIZES.padding }}>
           {/* Title and description */}
-          <Text style={{ ...FONTS.h3 }}>{item.title}</Text>
+          <Text style={{ ...FONTS.h3 }}>
+            {item.title.length > 40
+              ? item.title.slice(0, 40) + "..."
+              : item.title}
+          </Text>
 
           {/* Location */}
           <Text style={{ marginTop: SIZES.padding, ...FONTS.h4 }}>Date</Text>
