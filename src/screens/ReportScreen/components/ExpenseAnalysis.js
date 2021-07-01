@@ -81,8 +81,6 @@ const ExpenseAnalysis = ({ navigation }) => {
     return e.y;
   });
 
-  console.log(tdata);
-
   function Header() {
     return (
       <View style={styles.bgHeader}>

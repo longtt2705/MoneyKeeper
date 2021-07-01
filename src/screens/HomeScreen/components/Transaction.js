@@ -1,18 +1,43 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, Alert } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import { itemBackgroundColor, primaryColor } from "../../../api/constants";
 import { formatNumber } from "../../../api/helper";
+import { useDispatch } from "react-redux";
+import { deleteTransaction } from "../../../redux/slices/walletsSlice";
 
-export default function Transaction({ transaction }) {
+export default function Transaction({ transaction, navigation }) {
   const category = useSelector((state) =>
     state.categories.find((category) => category.id === transaction.categoryId)
   );
 
   if (!category) return null;
 
+  const dispatch = useDispatch();
+
+  const onTransactionPress = () => {
+    Alert.alert(
+      "Delete Transaction",
+      "Do you want to delele this transaction ?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel",
+        },
+        {
+          text: "DELETE",
+          onPress: () => {
+            console.log(transaction.id);
+            dispatch(deleteTransaction({ id: transaction.id }));
+          },
+        },
+      ]
+    );
+  };
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onTransactionPress}>
       <Image source={category.icon} style={styles.icon} />
 
       <View style={{ flex: 2 }}>
@@ -29,7 +54,7 @@ export default function Transaction({ transaction }) {
         </Text>
         <Text style={[styles.lightTitle, { alignSelf: "flex-end" }]}>VND</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

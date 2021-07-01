@@ -4,7 +4,7 @@ import { buttonColor, textColor } from "../../../api/constants";
 import Transaction from "./Transaction";
 const { format } = require("date-fns");
 
-export default function TransactionList({ transactions }) {
+export default function TransactionList({ transactions, navigation }) {
   const [data, setData] = useState(null);
   const maxTransactionDisplayed = 10;
 
@@ -55,7 +55,11 @@ export default function TransactionList({ transactions }) {
             <View style={{ marginTop: 30 }} key={transGroupByDate.dateKey}>
               <Text style={styles.dateLabel}>{transGroupByDate.dateKey}</Text>
               {transGroupByDate.transactions.map((transaction) => (
-                <Transaction transaction={transaction} key={transaction.id} />
+                <Transaction
+                  transaction={transaction}
+                  key={transaction.id}
+                  navigation={navigation}
+                />
               ))}
             </View>
           );

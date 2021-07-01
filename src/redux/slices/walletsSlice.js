@@ -10,9 +10,9 @@ const initialState = {
       title: "Cash",
       icon: icons.wallet,
       balance: 0,
-      limit: 1000000,
-      datestart: "04/05/2021",
-      dateend: "07/05/2021",
+      limit: null,
+      datestart: null,
+      dateend: null,
       note: "",
       transactions: [],
     },
@@ -69,6 +69,14 @@ const walletsSlice = createSlice({
           },
         };
       },
+    },
+    deleteTransaction(state, action) {
+      const deletedTransactionId = action.payload.id;
+      state.wallets.forEach((wallet) => {
+        wallet.transactions = wallet.transactions.filter(
+          (transaction) => transaction.id != deletedTransactionId
+        );
+      });
     },
     deleteTransactionOfCategory(state, action) {
       const deletedCategoryId = action.payload.id;
@@ -145,6 +153,7 @@ export const {
   updateWallet,
   deleteWallet,
   deleteTransactionOfCategory,
+  deleteTransaction,
 } = walletsSlice.actions;
 
 export default walletsSlice.reducer;

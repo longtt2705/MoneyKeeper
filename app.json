@@ -2,9 +2,9 @@
   "expo": {
     "name": "MoneySaver",
     "slug": "MoneySaver",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "orientation": "portrait",
-    "icon": "./src/assets/logo.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -16,7 +16,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "2"
+      "buildNumber": "5"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +25,8 @@
       },
       "softwareKeyboardLayoutMode": "pan",
       "package": "com.brother.moneysaver",
-      "versionCode": 3
+      "versionCode": 5,
+      "icon": "./assets/icon.png"
     },
     "web": {
       "favicon": "./assets/favicon.png"

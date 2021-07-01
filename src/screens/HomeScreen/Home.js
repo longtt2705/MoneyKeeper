@@ -125,7 +125,7 @@ export default function Home({ navigation }) {
             <Picker value={value} setValue={setValue} />
             <View style={styles.walletContainer}>
               <Chart data={generateChartData()} balance={balance} />
-              <TransactionList transactions={data} />
+              <TransactionList transactions={data} navigation={navigation} />
             </View>
           </>
         )}
